@@ -1,5 +1,5 @@
 import 'package:covid_19/routes/app_page.dart';
-import 'package:covid_19/styles/constant.dart';
+import 'package:covid_19/utils/styles/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 

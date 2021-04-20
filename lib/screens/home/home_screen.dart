@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:covid_19/common/my_header_widget.dart';
 import 'package:covid_19/routes/app_page.dart';
-import 'package:covid_19/styles/constant.dart';
+import 'package:covid_19/utils/styles/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../info/info_screen.dart';

@@ -1,6 +1,7 @@
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:covid_19/screens/home/home_screen.dart';
+import 'package:covid_19/screens/login/login_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
@@ -76,7 +77,7 @@ class _SplashScreenAppState extends State<SplashScreenApp> {
               Color(0xffe0f2f1)
             ],
           ),
-          navigateAfterSeconds: HomeScreen(),
+          navigateAfterSeconds: LoginScreen(),
           loaderColor: Colors.transparent,
         ),
         Center(

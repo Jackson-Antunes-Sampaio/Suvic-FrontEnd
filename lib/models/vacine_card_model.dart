@@ -1,11 +1,11 @@
-class VacineCard {
+class VaccineCardModel {
   final int id;
   final String batch;
   final String applicationDate;
 
-  VacineCard({this.id, this.batch, this.applicationDate});
+  VaccineCardModel({this.id, this.batch, this.applicationDate});
 
-  factory VacineCard.fromJson(Map<String, dynamic> json) => VacineCard(
+  factory VaccineCardModel.fromJson(Map<String, dynamic> json) => VaccineCardModel(
       id: json["id"],
       batch: json["batch"],
       applicationDate: json["applicationDate"]);
