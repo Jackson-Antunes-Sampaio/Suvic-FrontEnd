@@ -1,3 +1,4 @@
+import 'package:covid_19/common/botton_navigation_bar/bottom_navigation_bar.dart';
 import 'package:covid_19/common/icon_button_custom.dart';
 import 'package:covid_19/common/my_header_widget.dart';
 import 'package:covid_19/controllers/notify_covid_controller.dart';

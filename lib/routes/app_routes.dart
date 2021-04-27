@@ -8,5 +8,7 @@ abstract class Routes{
   static const INFO = 'InfoScreen';
   static const VACCINECARD = 'VaccineCardScreen';
   static const NOTIFYCOVID = 'NotifyCovidScreen';
+  static const BASE = 'BaseScreen';
+  static const SUVIC = "WebViewSuvicScreen";
 
 }

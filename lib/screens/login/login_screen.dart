@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:covid_19/common/my_header_widget.dart';
+import 'package:covid_19/routes/app_page.dart';
 import 'package:covid_19/screens/login/componets/input_text_field.dart';
 import 'package:covid_19/screens/login/componets/label_text.dart';
 import 'package:covid_19/screens/login/componets/login_social_media.dart';
@@ -8,6 +9,7 @@ import 'package:covid_19/utils/styles/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -66,7 +68,9 @@ class LoginScreen extends StatelessWidget {
                       height: 46,
                       width: 160,
                       child: RaisedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(Routes.BASE);
+                        },
                         child: Text(
                           "ENTRAR",
                           style: TextStyle(fontSize: 16),
@@ -124,7 +128,7 @@ class LoginScreen extends StatelessWidget {
                     height: 60,
                     child: Center(
                       child: Text(
-                        'Don\'t have account ? Sign Up Now',
+                        'Não tem conta? Cadastre-se agora',
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
                           color: facebookColor,
