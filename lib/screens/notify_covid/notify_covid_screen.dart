@@ -102,7 +102,7 @@ class _NotifyCovidScreenState extends State<NotifyCovidScreen> {
                             return Checkbox(
                               value: notifyCovidController.selectNotify.value,
                               onChanged: (newSelect) {
-                                notifyCovidController.selectNotify.value = newSelect;
+                                notifyCovidController.selectNotify.value = newSelect!;
                               },
                             );
                           }),
@@ -131,7 +131,7 @@ class _NotifyCovidScreenState extends State<NotifyCovidScreen> {
                         height: 50,
                         child: RaisedButton(
                           onPressed: () {
-                            if (formKey.currentState.validate()) {
+                            if (formKey.currentState!.validate()) {
                               print("okk");
                             }
                           },

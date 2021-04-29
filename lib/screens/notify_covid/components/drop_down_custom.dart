@@ -49,7 +49,7 @@ class DropDownCustom extends StatelessWidget {
                             menuMaxHeight: 1000,
                             itemHeight: 50,
                             onChanged: (newValue) {
-                              notifyCovidController.selectUf.value = newValue;
+                              notifyCovidController.selectUf.value = newValue!;
                               state.setValue(newValue);
                             },
                             value: notifyCovidController.selectUf.value,
@@ -74,7 +74,7 @@ class DropDownCustom extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.only( left: 55, top: 5),
                   child: Text(
-                    state.errorText,
+                    state.errorText!,
                     style: TextStyle(color: Colors.red, fontSize: 12),
                   ),
                 )

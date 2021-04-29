@@ -5,11 +5,11 @@ class CustomIconNavigationBar extends StatelessWidget {
   CustomIconNavigationBar(
       {this.text, this.iconData, this.color, this.onTap, this.size, });
 
-  final String text;
-  final IconData iconData;
-  final Color color;
-  final VoidCallback onTap;
-  final double size;
+  final String? text;
+  final IconData? iconData;
+  final Color? color;
+  final VoidCallback? onTap;
+  final double? size;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class CustomIconNavigationBar extends StatelessWidget {
                       color: onTap != null ? color : Colors.grey[400],
                       size: size ?? 24,
                     ),
-                    Text(text, style: TextStyle(color: color, fontSize: 11),),
+                    Text(text!, style: TextStyle(color: color, fontSize: 11),),
                   ],
                 )
             ),

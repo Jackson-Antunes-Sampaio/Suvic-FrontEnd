@@ -7,10 +7,10 @@ String columnName = "name";
 String columnApplicationDate = "applicationDate";
 
 class VaccineCardStore {
-  Database db;
-  int id;
-  String name;
-  String applicationDate;
+  late Database db;
+  int? id;
+  String? name;
+  String? applicationDate;
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
@@ -29,7 +29,7 @@ class VaccineCardStore {
   VaccineCardStore.fromMap(Map<String, dynamic> map) {
     id = map[columnId];
     name = map[columnName];
-    applicationDate = map[applicationDate];
+    applicationDate = map[applicationDate!];
   }
 
   Future open(String path) async {
@@ -49,13 +49,13 @@ create table $tableCard(
     return vcs;
   }
 
-  Future<VaccineCardStore> getTodo(int id) async {
+  Future<VaccineCardStore?> getTodo(int id) async {
     List<Map> maps = await db.query(tableCard,
         columns: [columnId, columnName, columnApplicationDate],
         where: '$columnId = ?',
         whereArgs: [id]);
     if (maps.length > 0) {
-      return VaccineCardStore.fromMap(maps.first);
+      return VaccineCardStore.fromMap(maps.first as Map<String, dynamic>);
     }
     return null;
   }

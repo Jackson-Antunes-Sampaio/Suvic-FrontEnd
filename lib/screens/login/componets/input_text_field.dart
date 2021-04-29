@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class InputTextField extends StatelessWidget {
 
-  InputTextField({@ required this.hintText, @ required this.obscureText});
+  InputTextField({required this.hintText, required this.obscureText});
 
   final String hintText;
   final bool obscureText;

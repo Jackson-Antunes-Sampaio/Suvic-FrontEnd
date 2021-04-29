@@ -1,7 +1,7 @@
 class VaccineCardModel {
-  final int id;
-  final String batch;
-  final String applicationDate;
+  final int? id;
+  final String? batch;
+  final String? applicationDate;
 
   VaccineCardModel({this.id, this.batch, this.applicationDate});
 

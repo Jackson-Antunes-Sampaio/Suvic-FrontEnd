@@ -1,6 +1,7 @@
-import 'dart:ffi';
+
 
 import 'package:covid_19/common/my_header_widget.dart';
+import 'package:covid_19/controllers/user_controller.dart';
 import 'package:covid_19/routes/app_page.dart';
 import 'package:covid_19/screens/login/componets/input_text_field.dart';
 import 'package:covid_19/screens/login/componets/label_text.dart';
@@ -12,6 +13,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
+
+  TextEditingController email = TextEditingController();
+  TextEditingController pass = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,8 +72,11 @@ class LoginScreen extends StatelessWidget {
                       height: 46,
                       width: 160,
                       child: RaisedButton(
-                        onPressed: () {
-                          Get.toNamed(Routes.BASE);
+                        onPressed: () async{
+                          final UserController userController = UserController();
+                          await userController.loginIn("jack@user.com", "123456789");
+
+                          //Get.toNamed(Routes.BASE);
                         },
                         child: Text(
                           "ENTRAR",

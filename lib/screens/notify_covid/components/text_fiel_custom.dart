@@ -5,10 +5,10 @@ class TextFieldCustom extends StatelessWidget {
 
   TextFieldCustom({this.iconData, this.labelText, this.hintText, this.textInputType});
 
-  final IconData iconData;
-  final String labelText;
-  final String hintText;
-  final TextInputType textInputType;
+  final IconData? iconData;
+  final String? labelText;
+  final String? hintText;
+  final TextInputType? textInputType;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class TextFieldCustom extends StatelessWidget {
         Expanded(
           child: TextFormField(
             validator: (text){
-              if(text.isEmpty){
+              if(text!.isEmpty){
                 return 'Campo Vazio';
               }else{
                 return null;

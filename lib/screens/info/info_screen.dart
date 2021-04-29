@@ -160,11 +160,11 @@ class _InfoScreenState extends State<InfoScreen> {
 }
 
 class PreventCard extends StatelessWidget {
-  final String image;
-  final String title;
-  final String text;
+  final String? image;
+  final String? title;
+  final String? text;
   const PreventCard({
-    Key key,
+    Key? key,
     this.image,
     this.title,
     this.text,
@@ -194,7 +194,7 @@ class PreventCard extends StatelessWidget {
                 ],
               ),
             ),
-            Image.asset(image),
+            Image.asset(image!),
             Positioned(
               left: 130,
               child: Container(
@@ -206,14 +206,14 @@ class PreventCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      title,
+                      title!,
                       style: kTitleTextstyle.copyWith(
                         fontSize: 16,
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        text,
+                        text!,
                         maxLines: 4,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -237,11 +237,11 @@ class PreventCard extends StatelessWidget {
 }
 
 class SymptomCard extends StatelessWidget {
-  final String image;
-  final String title;
+  final String? image;
+  final String? title;
   final bool isActive;
   const SymptomCard({
-    Key key,
+    Key? key,
     this.image,
     this.title,
     this.isActive = false,
@@ -270,9 +270,9 @@ class SymptomCard extends StatelessWidget {
       ),
       child: Column(
         children: <Widget>[
-          Image.asset(image, height: 90),
+          Image.asset(image!, height: 90),
           Text(
-            title,
+            title!,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ],

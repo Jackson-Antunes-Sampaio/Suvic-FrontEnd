@@ -7,7 +7,7 @@ class ButtonCustom extends StatelessWidget {
   final IconData icon;
   final Color color;
 
-  ButtonCustom({@required this.text, @required this.navigation, @required this.icon, @required this.color});
+  ButtonCustom({required this.text, required this.navigation, required this.icon, required this.color});
 
   @override
   Widget build(BuildContext context) {

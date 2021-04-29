@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 class VaccineItem extends StatelessWidget {
   VaccineItem({this.title, this.quantity, this.date, this.desc, this.local, this.city});
 
-  final String title;
-  final String quantity;
-  final String date;
-  final String desc;
-  final String local;
-  final String city;
+  final String? title;
+  final String? quantity;
+  final String? date;
+  final String? desc;
+  final String? local;
+  final String? city;
 
   @override
   Widget build(BuildContext context) {

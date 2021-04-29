@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class CustomCarouselSlider extends StatelessWidget {
-  CustomCarouselSlider({@required this.itemsString, @required this.itemsImage});
+  CustomCarouselSlider({required this.itemsString, required this.itemsImage});
 
   final List<String> itemsString;
   final List<String> itemsImage;

@@ -19,7 +19,7 @@ class _BottomNavigationBarNewState extends State<BottomNavigationBarNew> {
 
         decoration: BoxDecoration(
           color: Colors.white,
-          border: Border.all(color: Colors.grey[100]),
+          border: Border.all(color: Colors.grey[100]!),
         ),
         child: SalomonBottomBar(
           currentIndex:  _currentIndex.value,

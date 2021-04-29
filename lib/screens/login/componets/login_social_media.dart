@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class LoginSocialMediaBtn extends StatelessWidget {
 
-  LoginSocialMediaBtn({@required this.icon, @required this.color});
+  LoginSocialMediaBtn({required this.icon, required this.color});
 
   final IconData icon;
   final Color color;

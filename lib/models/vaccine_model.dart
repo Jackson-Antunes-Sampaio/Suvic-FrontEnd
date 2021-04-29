@@ -1,5 +1,5 @@
 class VaccineModel {
-  String name;
+  String? name;
 
   VaccineModel({this.name});
 
