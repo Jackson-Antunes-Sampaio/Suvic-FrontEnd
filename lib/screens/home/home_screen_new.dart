@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:covid_19/common/my_header_widget.dart';
-import 'package:covid_19/utils/styles/style.dart';
 import 'package:flutter/material.dart';
 import 'components/custom_carrousel_slider.dart';
 
@@ -10,6 +9,7 @@ class HomeScreenNew extends StatefulWidget {
 }
 
 class _HomeScreenNewState extends State<HomeScreenNew> {
+
   final controller = ScrollController();
   double offset = 0;
 
@@ -28,6 +28,7 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
     controller.dispose();
     super.dispose();
   }
+
 
   void onScroll() {
     setState(() {

@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 
 
 
+
 class SplashScreenApp extends StatelessWidget {
 
   SplashScreenApp(){
@@ -17,7 +18,7 @@ class SplashScreenApp extends StatelessWidget {
 
   void userLogged()async {
     await Future.delayed(Duration(seconds: 5));
-    Get.toNamed(Routes.BASE);
+    Get.toNamed(Routes.LOGIN);
   }
 
   @override

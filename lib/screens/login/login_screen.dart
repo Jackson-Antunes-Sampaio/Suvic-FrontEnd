@@ -1,5 +1,7 @@
 
 
+import 'dart:io';
+
 import 'package:covid_19/common/my_header_widget.dart';
 import 'package:covid_19/controllers/user_controller.dart';
 import 'package:covid_19/routes/app_page.dart';
@@ -11,6 +13,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+
+
 
 class LoginScreen extends StatelessWidget {
 
@@ -74,9 +78,24 @@ class LoginScreen extends StatelessWidget {
                       child: RaisedButton(
                         onPressed: () async{
                           final UserController userController = UserController();
-                          await userController.loginIn("jack@user.com", "123456789");
+                          //await userController.loginIn("jack@user.com", "123456789");
+                          Get.toNamed(Routes.BASE);
 
-                          //Get.toNamed(Routes.BASE);
+
+
+
+
+
+
+
+                          // client.getUrl(Uri.parse("http://3.140.194.155:3000/"))
+                          //     .then((HttpClientRequest request) {
+                          //   return request.close();
+                          // })
+                          //     .then((HttpClientResponse response) {
+                          //     print(response.statusCode);
+                          // });
+                          //print("aquiii");
                         },
                         child: Text(
                           "ENTRAR",
