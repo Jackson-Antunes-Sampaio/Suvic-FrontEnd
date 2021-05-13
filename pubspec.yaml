@@ -32,7 +32,11 @@ dependencies:
   carousel_slider: ^4.0.0-nullsafety.0
   salomon_bottom_bar: ^3.0.0
   webview_flutter: ^2.0.4
-  http: ^0.13.2
+  flutter_credit_card: ^2.0.0
+  brasil_fields: ^1.1.2
+  credit_card_type_detector: ^2.0.0-nullsafety.0
+  mask_text_input_formatter: ^2.0.0-nullsafety.2
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

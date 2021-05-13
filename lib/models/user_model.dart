@@ -1,17 +1,36 @@
 class UserModel {
-  final int? id;
-  final String? name;
-  final String? email;
-  final String? password;
+  int? id;
+  String? name;
+  String? email;
+  String? password;
+  String? createdAt;
+  String? updatedAt;
 
-  UserModel({this.id, this.name, this.email, this.password});
+  UserModel(
+      {this.id,
+        this.name,
+        this.email,
+        this.password,
+        this.createdAt,
+        this.updatedAt});
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-      id: json["id"],
-      name: json["name"],
-      email: json["email"],
-      password: json["password"]);
+  UserModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    email = json['email'];
+    password = json['password'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+  }
 
-  Map<String, dynamic> toJson() =>
-      {"id": id, "name": name, "email": email, "password": password};
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['email'] = this.email;
+    data['password'] = this.password;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    return data;
+  }
 }

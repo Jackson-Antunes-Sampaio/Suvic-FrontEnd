@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 
 
 class CustomDio{
+
   Dio? _dio;
   CustomDio(){
     _dio=Dio();
@@ -12,7 +13,7 @@ class CustomDio{
   //   _dio!.interceptors.add(InterceptorsWrapper(onRequest: _onRequest, onResponse: _onResponse, onError: _onError));
   // }
   //
-  // Dio? get instance => _dio;
+   Dio? get instance => _dio;
   //
   // void _onRequest(RequestOptions options, RequestInterceptorHandler handler)async{
   //   final storage = FlutterSecureStorage();

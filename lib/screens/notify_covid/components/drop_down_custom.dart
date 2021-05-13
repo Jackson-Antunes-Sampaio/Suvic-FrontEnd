@@ -46,7 +46,7 @@ class DropDownCustom extends StatelessWidget {
                           ),
                           child: DropdownButton<String>(
                             isExpanded: true,
-                            menuMaxHeight: 1000,
+                            //menuMaxHeight: 1000,
                             itemHeight: 50,
                             onChanged: (newValue) {
                               notifyCovidController.selectUf.value = newValue!;

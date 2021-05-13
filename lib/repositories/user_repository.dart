@@ -10,19 +10,21 @@ class UserRepository {
 
 
   Future<String> loginUser(String email, String pass) async {
-    try {
-      //Dio dio = CustomDio().instance;
-      Dio dio = Dio();
+     try {
+      Dio? dio = CustomDio().instance;
+      //Dio dio = Dio();
 
-      print(API_URL + "login");
-      final response = await dio.post(API_URL + "login", data: {
+      final response = await dio?.post(API_URL + "login",
+          data: {
         "email" : email,
         "password" : pass,
-      });
+      },
+        options: Options(followRedirects: false, validateStatus: (status) { return status! < 500; })
+      );
 
-      print("aqui");
+      print("${response?.statusCode}");
 
-      if (response.statusCode == 200) {
+      if (response?.statusCode == 200) {
         return "Ok";
       } else {
         return "Error";
@@ -30,6 +32,21 @@ class UserRepository {
     } catch (e) {
       return "Error 2";
     }
+  }
+
+  Future<void> loginGetDate()async{
+    Dio? dio = CustomDio().instance;
+
+    final response = await dio?.get(API_URL,
+        options: Options(
+
+            followRedirects: false,
+            validateStatus: (status) { return status! < 500; }
+            )
+    );
+    print("Reponse.data: ${response?.statusCode}");
+
+    //return UserModel.fromJson(response?.data);
   }
 
   // Future<UserModel> newPass(String email, String pass, String newPass) async {
