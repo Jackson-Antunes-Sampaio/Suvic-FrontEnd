@@ -2,12 +2,10 @@ import 'dart:ui';
 
 import 'package:covid_19/common/botton_navigation_bar/bottom_navigation_bar_new.dart';
 import 'package:covid_19/models/page_manager.dart';
-import 'package:covid_19/screens/stock/pages/agendament.dart';
+import 'package:covid_19/screens/stock/elements/chart.dart';
 import 'package:covid_19/utils/styles/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../elements/chart.dart';
 
 // ignore: must_be_immutable
 class StockVacina extends StatelessWidget {
@@ -53,9 +51,7 @@ class StockVacina extends StatelessWidget {
                         ),
                       ),
                       child: ListTile(
-                        onTap: () {
-                          Get.to(Agendament());
-                        },
+                        onTap: () {},
                         minVerticalPadding: 0,
                         leading: Icon(
                           Icons.medical_services,

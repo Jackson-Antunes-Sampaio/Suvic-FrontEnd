@@ -1,8 +1,6 @@
 import 'package:covid_19/common/botton_navigation_bar/bottom_navigation_bar_new.dart';
 import 'package:covid_19/models/page_manager.dart';
-import 'package:covid_19/screens/stock/elements/autocomplete_time.dart';
 import 'package:covid_19/screens/stock/elements/herder_container_vacina.dart';
-import 'package:covid_19/utils/styles/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 

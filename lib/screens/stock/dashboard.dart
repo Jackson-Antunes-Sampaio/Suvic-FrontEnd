@@ -1,8 +1,8 @@
 import 'package:covid_19/common/botton_navigation_bar/bottom_navigation_bar_new.dart';
 import 'package:covid_19/models/page_manager.dart';
+import 'package:covid_19/screens/stock/addStock.dart';
 import 'package:covid_19/screens/stock/elements/dashboard_chart.dart';
-import 'package:covid_19/screens/stock/pages/addStock.dart';
-import 'package:covid_19/screens/stock/pages/stock.dart';
+import 'package:covid_19/screens/stock/stock.dart';
 import 'package:covid_19/utils/styles/style.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
