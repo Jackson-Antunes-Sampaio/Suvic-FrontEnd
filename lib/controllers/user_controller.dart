@@ -4,17 +4,20 @@ import 'package:get/get.dart';
 
 class UserController extends GetxController {
   final UserRepository userRepository = UserRepository();
-  UserModel? userModel;
+  UserModel? user;
   RxString token = "".obs;
 
-  Future<void> loginIn(String email, String pass)async{
+  Future<String> loginIn(String email, String pass)async{
     final response = await userRepository.loginUser(email, pass);
-    print(response);
-    //await loginDate();
+    await loginDate();
+    return response;
+
   }
 
   Future<void> loginDate()async{
-    await userRepository.loginGetDate();
+    user = await userRepository.loginGetDate();
+
+    print("aqui $user");
   }
 
 

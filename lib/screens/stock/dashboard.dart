@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DashboardStock extends StatelessWidget {
-  PageController pageController = PageController();
-  PageManager pageManager = Get.put(PageManager());
+  final PageController pageController = PageController();
+  final PageManager pageManager = Get.put(PageManager());
   var _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -148,7 +148,7 @@ class DashboardStock extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBarNew(pageController),
+      bottomNavigationBar: BottomNavigationBarNew(),
     );
   }
 }

@@ -5,6 +5,8 @@ class UserModel {
   String? password;
   String? createdAt;
   String? updatedAt;
+  bool? permissionLevel;
+  String? clinicId;
 
   UserModel(
       {this.id,
@@ -12,7 +14,9 @@ class UserModel {
         this.email,
         this.password,
         this.createdAt,
-        this.updatedAt});
+        this.updatedAt,
+        this.permissionLevel,
+        this.clinicId});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -21,6 +25,8 @@ class UserModel {
     password = json['password'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
+    permissionLevel = json['permissionLevel'];
+    clinicId = json['clinicId'];
   }
 
   Map<String, dynamic> toJson() {
@@ -31,6 +37,13 @@ class UserModel {
     data['password'] = this.password;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
+    data['permissionLevel'] = this.permissionLevel;
+    data['clinicId'] = this.clinicId;
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'UserModel{id: $id, name: $name, email: $email, password: $password, createdAt: $createdAt, updatedAt: $updatedAt, permissionLevel: $permissionLevel, clinicId: $clinicId}';
   }
 }

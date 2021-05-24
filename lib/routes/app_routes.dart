@@ -10,5 +10,6 @@ abstract class Routes{
   static const NOTIFYCOVID = 'NotifyCovidScreen';
   static const BASE = 'BaseScreen';
   static const SUVIC = "WebViewSuvicScreen";
+  static const REGISTRATIONUSERS = 'RegistrationUsersScreen';
 
 }

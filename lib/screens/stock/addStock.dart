@@ -91,7 +91,7 @@ class _AddVacinaState extends State<AddVacina> {
                       child: TextFormField(
                         onTap: () {},
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.real_estate_agent),
+                          //prefixIcon: Icon(Icons.real_estate_agent),
                           labelText: 'Valor',
                           border: OutlineInputBorder(),
                         ),
@@ -112,7 +112,6 @@ class _AddVacinaState extends State<AddVacina> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBarNew(pageController),
     );
   }
 }

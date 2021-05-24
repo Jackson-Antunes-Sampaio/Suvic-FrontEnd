@@ -165,7 +165,7 @@ class StockVacina extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBarNew(pageController),
+      bottomNavigationBar: BottomNavigationBarNew(),
     );
   }
 }

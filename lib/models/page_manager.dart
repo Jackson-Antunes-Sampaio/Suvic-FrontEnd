@@ -3,4 +3,5 @@ import 'package:get/get.dart';
 
 class PageManager extends GetxController {
   final indexNavigation = 0.obs;
+  final PageController pageController = PageController();
 }

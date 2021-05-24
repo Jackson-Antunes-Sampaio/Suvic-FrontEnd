@@ -216,7 +216,7 @@ class _AgendamentState extends State<Agendament> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBarNew(pageController),
+      bottomNavigationBar: BottomNavigationBarNew(),
     );
   }
 }

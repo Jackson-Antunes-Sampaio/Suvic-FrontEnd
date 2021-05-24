@@ -3,6 +3,8 @@ import 'package:covid_19/models/page_manager.dart';
 import 'package:covid_19/screens/credit_card/credit_card_screen.dart';
 import 'package:covid_19/screens/home/home_screen_new.dart';
 import 'package:covid_19/screens/info/info_screen.dart';
+import 'package:covid_19/screens/menu/menu_screen.dart';
+import 'package:covid_19/screens/stock/addStock.dart';
 import 'package:covid_19/screens/vaccine_card/vaccine_card_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,9 +16,8 @@ class BaseScreen extends StatefulWidget {
 
 class _BaseScreenState extends State<BaseScreen> {
 
-  PageController pageController = PageController();
-  PageManager pageManager = Get.put(PageManager());
-  var _currentIndex = 0;
+  final PageManager pageManager = Get.put(PageManager());
+
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +27,13 @@ class _BaseScreenState extends State<BaseScreen> {
         // onPageChanged: (index){
         //   pageManager.setPage(index);
         // },
-        controller: pageController,
+        controller: pageManager.pageController,
         children: [
           HomeScreenNew(),
           VaccineCardScreen(),
-          InfoScreen(),
+          //InfoScreen(),
+          AddVacina(),
+          MenuScreen(),
           CreditCardScreen(),
           // Scaffold(
           //   body: Center(
@@ -39,7 +42,7 @@ class _BaseScreenState extends State<BaseScreen> {
           // ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBarNew(pageController),
+      bottomNavigationBar: BottomNavigationBarNew(),
       //bottomNavigationBar: CustomNavigationBar(pageController),
     );
   }

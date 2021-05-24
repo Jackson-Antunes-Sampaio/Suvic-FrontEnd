@@ -19,34 +19,32 @@ class UserRepository {
         "email" : email,
         "password" : pass,
       },
-        options: Options(followRedirects: false, validateStatus: (status) { return status! < 500; })
+       // options: Options(followRedirects: false, validateStatus: (status) { return status! < 500; })
       );
 
       print("${response?.statusCode}");
 
       if (response?.statusCode == 200) {
-        return "Ok";
+        return "Usuario Logado!";
       } else {
-        return "Error";
+        return "Email e/ou Senha incorreto";
       }
     } catch (e) {
-      return "Error 2";
+      return "Email e/ou Senha incorreto";
     }
   }
 
-  Future<void> loginGetDate()async{
+  Future<UserModel> loginGetDate()async{
     Dio? dio = CustomDio().instance;
 
-    final response = await dio?.get(API_URL,
-        options: Options(
+    final response = await dio?.get(API_URL + "users/",
 
-            followRedirects: false,
-            validateStatus: (status) { return status! < 500; }
-            )
     );
-    print("Reponse.data: ${response?.statusCode}");
+    print("StatusCode: ${response?.statusCode}");
 
-    //return UserModel.fromJson(response?.data);
+    print("${response!.data}");
+
+    return UserModel.fromJson(response.data);
   }
 
   // Future<UserModel> newPass(String email, String pass, String newPass) async {

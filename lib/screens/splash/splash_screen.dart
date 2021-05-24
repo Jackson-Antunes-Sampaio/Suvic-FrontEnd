@@ -18,7 +18,7 @@ class SplashScreenApp extends StatelessWidget {
 
   void userLogged()async {
     await Future.delayed(Duration(seconds: 5));
-    Get.toNamed(Routes.LOGIN);
+    Get.offNamed(Routes.LOGIN);
   }
 
   @override

@@ -35,6 +35,7 @@ dependencies:
   brasil_fields: ^1.1.2
   credit_card_type_detector: ^2.0.0-nullsafety.0
   mask_text_input_formatter: ^2.0.0-nullsafety.2
+  dio_cookie_manager: ^2.0.0
 
 
   # The following adds the Cupertino Icons font to your application.

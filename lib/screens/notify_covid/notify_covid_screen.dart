@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
 
-import 'components/text_fiel_custom.dart';
+import '../../common/text_fiel_custom.dart';
 
 class NotifyCovidScreen extends StatefulWidget {
   @override

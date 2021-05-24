@@ -1,9 +1,15 @@
+import 'dart:io';
+
 import 'package:covid_19/common/my_header_widget.dart';
+import 'package:covid_19/controllers/user_controller.dart';
 import 'package:covid_19/routes/app_page.dart';
 import 'package:covid_19/screens/login/componets/input_text_field.dart';
 import 'package:covid_19/screens/login/componets/label_text.dart';
 import 'package:covid_19/screens/login/componets/login_social_media.dart';
+import 'package:covid_19/utils/dio/custom_dio.dart';
 import 'package:covid_19/utils/styles/style.dart';
+import 'package:dio/adapter.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,8 +18,10 @@ import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
 
-  TextEditingController email = TextEditingController();
-  TextEditingController pass = TextEditingController();
+  final TextEditingController email = TextEditingController();
+  final TextEditingController pass = TextEditingController();
+  final UserController userController = Get.put(UserController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,9 +79,37 @@ class LoginScreen extends StatelessWidget {
                       width: 160,
                       child: RaisedButton(
                         onPressed: () async{
-                          // final UserController userController = UserController();
-                          // await userController.loginIn("jack@user.com", "123456789");
-                          Get.toNamed(Routes.BASE);
+
+                           final String response = await userController.loginIn("jack@user.com", "123456");
+                           if(response == "Usuario Logado!"){
+                             Get.offNamed(Routes.BASE);
+                           }else{
+                             Get.snackbar("Falha ao Entrar", "$response", );
+                             final snackBar = SnackBar(
+                               content: Text('$response'),
+                               backgroundColor: Colors.red,
+                               // action: SnackBarAction(
+                               //   label: 'Undo',
+                               //   onPressed: () {
+                               //     // Some code to undo the change.
+                               //   },
+                               // ),
+                             );
+
+                             ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                           }
+
+
+                          
+                          // final response2 = await  dio.post(
+                          //   "https://ec2-18-231-166-223.sa-east-1.compute.amazonaws.com:8443/login/",
+                          //   data: {
+                          //     "email" : "jack@user.com",
+                          //     "password" : "123456",
+                          //   }
+                          // );
+                          // print("aqui ${response2.data}");
                         },
                         child: Text(
                           "ENTRAR",
