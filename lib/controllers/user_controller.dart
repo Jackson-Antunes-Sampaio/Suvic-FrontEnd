@@ -9,15 +9,21 @@ class UserController extends GetxController {
 
   Future<String> loginIn(String email, String pass)async{
     final response = await userRepository.loginUser(email, pass);
+
     await loginDate();
+
     return response;
 
   }
 
   Future<void> loginDate()async{
-    user = await userRepository.loginGetDate();
 
-    print("aqui $user");
+    try {
+      user = await userRepository.loginGetDate();
+      print("aqui $user");
+    }catch(e){
+      print(e);
+    }
   }
 
 

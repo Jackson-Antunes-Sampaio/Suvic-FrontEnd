@@ -3,6 +3,8 @@ import 'package:covid_19/utils/styles/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
+import 'bindings/app_bindings.dart';
+
 
 
 
@@ -24,6 +26,7 @@ class MyApp extends StatelessWidget {
           )),
       //home: HomePage(),
       initialRoute: AppPage.INITIAL,
+      initialBinding: AppBindings(),
       //initialBinding: AppBindings(),
       getPages: AppPage.routes,
     );

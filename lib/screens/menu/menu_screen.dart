@@ -1,9 +1,13 @@
+import 'package:covid_19/controllers/user_controller.dart';
 import 'package:covid_19/routes/app_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 
 class MenuScreen extends StatelessWidget {
+
+  final UserController userController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,7 +16,7 @@ class MenuScreen extends StatelessWidget {
         child: Column(
           children: [
             Icon(Icons.person, size: 100,),
-            Text("Jackson Antunes Sampaio"),
+            Text("${userController.user!.email}"),
             Divider(),
             ListTile(
               leading: Icon(Icons.person_add_alt_1),
