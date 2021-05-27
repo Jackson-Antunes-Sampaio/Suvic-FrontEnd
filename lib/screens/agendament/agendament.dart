@@ -2,6 +2,7 @@ import 'package:covid_19/common/botton_navigation_bar/bottom_navigation_bar_new.
 import 'package:covid_19/models/page_manager.dart';
 import 'package:covid_19/screens/agendament/elements/autocomplete_time.dart';
 import 'package:covid_19/screens/agendament/elements/autocomplete_vaccine.dart';
+import 'package:covid_19/screens/agendament/elements/googleMaps.dart';
 import 'package:covid_19/utils/styles/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,8 +32,6 @@ class _AgendamentState extends State<Agendament> {
 
   @override
   Widget build(BuildContext context) {
-    PageController pageController = PageController();
-    PageManager pageManager = Get.put(PageManager());
     return Scaffold(
       body: Container(
         padding: EdgeInsets.only(bottom: 30),
@@ -44,14 +43,7 @@ class _AgendamentState extends State<Agendament> {
                 height: 250,
                 color: Colors.white,
                 child: Center(
-                  child: Text(
-                    'Google Maps',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: kPrimaryColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  child: GoogleMapAgendament(),
                 ),
               ),
               Container(
