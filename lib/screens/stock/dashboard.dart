@@ -1,13 +1,14 @@
 import 'package:covid_19/common/botton_navigation_bar/bottom_navigation_bar_new.dart';
+import 'package:covid_19/controllers/stock_vacine_controller.dart';
 import 'package:covid_19/models/page_manager.dart';
 import 'package:covid_19/screens/stock/addStock.dart';
 import 'package:covid_19/screens/stock/elements/dashboard_chart.dart';
 import 'package:covid_19/screens/stock/stock.dart';
 import 'package:covid_19/utils/styles/style.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+// ignore: must_be_immutable
 class DashboardStock extends StatelessWidget {
   final PageController pageController = PageController();
   final PageManager pageManager = Get.put(PageManager());
@@ -48,20 +49,25 @@ class DashboardStock extends StatelessWidget {
                                         fontSize: 11,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.green),
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.all(10),
-                              child: Text(
-                                '10000K',
-                                style: TextStyle(
-                                  fontSize: 25,
-                                  color: kPrimaryColor,
-                                ),
+                              child: GetBuilder<StockVacineController>(
+                                init: StockVacineController(),
+                                builder: (controller) {
+                                  return Text(
+                                    controller.vaccines.length.toString(),
+                                    style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.green),
+                                  );
+                                },
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),

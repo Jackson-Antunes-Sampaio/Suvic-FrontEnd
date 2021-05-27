@@ -1,7 +1,6 @@
 part of '../routes/app_page.dart';
 
-abstract class Routes{
-
+abstract class Routes {
   static const HOME = 'HomeScreen';
   static const LOGIN = 'LoginScreen';
   static const SPLASHSCREENAPP = 'SplashScreenAppScreen';
@@ -12,4 +11,5 @@ abstract class Routes{
   static const SUVIC = "WebViewSuvicScreen";
   static const REGISTRATIONUSERS = 'RegistrationUsersScreen';
 
+  static const StockVacina = 'DashboardStock';
 }

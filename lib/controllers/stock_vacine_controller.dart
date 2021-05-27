@@ -4,14 +4,17 @@ import 'package:get/get.dart';
 
 class StockVacineController extends GetxController {
   var repository = StockVacineRepository();
-  List vaccines = [].obs;
+  List<StockVacineModel> vaccines = [];
 
   getAll() async {
-    vaccines.addAll(await repository.getAll());
+    await repository.getAllVacine();
+    //vaccines.addAll(await repository.getAll());
+    update();
   }
 
   insert(StockVacineModel vaccine) async {
     await repository.insert(vaccine);
     vaccines.add(vaccine);
+    update();
   }
 }

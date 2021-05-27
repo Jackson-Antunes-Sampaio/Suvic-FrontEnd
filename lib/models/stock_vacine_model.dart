@@ -1,20 +1,20 @@
 class StockVacineModel {
   final int? id;
-  final String? idClinica;
-  final String? name;
-  final int? lote;
-  final String? dataValidade;
-  final int? quantidade;
-  final double? valor;
+  final String idClinica;
+  final String name;
+  final int lote;
+  final String dataValidade;
+  final int quantidade;
+  final double valor;
 
   StockVacineModel({
     this.id,
-    this.idClinica,
-    this.name,
-    this.lote,
-    this.dataValidade,
-    this.quantidade,
-    this.valor,
+    required this.idClinica,
+    required this.name,
+    required this.lote,
+    required this.dataValidade,
+    required this.quantidade,
+    required this.valor,
   });
 
   factory StockVacineModel.fromJson(Map<String, dynamic> json) =>
