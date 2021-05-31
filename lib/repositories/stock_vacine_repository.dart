@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class StockVacineRepository {
-  final String service = 'clinic /storage';
+  final String service = 'clinic/storage';
 
   getAllVacine() async {
     try {
