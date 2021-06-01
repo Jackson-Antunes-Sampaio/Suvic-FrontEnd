@@ -1,4 +1,7 @@
 import 'package:covid_19/common/botton_navigation_bar/bottom_navigation_bar_new.dart';
+import 'package:covid_19/common/button_custom.dart';
+import 'package:covid_19/common/my_header_widget.dart';
+import 'package:covid_19/common/text_fiel_custom.dart';
 import 'package:covid_19/models/page_manager.dart';
 import 'package:covid_19/screens/stock/elements/herder_container_vacina.dart';
 import 'package:flutter/material.dart';
@@ -38,73 +41,61 @@ class _AddVacinaState extends State<AddVacina> {
           padding: EdgeInsets.only(bottom: 30),
           child: Column(
             children: <Widget>[
-              HeaderContainerVacina("Adicionar Vacina"),
+              MyHeader(
+                image: "assets/images/2vacine.png",
+                textTop: "Adicionar Vacina",
+                textBottom: "",
+                offset: 0,
+              ),
               Container(
                 margin: EdgeInsets.only(left: 20, right: 20),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 14, bottom: 12),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.medical_services),
-                          labelText: 'Vacina',
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
+                    TextFieldCustom(
+                      validator: (text){},
+                      textInputType: TextInputType.text,
+                      labelText: "Vacina",
+                      hintText: "Vacina",
+                      iconData: Icons.medical_services,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.add_box),
-                          labelText: 'Lote',
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
+                    SizedBox(height: 10,),
+                    TextFieldCustom(
+                      validator: (text){},
+                      textInputType: TextInputType.text,
+                      labelText: "Lote",
+                      hintText: "Lote",
+                      iconData: Icons.add_box,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: TextFormField(
-                        onTap: _selectDate,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.calendar_today),
-                          labelText: 'Data de Validade',
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
+                    SizedBox(height: 10,),
+                    TextFieldCustom(
+                      validator: (text){},
+                      textInputType: TextInputType.text,
+                      labelText: "Data de Validade",
+                      hintText: "Data de Validade",
+                      iconData: Icons.calendar_today,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: TextFormField(
-                        onTap: () {},
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.plus_one),
-                          labelText: 'Quantidade',
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
+                    SizedBox(height: 10,),
+                    TextFieldCustom(
+                      validator: (text){},
+                      textInputType: TextInputType.text,
+                      labelText: "Quantidade",
+                      hintText: "Quantidade",
+                      iconData: Icons.plus_one,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: TextFormField(
-                        onTap: () {},
-                        decoration: InputDecoration(
-                          //prefixIcon: Icon(Icons.real_estate_agent),
-                          labelText: 'Valor',
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
+                    SizedBox(height: 10,),
+                    TextFieldCustom(
+                      validator: (text){},
+                      textInputType: TextInputType.text,
+                      labelText: "Valor",
+                      hintText: "Valor",
+                      iconData: Icons.attach_money,
                     ),
-                    Container(
-                      width: double.maxFinite,
-                      child: ElevatedButton.icon(
-                        onPressed: () {},
-                        icon: Icon(Icons.add),
-                        label: Text('Adicionar'),
-                      ),
-                    )
+                    SizedBox(height: 10,),
+                    ButtonCustom(
+                        onPressed: (){},
+                        title: "Adicionar"),
+
                   ],
                 ),
               )

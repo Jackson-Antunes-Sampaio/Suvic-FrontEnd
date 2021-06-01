@@ -148,7 +148,6 @@ class DashboardStock extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBarNew(),
     );
   }
 }
