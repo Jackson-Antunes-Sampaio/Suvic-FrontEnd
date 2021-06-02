@@ -6,6 +6,10 @@ class StockVacineController extends GetxController {
   var repository = StockVacineRepository();
   List<StockVacineModel> vaccines = [];
 
+  StockVacineController() {
+    getAll();
+  }
+
   getAll() async {
     await repository.getAllVacine();
     //vaccines.addAll(await repository.getAll());

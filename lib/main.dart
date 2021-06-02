@@ -20,12 +20,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Suvic',
       theme: ThemeData(
-          scaffoldBackgroundColor: kBackgroundColor,
-          //scaffoldBackgroundColor: const Color.fromARGB(255,241,241,255),
-          fontFamily: "Poppins",
-          textTheme: TextTheme(
-            body1: TextStyle(color: kBodyTextColor),
-          )),
+        scaffoldBackgroundColor: kBackgroundColor,
+        //scaffoldBackgroundColor: const Color.fromARGB(255,241,241,255),
+        fontFamily: "Poppins",
+        textTheme: TextTheme(
+          body1: TextStyle(color: kBodyTextColor),
+        ),
+      ),
       //home: HomePage(),
       initialRoute: AppPage.INITIAL,
       initialBinding: AppBindings(),

@@ -1,5 +1,6 @@
 import 'package:covid_19/controllers/user_controller.dart';
 import 'package:covid_19/routes/app_page.dart';
+import 'package:covid_19/screens/agendament/agendament.dart';
 import 'package:covid_19/screens/stock/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,7 +19,8 @@ class MenuScreen extends StatelessWidget {
               Icons.person,
               size: 100,
             ),
-            Text("${userController.user!.email}"),
+            // Text("${userController.user!.email}"),
+            Text("Email"),
             Divider(),
             ListTile(
               leading: Icon(Icons.person_add_alt_1),
