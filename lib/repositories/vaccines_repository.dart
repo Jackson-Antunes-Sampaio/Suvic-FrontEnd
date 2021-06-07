@@ -1,5 +1,3 @@
-import 'package:covid_19/models/vaccine_model.dart';
-import 'package:covid_19/models/vacine_card_model.dart';
 import 'package:covid_19/utils/constants.dart';
 import 'package:covid_19/utils/dio/custom_dio.dart';
 import 'package:dio/dio.dart';
@@ -8,7 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class VaccineRepository {
   final String service = 'vaccines/';
 
-  Future<VaccineModel> vaccines() async {
+  Future<List<String>> getaAll() async {
     try {
       Dio? dio = CustomDio().instance;
 
@@ -19,11 +17,13 @@ class VaccineRepository {
       dio!.options.headers["Cookie"] = token;
       final response = await dio.get(API_URL + service);
 
-      if (response.statusCode == 200) {
-        return VaccineModel.fromJson(response.data);
-      } else {
-        return VaccineModel();
-      }
+      List<String> vacines = [];
+
+      response.data.forEach((element) {
+        vacines.add(element['name']);
+      });
+
+      return vacines;
     } catch (e) {
       print(e);
       return Future.error("error");

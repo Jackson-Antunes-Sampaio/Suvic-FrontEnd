@@ -26,6 +26,19 @@ class StockVacineRepository {
 
       print("${response.data}");
 
+      List<StockVacineModel> res = [];
+
+      response.data.forEach((element) {
+        // print(element);
+        res.add(StockVacineModel(
+            name: element['vaccine'].toString(),
+            lote: int.parse(element['batch']),
+            dataValidade: element['expirationdate'],
+            quantidade: element['count'],
+            valor: 0));
+      });
+
+      return res;
       //return StockVacineModel.fromJson(response.data);
     } catch (e) {
       print(e);

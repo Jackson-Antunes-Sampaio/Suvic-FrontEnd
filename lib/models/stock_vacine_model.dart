@@ -1,6 +1,6 @@
 class StockVacineModel {
   final int? id;
-  final String idClinica;
+  final String? idClinica;
   final String name;
   final int lote;
   final String dataValidade;
@@ -9,7 +9,7 @@ class StockVacineModel {
 
   StockVacineModel({
     this.id,
-    required this.idClinica,
+    this.idClinica,
     required this.name,
     required this.lote,
     required this.dataValidade,

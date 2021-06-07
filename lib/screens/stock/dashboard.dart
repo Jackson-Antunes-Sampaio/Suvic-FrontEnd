@@ -1,5 +1,6 @@
 import 'package:covid_19/common/botton_navigation_bar/bottom_navigation_bar_new.dart';
 import 'package:covid_19/controllers/stock_vacine_controller.dart';
+import 'package:covid_19/controllers/vaccine_controller.dart';
 import 'package:covid_19/models/page_manager.dart';
 import 'package:covid_19/screens/stock/addStock.dart';
 import 'package:covid_19/screens/stock/elements/dashboard_chart.dart';
@@ -60,6 +61,7 @@ class DashboardStock extends StatelessWidget {
                                 builder: (controller) {
                                   return Text(
                                     controller.vaccines.length.toString(),
+                                    // controller.vacines.length.toString(),
                                     style: TextStyle(
                                         fontSize: 11,
                                         fontWeight: FontWeight.bold,
@@ -93,7 +95,7 @@ class DashboardStock extends StatelessWidget {
                                     size: 20,
                                   ),
                                   Text(
-                                    'Saida de Vacinas',
+                                    'Agendamentos',
                                     style: TextStyle(
                                         fontSize: 11,
                                         fontWeight: FontWeight.bold,

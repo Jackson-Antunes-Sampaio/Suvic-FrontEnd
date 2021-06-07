@@ -1,6 +1,7 @@
 import 'package:covid_19/controllers/stock_vacine_controller.dart';
 import 'package:covid_19/models/page_manager.dart';
 import 'package:covid_19/models/stock_vacine_model.dart';
+import 'package:covid_19/screens/stock/autocomplete/textFormField.dart';
 import 'package:covid_19/screens/stock/elements/herder_container_vacina.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
@@ -63,20 +64,7 @@ class _AddVacinaState extends State<AddVacina> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 14, bottom: 12),
-                        child: TextFormField(
-                          controller: vacineName,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.medical_services),
-                            labelText: 'Vacina',
-                            border: OutlineInputBorder(),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Este é um campo obrigatório';
-                            }
-                            return null;
-                          },
-                        ),
+                        child: autocompleVaccines(context, vacineName),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10),
