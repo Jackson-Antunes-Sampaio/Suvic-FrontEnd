@@ -11,13 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
-import 'components/input_text_field.dart';
-import 'components/label_text.dart';
-import 'components/login_social_media.dart';
-
-
 class LoginScreen extends StatelessWidget {
-
   final TextEditingController email = TextEditingController();
   final TextEditingController pass = TextEditingController();
   final UserController userController = Get.put(UserController());
@@ -78,30 +72,31 @@ class LoginScreen extends StatelessWidget {
                       height: 46,
                       width: 160,
                       child: RaisedButton(
-                        onPressed: () async{
+                        onPressed: () async {
+                          final String response = await userController.loginIn(
+                              "user@email.co", "admin");
+                          if (response == "Usuario Logado!") {
+                            Get.offNamed(Routes.BASE);
+                          } else {
+                            Get.snackbar(
+                              "Falha ao Entrar",
+                              "$response",
+                            );
+                            final snackBar = SnackBar(
+                              content: Text('$response'),
+                              backgroundColor: Colors.red,
+                              // action: SnackBarAction(
+                              //   label: 'Undo',
+                              //   onPressed: () {
+                              //     // Some code to undo the change.
+                              //   },
+                              // ),
+                            );
 
-                           final String response = await userController.loginIn("jack@user.com", "123456");
-                           if(response == "Usuario Logado!"){
-                             Get.offNamed(Routes.BASE);
-                           }else{
-                             Get.snackbar("Falha ao Entrar", "$response", );
-                             final snackBar = SnackBar(
-                               content: Text('$response'),
-                               backgroundColor: Colors.red,
-                               // action: SnackBarAction(
-                               //   label: 'Undo',
-                               //   onPressed: () {
-                               //     // Some code to undo the change.
-                               //   },
-                               // ),
-                             );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          }
 
-                             ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-                           }
-
-
-                          
                           // final response2 = await  dio.post(
                           //   "https://ec2-18-231-166-223.sa-east-1.compute.amazonaws.com:8443/login/",
                           //   data: {
@@ -131,9 +126,10 @@ class LoginScreen extends StatelessWidget {
                     child: Text(
                       "Ou",
                       style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black54,),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black54,
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -147,12 +143,16 @@ class LoginScreen extends StatelessWidget {
                         icon: FontAwesomeIcons.facebookF,
                         color: facebookColor,
                       ),
-                      SizedBox(width: 16,),
+                      SizedBox(
+                        width: 16,
+                      ),
                       LoginSocialMediaBtn(
                         icon: FontAwesomeIcons.google,
                         color: googleColor,
                       ),
-                      SizedBox(width: 16,),
+                      SizedBox(
+                        width: 16,
+                      ),
                       LoginSocialMediaBtn(
                         icon: FontAwesomeIcons.twitter,
                         color: twitterColor,
@@ -185,5 +185,4 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
-
 }

@@ -1,13 +1,12 @@
 import 'package:covid_19/controllers/user_controller.dart';
 import 'package:covid_19/models/user_model.dart';
 import 'package:covid_19/routes/app_page.dart';
+
 import 'package:covid_19/screens/menu/components/header_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class MenuScreen extends StatelessWidget {
-
   final UserController userController = Get.find();
 
   @override
@@ -50,6 +49,7 @@ class MenuScreen extends StatelessWidget {
             ),
           )
         ],
+
       ),
     );
   }
