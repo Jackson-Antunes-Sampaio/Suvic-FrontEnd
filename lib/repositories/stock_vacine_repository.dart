@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class StockVacineRepository {
-  final String service = 'clinic /storage';
+  final String service = 'clinics/storage/list';
 
   getAllVacine() async {
     try {
@@ -14,14 +14,34 @@ class StockVacineRepository {
       final storage = FlutterSecureStorage();
 
       final token = await storage.read(key: "cookie");
+
+      print(token);
+
+      // print('Tock:' + token!);
       dio!.options.headers["Cookie"] = token;
       final response = await dio.get(API_URL + service);
 
-      print("aqui vacine");
+      // print("aqui vacine");
       print("StatusCode: ${response.statusCode}");
 
       print("${response.data}");
 
+      List<StockVacineModel> res = [];
+
+      response.data.forEach((element) {
+        // print(element);
+        res.add(
+          StockVacineModel(
+            name: element['vaccine'].toString(),
+            lote: int.parse(element['batch']),
+            dataValidade: element['expirationdate'],
+            quantidade: element['count'],
+            valor: 0,
+          ),
+        );
+      });
+
+      return res;
       //return StockVacineModel.fromJson(response.data);
     } catch (e) {
       print(e);
@@ -37,12 +57,13 @@ class StockVacineRepository {
 
       final token = await storage.read(key: "cookie");
       dio!.options.headers["Cookie"] = token;
-      final response = await dio.post(API_URL + service, data: {
+
+      final response = await dio.post(API_URL + 'clinics/storage', data: {
         'batch': stockvacine.lote.toString(),
         'expirationdate': stockvacine.dataValidade,
         'count': stockvacine.quantidade,
         'reserved': 0,
-        'vaccine': stockvacine.toJson()
+        'vaccine': stockvacine.name
       });
 
       if (response.statusCode == 200) {
@@ -51,7 +72,7 @@ class StockVacineRepository {
         print('Error code ${response.statusCode}');
       }
     } catch (e) {
-      print('Error Insert');
+      print('Error Insert $e');
     }
   }
 }

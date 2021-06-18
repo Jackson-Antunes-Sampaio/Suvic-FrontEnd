@@ -1,8 +1,7 @@
 class AgendamentModel {
   final int? id;
   final String? idClinica;
-  final String? userId;
-  final String? idVaccine;
+  final String? vaccine;
   final String? data;
   final String? time;
   final String? cardRegistered;
@@ -10,8 +9,7 @@ class AgendamentModel {
   AgendamentModel({
     this.id,
     this.idClinica,
-    this.userId,
-    this.idVaccine,
+    this.vaccine,
     this.data,
     this.time,
     this.cardRegistered,
@@ -21,8 +19,7 @@ class AgendamentModel {
       AgendamentModel(
         id: json['id'],
         idClinica: json['idClinica'],
-        userId: json['userId'],
-        idVaccine: json['idVaccine'],
+        vaccine: json['idVaccine'],
         data: json['data'],
         time: json['time'],
         cardRegistered: json['cardRegistered'],
@@ -31,8 +28,7 @@ class AgendamentModel {
   Map<String, dynamic> toJson() => {
         "id": id,
         "idClinica": idClinica,
-        "userId": userId,
-        "idVaccine": idVaccine,
+        "idVaccine": vaccine,
         "data": data,
         "time": time,
         "cardRegistered": cardRegistered,
