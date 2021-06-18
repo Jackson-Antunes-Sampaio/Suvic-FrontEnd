@@ -1,4 +1,5 @@
 import 'package:another_flushbar/flushbar.dart';
+import 'package:covid_19/controllers/user_controller.dart';
 import 'package:covid_19/routes/app_page.dart';
 import 'package:covid_19/screens/home/home_screen.dart';
 import 'package:covid_19/screens/login/login_screen.dart';
@@ -12,13 +13,22 @@ import 'package:get/get.dart';
 
 class SplashScreenApp extends StatelessWidget {
 
+  final UserController userController = Get.find();
+
   SplashScreenApp(){
     userLogged();
   }
 
   void userLogged()async {
-    await Future.delayed(Duration(seconds: 5));
-    Get.offNamed(Routes.LOGIN);
+    await Future.delayed(Duration(seconds: 3));
+
+    await userController.loginDate();
+
+    if(userController.user?.email != null) {
+      Get.offNamed(Routes.BASE);
+    }else{
+       Get.offNamed(Routes.LOGIN);
+    }
   }
 
   @override

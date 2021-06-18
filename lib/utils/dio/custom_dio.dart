@@ -32,8 +32,8 @@ class CustomDio{
 
   void _onRequest(RequestOptions options, RequestInterceptorHandler handler)async{
     final storage = FlutterSecureStorage();
-    final token = await storage.read(key: "cookie");
-    print("$token");
+    final token = await storage.read(key: "token");
+
     options.headers["Cookie"] = token;
 
     //options.headers["x-access-token"] = token;

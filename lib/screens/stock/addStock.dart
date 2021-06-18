@@ -1,4 +1,9 @@
-import 'package:covid_19/controllers/stock_vacine_controller.dart';
+
+import 'package:covid_19/common/botton_navigation_bar/bottom_navigation_bar_new.dart';
+import 'package:covid_19/common/button_custom.dart';
+import 'package:covid_19/common/my_header_widget.dart';
+import 'package:covid_19/common/text_fiel_custom.dart';
+
 import 'package:covid_19/models/page_manager.dart';
 import 'package:covid_19/models/stock_vacine_model.dart';
 import 'package:covid_19/screens/stock/autocomplete/textFormField.dart';
@@ -54,101 +59,62 @@ class _AddVacinaState extends State<AddVacina> {
           padding: EdgeInsets.only(bottom: 30),
           child: Column(
             children: <Widget>[
-              HeaderContainerVacina("Adicionar Vacina"),
-              Form(
-                key: _formKey,
-                child: Container(
-                  margin: EdgeInsets.only(left: 20, right: 20),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 14, bottom: 12),
-                        child: autocompleVaccines(context, vacineName),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: TextFormField(
-                          controller: lote,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.add_box),
-                            labelText: 'Lote',
-                            border: OutlineInputBorder(),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Este é um campo obrigatório';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: TextFormField(
-                          controller: experationdate,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.calendar_today),
-                            labelText: 'Data de Validade',
-                            border: OutlineInputBorder(),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Este é um campo obrigatório';
-                            }
-                            return null;
-                          },
-                          keyboardType: TextInputType.datetime,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: TextFormField(
-                          controller: quantidade,
-                          onTap: () {},
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.plus_one),
-                            labelText: 'Quantidade',
-                            border: OutlineInputBorder(),
-                          ),
-                          keyboardType: TextInputType.number,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Este é um campo obrigatório';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: TextFormField(
-                          controller: valor,
-                          onTap: () {},
-                          decoration: InputDecoration(
-                            //prefixIcon: Icon(Icons.real_estate_agent),
-                            labelText: 'Valor',
-                            border: OutlineInputBorder(),
-                          ),
-                          keyboardType: TextInputType.number,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Este é um campo obrigatório';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      Container(
-                        width: double.maxFinite,
-                        child: ElevatedButton.icon(
-                          onPressed: () => addVacineInStock(),
-                          icon: Icon(Icons.add),
-                          label: Text('Adicionar'),
-                        ),
-                      )
-                    ],
-                  ),
+              MyHeader(
+                image: "assets/images/2vacine.png",
+                textTop: "Adicionar Vacina",
+                textBottom: "",
+                offset: 0,
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 20, right: 20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    TextFieldCustom(
+                      validator: (text){},
+                      textInputType: TextInputType.text,
+                      labelText: "Vacina",
+                      hintText: "Vacina",
+                      iconData: Icons.medical_services,
+                    ),
+                    SizedBox(height: 10,),
+                    TextFieldCustom(
+                      validator: (text){},
+                      textInputType: TextInputType.text,
+                      labelText: "Lote",
+                      hintText: "Lote",
+                      iconData: Icons.add_box,
+                    ),
+                    SizedBox(height: 10,),
+                    TextFieldCustom(
+                      validator: (text){},
+                      textInputType: TextInputType.text,
+                      labelText: "Data de Validade",
+                      hintText: "Data de Validade",
+                      iconData: Icons.calendar_today,
+                    ),
+                    SizedBox(height: 10,),
+                    TextFieldCustom(
+                      validator: (text){},
+                      textInputType: TextInputType.text,
+                      labelText: "Quantidade",
+                      hintText: "Quantidade",
+                      iconData: Icons.plus_one,
+                    ),
+                    SizedBox(height: 10,),
+                    TextFieldCustom(
+                      validator: (text){},
+                      textInputType: TextInputType.text,
+                      labelText: "Valor",
+                      hintText: "Valor",
+                      iconData: Icons.attach_money,
+                    ),
+                    SizedBox(height: 10,),
+                    ButtonCustom(
+                        onPressed: (){},
+                        title: "Adicionar"),
+
+                  ],
                 ),
               )
             ],

@@ -9,10 +9,7 @@ class UserRepository {
     try {
       Dio? dio = CustomDio().instance;
 
-      dio?.options.headers["X-Authorization"] = "Bearer Jackson";
-
-      final response = await dio?.post(
-        API_URL + "login",
+      final response = await dio?.post(API_URL + "login",
         data: {
           "email": email,
           "password": pass,
@@ -38,7 +35,7 @@ class UserRepository {
 
       if (response?.statusCode == 200) {
         final storage = FlutterSecureStorage();
-        await storage.write(key: "cookie", value: cookie);
+        await storage.write(key: "token", value: cookie);
 
         return "Usuario Logado!";
       } else {
@@ -51,56 +48,55 @@ class UserRepository {
     }
   }
 
-  Future<String> loginUser2(String email, String pass) async {
-    try {
-      Dio? dio = CustomDio().instance;
-      //Dio dio = Dio();
 
-      dio?.options.headers["X-Authorization"] = "Bearer Jackson";
 
-      final response = await dio?.post(
-        API_URL + "login",
-        data: {
-          "email": email,
-          "password": pass,
-        },
-        // options: Options(followRedirects: false, validateStatus: (status) { return status! < 500; })
-      );
 
-      print("message: ${response?.headers["set-cookie"]}");
-
-      var cookie = response?.headers["set-cookie"]![0];
-
-      if (response?.statusCode == 200) {
-        print(cookie.toString());
-        dio?.options.headers["Cookie"] = "$cookie";
-        final response = await dio?.get(
-          API_URL + "users/",
-        );
-        print("StatusCode: ${response?.statusCode}");
-
-        print("${response!.data}");
-
-        return "Usuario Logado!";
-      } else {
-        return "Email e/ou Senha incorreto";
-      }
-    } catch (e) {
-      return "Email e/ou Senha incorreto";
-    }
-  }
+  // Future<String> loginUser2(String email, String pass) async {
+  //    try {
+  //     Dio? dio = CustomDio().instance;
+  //     //Dio dio = Dio();
+  //
+  //     dio?.options.headers["X-Authorization"] = "Bearer Jackson";
+  //
+  //     final response = await dio?.post(API_URL + "login",
+  //         data: {
+  //       "email" : email,
+  //       "password" : pass,
+  //     },
+  //      // options: Options(followRedirects: false, validateStatus: (status) { return status! < 500; })
+  //     );
+  //
+  //     print("message: ${response?.headers["set-cookie"]}");
+  //
+  //     var cookie = response?.headers["set-cookie"]![0];
+  //
+  //     if (response?.statusCode == 200) {
+  //       print(cookie.toString());
+  //       dio?.options.headers["Cookie"] = "$cookie";
+  //       final response = await dio?.get(API_URL + "users/",);
+  //       print("StatusCode: ${response?.statusCode}");
+  //
+  //       print("${response!.data}");
+  //
+  //       return "Usuario Logado!";
+  //
+  //     } else {
+  //       return "Email e/ou Senha incorreto";
+  //     }
+  //   } catch (e) {
+  //     return "Email e/ou Senha incorreto";
+  //   }
+  // }
 
   Future<UserModel> loginGetDate() async {
     try {
       Dio? dio = CustomDio().instance;
 
       final storage = FlutterSecureStorage();
-
-      final token = await storage.read(key: "cookie");
+      final token = await storage.read(key: "token");
+      print(token);
       dio!.options.headers["Cookie"] = token;
       final response = await dio.get(API_URL + "users");
-      print("aqui");
-      print("StatusCode: ${response.statusCode}");
 
       print("${response.data}");
 

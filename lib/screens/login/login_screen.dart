@@ -1,11 +1,7 @@
-import 'dart:io';
 
 import 'package:covid_19/common/my_header_widget.dart';
 import 'package:covid_19/controllers/user_controller.dart';
 import 'package:covid_19/routes/app_page.dart';
-import 'package:covid_19/screens/login/componets/input_text_field.dart';
-import 'package:covid_19/screens/login/componets/label_text.dart';
-import 'package:covid_19/screens/login/componets/login_social_media.dart';
 import 'package:covid_19/utils/dio/custom_dio.dart';
 import 'package:covid_19/utils/styles/style.dart';
 import 'package:dio/adapter.dart';
