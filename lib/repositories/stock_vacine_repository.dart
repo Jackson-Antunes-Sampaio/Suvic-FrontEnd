@@ -30,12 +30,15 @@ class StockVacineRepository {
 
       response.data.forEach((element) {
         // print(element);
-        res.add(StockVacineModel(
+        res.add(
+          StockVacineModel(
             name: element['vaccine'].toString(),
             lote: int.parse(element['batch']),
             dataValidade: element['expirationdate'],
             quantidade: element['count'],
-            valor: 0));
+            valor: 0,
+          ),
+        );
       });
 
       return res;

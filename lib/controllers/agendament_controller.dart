@@ -6,6 +6,8 @@ class AgendamentController extends GetxController {
   var repository = AgendamentRepository();
   List agendaments = [].obs;
 
+  static AgendamentController get to => Get.find();
+
   getAll() async {
     agendaments.addAll(await repository.getAll());
   }
