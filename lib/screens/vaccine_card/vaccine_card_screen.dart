@@ -1,7 +1,9 @@
 import 'package:covid_19/common/icon_button_custom.dart';
 import 'package:covid_19/common/my_header_widget.dart';
+import 'package:covid_19/controllers/vaccines_controller.dart';
 import 'package:covid_19/screens/vaccine_card/components/vaccine_item.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class VaccineCardScreen extends StatefulWidget {
   @override
@@ -10,6 +12,7 @@ class VaccineCardScreen extends StatefulWidget {
 
 class _VaccineCardScreenState extends State<VaccineCardScreen> {
   final controller = ScrollController();
+  final VaccinesController vaccinesController = Get.put(VaccinesController());
   double offset = 0;
 
   @override
@@ -85,7 +88,7 @@ class _VaccineCardScreenState extends State<VaccineCardScreen> {
                       onPressed: () {},
                       child: Row(
                         children: [
-                          Text("2 Vacinas", style: TextStyle(fontSize: 11),),
+                          Text("2 Dependentes", style: TextStyle(fontSize: 11),),
                           Icon(Icons.arrow_drop_down)
                         ],
                       ),
@@ -95,20 +98,20 @@ class _VaccineCardScreenState extends State<VaccineCardScreen> {
                 ),
               ],
             ),
-            VaccineItem(
-              title: "Novo Coronavirus (2019) - COVID 19",
-              quantity: "1º dose",
-              date: "25/03/2020",
-              city: "São Paulo",
-              local: "Ubs Maria Tereza De Andrade"
-            ),
-            VaccineItem(
-                title: "Novo Coronavirus (2019) - COVID 19",
-                quantity: "2º dose",
-                date: "25/04/2020",
-                city: "São Paulo",
-                local: "Ubs Maria Tereza De Andrade"
-            ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: new NeverScrollableScrollPhysics(),
+              itemCount: vaccinesController.vaccinesCard.length,
+                itemBuilder: (build, index){
+                String date = vaccinesController.vaccinesCard[index].applicationDate!.split("-").last + "/" + vaccinesController.vaccinesCard[index].applicationDate!.split("-")[1] + "/" + vaccinesController.vaccinesCard[index].applicationDate!.split("-").first;
+                  return VaccineItem(
+                      title: "${vaccinesController.vaccinesCard[index].vaccine?.name}",
+                      quantity: "1º dose",
+                      date: "${date}",
+                      city: "São Paulo",
+                      local: "Ubs Maria Tereza De Andrade"
+                  );
+                })
           ],
         ),
       ),

@@ -45,6 +45,17 @@ class MenuScreen extends StatelessWidget {
                       Get.toNamed(Routes.NOTIFYCOVID);
                     },
                   ),
+                ),
+                Card(
+                  elevation: 4,
+                  child: ListTile(
+                    leading: Icon(Icons.credit_card_outlined),
+                    title: Text('Cartão de credito'),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: (){
+                      Get.toNamed(Routes.CREDITCARDS);
+                    },
+                  ),
                 )
               ],
             ),
