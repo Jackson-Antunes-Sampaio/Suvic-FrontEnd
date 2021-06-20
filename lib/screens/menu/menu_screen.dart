@@ -54,6 +54,17 @@ class MenuScreen extends StatelessWidget {
                       Get.toNamed(Routes.AGENDAMENT);
                     },
                   ),
+                ),
+                Card(
+                  elevation: 4,
+                  child: ListTile(
+                    leading: Icon(Icons.qr_code),
+                    title: Text('Estoque'),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: () {
+                      Get.toNamed(Routes.StockVacina);
+                    },
+                  ),
                 )
               ],
             ),
