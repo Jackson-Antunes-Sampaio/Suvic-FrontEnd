@@ -1,6 +1,5 @@
 import 'package:covid_19/common/botton_navigation_bar/bottom_navigation_bar_new.dart';
 import 'package:covid_19/controllers/stock_vacine_controller.dart';
-import 'package:covid_19/controllers/vaccine_controller.dart';
 import 'package:covid_19/models/page_manager.dart';
 import 'package:covid_19/screens/stock/addStock.dart';
 import 'package:covid_19/screens/stock/elements/dashboard_chart.dart';
@@ -156,6 +155,7 @@ class DashboardStock extends StatelessWidget {
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavigationBarNew(),
     );
   }
 }
