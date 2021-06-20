@@ -6,7 +6,6 @@ Widget autocompleVaccines(BuildContext context, TextEditingController vacine) {
   return TypeAheadField(
     textFieldConfiguration: TextFieldConfiguration(
       controller: vacine,
-      autofocus: true,
       decoration: InputDecoration(
         labelText: 'Vacina',
         border: OutlineInputBorder(),
