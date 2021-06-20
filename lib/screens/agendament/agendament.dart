@@ -1,12 +1,16 @@
 import 'package:covid_19/common/botton_navigation_bar/bottom_navigation_bar_new.dart';
 import 'package:covid_19/controllers/agendament_controller.dart';
 import 'package:covid_19/controllers/clinicController.dart';
+import 'package:covid_19/controllers/stock_vacine_controller.dart';
 import 'package:covid_19/models/agendament_model.dart';
+import 'package:covid_19/models/stock_vacine_model.dart';
+import 'package:covid_19/repositories/stock_vacine_repository.dart';
+import 'package:covid_19/screens/agendament/autocomplete/data/getTime.dart';
 import 'package:covid_19/screens/agendament/autocomplete/textFormField.dart';
-import 'package:covid_19/screens/agendament/elements/autocomplete_time.dart';
 import 'package:covid_19/screens/agendament/elements/googleMaps.dart';
 import 'package:covid_19/utils/styles/style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -109,7 +113,8 @@ class _AgendamentState extends State<Agendament> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-                      child: autocompleTime(),
+                      child: autoCompleteTime(),
+                      // child: autocompleTime(),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
@@ -134,15 +139,25 @@ class _AgendamentState extends State<Agendament> {
                       child: Container(
                         width: double.maxFinite,
                         child: ElevatedButton.icon(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateColor.resolveWith(
-                                  (states) => kPrimaryColor),
-                            ),
-                            onPressed: () {
-                              return schedule();
-                            },
-                            icon: Icon(Icons.add),
-                            label: Text('Agendar')),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateColor.resolveWith(
+                                (states) => kPrimaryColor),
+                          ),
+                          onPressed: () {
+                            return schedule();
+                          },
+                          icon: Obx(() => AgendamentController.to.loading.value
+                              ? Container(
+                                  width: 15,
+                                  height: 15,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 2,
+                                  ),
+                                )
+                              : Icon(Icons.add)),
+                          label: Text('Agendar'),
+                        ),
                       ),
                     )
                   ],
@@ -156,12 +171,40 @@ class _AgendamentState extends State<Agendament> {
     );
   }
 
+  TypeAheadFormField<String> autoCompleteTime() {
+    return TypeAheadFormField(
+      textFieldConfiguration: TextFieldConfiguration(
+        decoration: InputDecoration(
+          labelText: 'Horário',
+          border: OutlineInputBorder(),
+        ),
+        controller: time,
+      ),
+      suggestionsCallback: (pattern) {
+        return GetTimeScheld.getSuggestions(pattern);
+      },
+      itemBuilder: (context, String suggestion) {
+        return ListTile(
+          title: Text(suggestion),
+          trailing: Text('0/5'),
+        );
+      },
+      transitionBuilder: (context, suggestionsBox, controller) {
+        return suggestionsBox;
+      },
+      onSuggestionSelected: (String suggestion) {
+        time.text = suggestion;
+      },
+      validator: (value) => value!.isEmpty ? 'Please select a time' : null,
+    );
+  }
+
   schedule() {
     if (_formKey.currentState!.validate()) {
       AgendamentController.to.insert(AgendamentModel(
         vaccine: vaccine.text,
         data: date,
-        time: '09:30',
+        time: time.text,
       ));
       _formKey.currentState!.reset();
     }
