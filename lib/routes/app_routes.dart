@@ -12,4 +12,5 @@ abstract class Routes {
   static const REGISTRATIONUSERS = 'RegistrationUsersScreen';
 
   static const StockVacina = 'DashboardStock';
+  static const AGENDAMENT = 'Agendament';
 }

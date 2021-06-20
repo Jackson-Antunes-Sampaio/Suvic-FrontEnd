@@ -17,6 +17,7 @@ class Agendament extends StatefulWidget {
 
 class _AgendamentState extends State<Agendament> {
   DateTime _date = DateTime.now();
+  var date;
 
   void _selectDate() async {
     final DateTime? newDate = await showDatePicker(
@@ -31,6 +32,7 @@ class _AgendamentState extends State<Agendament> {
         _date = newDate;
 
         data.text = DateFormat('dd-MM-y').format(newDate);
+        date = DateFormat('yyyy-MM-dd').format(newDate);
       });
     }
   }
@@ -55,25 +57,28 @@ class _AgendamentState extends State<Agendament> {
                 child: GoogleMapAgendament(),
               ),
             ),
-            Container(
-              width: double.maxFinite,
-              height: 50,
+            Card(
               color: kPrimaryColor,
-              child: Center(
-                child: Obx(
-                  () {
-                    String clinicName =
-                        ClinicController.to.clinic.value.name ?? '';
+              margin: EdgeInsets.all(0),
+              child: Container(
+                width: double.maxFinite,
+                height: 50,
+                child: Center(
+                  child: Obx(
+                    () {
+                      String clinicName =
+                          ClinicController.to.clinic.value.name ?? '';
 
-                    return Text(
-                      clinicName,
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    );
-                  },
+                      return Text(
+                        clinicName,
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
@@ -155,9 +160,10 @@ class _AgendamentState extends State<Agendament> {
     if (_formKey.currentState!.validate()) {
       AgendamentController.to.insert(AgendamentModel(
         vaccine: vaccine.text,
-        data: data.text,
+        data: date,
         time: '09:30',
       ));
+      _formKey.currentState!.reset();
     }
   }
 }

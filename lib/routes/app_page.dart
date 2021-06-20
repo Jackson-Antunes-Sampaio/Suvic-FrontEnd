@@ -1,3 +1,4 @@
+import 'package:covid_19/screens/agendament/agendament.dart';
 import 'package:covid_19/screens/base/base_screen.dart';
 import 'package:covid_19/screens/home/home_screen.dart';
 import 'package:covid_19/screens/info/info_screen.dart';
@@ -6,7 +7,6 @@ import 'package:covid_19/screens/notify_covid/notify_covid_screen.dart';
 import 'package:covid_19/screens/registration_users/registration_users_screen.dart';
 import 'package:covid_19/screens/splash/splash_screen.dart';
 import 'package:covid_19/screens/stock/dashboard.dart';
-import 'package:covid_19/screens/stock/stock.dart';
 import 'package:covid_19/screens/vaccine_card/vaccine_card_screen.dart';
 import 'package:covid_19/screens/webview_suvic/webview_suvic_screen.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
@@ -58,6 +58,10 @@ class AppPage {
     GetPage(
       name: Routes.StockVacina,
       page: () => DashboardStock(),
+    ),
+    GetPage(
+      name: Routes.AGENDAMENT,
+      page: () => Agendament(),
     ),
   ];
 }

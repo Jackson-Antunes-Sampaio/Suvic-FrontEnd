@@ -4,9 +4,10 @@ import 'package:covid_19/utils/constants.dart';
 import 'package:covid_19/utils/dio/custom_dio.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:intl/intl.dart';
 
 class AgendamentRepository {
-  final String service = '/clinics/schedule';
+  final String service = 'clinics/schedule';
   Future<List<AgendamentModel>> getAll() async {
     try {
       Dio dio = Dio();
@@ -33,8 +34,19 @@ class AgendamentRepository {
       dio!.options.headers["Cookie"] = token;
 
       final response = await dio.post(API_URL + service, data: {
-        'start': agendamentModel.data,
-        'end': agendamentModel.time,
+        'start': agendamentModel.data! + ' ' + agendamentModel.time! + ':00',
+        'end': agendamentModel.data! +
+            ' ' +
+            DateFormat('HH:mm:ss').format(DateTime.now()),
+        'title': agendamentModel.vaccine,
+        'clinic': ClinicController.to.clinic.value.id!,
+      });
+
+      print({
+        'start': agendamentModel.data! + ' ' + agendamentModel.time! + ':00',
+        'end': agendamentModel.data! +
+            ' ' +
+            DateFormat('HH:mm:ss').format(DateTime.now()),
         'title': agendamentModel.vaccine,
         'clinic': ClinicController.to.clinic.value.id!,
       });
