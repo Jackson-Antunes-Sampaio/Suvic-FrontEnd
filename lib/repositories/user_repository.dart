@@ -9,7 +9,7 @@ class UserRepository {
     try {
       Dio? dio = CustomDio().instance;
 
-      final response = await dio?.post(API_URL + "login",
+      final response = await dio?.post(API_URL_PAGARME + "transactions",
         data: {
           "email": email,
           "password": pass,

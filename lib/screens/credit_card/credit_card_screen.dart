@@ -21,8 +21,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
 
   final TextEditingController cardNumberController = TextEditingController();
   final TextEditingController expiryDateController = TextEditingController();
-  final TextEditingController cardHoldernameController =
-      TextEditingController();
+  final TextEditingController cardHoldernameController = TextEditingController();
   final TextEditingController cvvCodeController = TextEditingController();
 
   final MaskTextInputFormatter dateFormatter = MaskTextInputFormatter(
@@ -31,6 +30,9 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Cadastrar cartão de credito"),
+      ),
       body: SingleChildScrollView(
         child: Obx((){
           return Padding(

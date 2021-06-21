@@ -1,9 +1,11 @@
+
 import 'package:covid_19/utils/constants.dart';
 import 'package:covid_19/utils/dio/custom_dio.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class VaccineRepository {
+
   final String service = 'vaccines/';
 
   Future<List<String>> getaAll() async {
@@ -11,6 +13,7 @@ class VaccineRepository {
       Dio? dio = CustomDio().instance;
 
       final storage = FlutterSecureStorage();
+
 
       final token = await storage.read(key: "cookie");
 
@@ -54,5 +57,6 @@ class VaccineRepository {
   //     } else {}
   //   } catch (e) {}
   // }
+
 
 }

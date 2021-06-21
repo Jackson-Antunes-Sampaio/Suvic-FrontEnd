@@ -1,5 +1,7 @@
+
 import 'package:covid_19/screens/agendament/agendament.dart';
 import 'package:covid_19/screens/base/base_screen.dart';
+import 'package:covid_19/screens/credit_card/credit_card_screen.dart';
 import 'package:covid_19/screens/home/home_screen.dart';
 import 'package:covid_19/screens/info/info_screen.dart';
 import 'package:covid_19/screens/login/login_screen.dart';
@@ -56,6 +58,7 @@ class AppPage {
       page: () => RegistrationUsersScreen(),
     ),
     GetPage(
+
       name: Routes.StockVacina,
       page: () => DashboardStock(),
     ),
@@ -65,3 +68,4 @@ class AppPage {
     ),
   ];
 }
+

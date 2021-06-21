@@ -47,6 +47,7 @@ class MenuScreen extends StatelessWidget {
                 Card(
                   elevation: 4,
                   child: ListTile(
+
                     leading: Icon(Icons.schedule),
                     title: Text('Agendamento'),
                     trailing: Icon(Icons.arrow_forward_ios),
@@ -63,6 +64,7 @@ class MenuScreen extends StatelessWidget {
                     trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () {
                       Get.toNamed(Routes.StockVacina);
+
                     },
                   ),
                 )
