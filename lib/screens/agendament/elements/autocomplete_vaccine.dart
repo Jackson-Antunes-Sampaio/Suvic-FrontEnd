@@ -1,3 +1,4 @@
+import 'package:covid_19/screens/credit_card/components/text_form_field.dart';
 import 'package:flutter/material.dart';
 
 Widget autocompleVaccine() {
@@ -20,9 +21,20 @@ Widget autocompleVaccine() {
         TextEditingController textEditingController,
         FocusNode focusNode,
         VoidCallback onFieldSubmitted) {
+
+      // return TextFormFieldCustom(
+      //     controller: textEditingController,
+      //     keyboardType: TextInputType.text,
+      //     inputFormatters: [],
+      //     labelText: 'Vacina',
+      //     hintText: 'Vacina',
+      //     validator: (value){},
+      //     //keyboardType: keyboardType,
+      //     onChanget: (value){});
       return TextFormField(
         decoration: InputDecoration(
           labelText: 'Vacina',
+          isDense: true,
           border: OutlineInputBorder(),
         ),
         controller: textEditingController,

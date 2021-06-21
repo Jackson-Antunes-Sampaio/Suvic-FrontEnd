@@ -1,7 +1,9 @@
 import 'package:covid_19/common/botton_navigation_bar/bottom_navigation_bar_new.dart';
+import 'package:covid_19/common/text_fiel_custom.dart';
 import 'package:covid_19/models/page_manager.dart';
 import 'package:covid_19/screens/agendament/elements/autocomplete_time.dart';
 import 'package:covid_19/screens/agendament/elements/autocomplete_vaccine.dart';
+import 'package:covid_19/screens/credit_card/components/text_form_field.dart';
 import 'package:covid_19/utils/styles/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -69,6 +71,7 @@ class _AgendamentState extends State<Agendament> {
                   ),
                 ),
               ),
+
               Container(
                 child: Form(
                   child: Column(
@@ -84,6 +87,7 @@ class _AgendamentState extends State<Agendament> {
                         child: TextFormField(
                           decoration: InputDecoration(
                             labelText: 'Data',
+                            isDense: true,
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -216,7 +220,6 @@ class _AgendamentState extends State<Agendament> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBarNew(),
     );
   }
 }

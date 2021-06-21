@@ -22,6 +22,7 @@ Widget autocompleTime() {
       return TextFormField(
         decoration: InputDecoration(
           labelText: 'Horário',
+          isDense: true,
           border: OutlineInputBorder(),
         ),
         controller: textEditingController,

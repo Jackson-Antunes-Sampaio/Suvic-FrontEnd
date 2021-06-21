@@ -1,37 +1,43 @@
-
 import 'package:covid_19/models/user_model.dart';
 import 'package:covid_19/utils/constants.dart';
 import 'package:covid_19/utils/dio/custom_dio.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-
 class UserRepository {
-
-
   Future<String> loginUser(String email, String pass) async {
     try {
       Dio? dio = CustomDio().instance;
 
-      final response = await dio?.post(API_URL_PAGARME + "transactions",
+      final response = await dio?.post(API_URL + "login",
         data: {
-          "email" : email,
-          "password" : pass,
+          "email": email,
+          "password": pass,
         },
         // options: Options(followRedirects: false, validateStatus: (status) { return status! < 500; })
       );
+
+      // final response1 = await dio?.post(
+      //   API_URL + "users/",
+      //   data: {
+      //     "name": "user",
+      //     "email": "user@user.com",
+      //     "password": "123456",
+      //     "permission": "Admin",
+      //   },
+      // );
+
+      // print('Status de Create:' + response1!.statusCode.toString());
 
       print("cookie: ${response?.headers["set-cookie"]![0]}");
 
       var cookie = response?.headers["set-cookie"]![0];
 
       if (response?.statusCode == 200) {
-
         final storage = FlutterSecureStorage();
         await storage.write(key: "token", value: cookie);
 
         return "Usuario Logado!";
-
       } else {
         print("Erro 1: Email e/ou Senha incorreto");
         return "Email e/ou Senha incorreto";
@@ -41,6 +47,7 @@ class UserRepository {
       return "Email e/ou Senha incorreto";
     }
   }
+
 
 
 
@@ -81,8 +88,7 @@ class UserRepository {
   //   }
   // }
 
-  Future<UserModel> loginGetDate()async{
-
+  Future<UserModel> loginGetDate() async {
     try {
       Dio? dio = CustomDio().instance;
 
@@ -95,40 +101,40 @@ class UserRepository {
       print("${response.data}");
 
       return UserModel.fromJson(response.data);
-    }catch(e){
+    } catch (e) {
       print(e);
       return Future.error("error");
     }
   }
 
-  // Future<UserModel> newPass(String email, String pass, String newPass) async {
-  //   try {
-  //     Dio dio = CustomDio.withAuthentication().instance!;
-  //     final response = await dio.put(API_URL + "users",
-  //         data: {"email": email, "password": pass, "newPassword": newPass});
-  //
-  //     if (response.statusCode == 200) {
-  //       //return await loginUser(email, newPass);
-  //     } else {
-  //     }
-  //   } catch (e) {
-  //   }
-  // }
+// Future<UserModel> newPass(String email, String pass, String newPass) async {
+//   try {
+//     Dio dio = CustomDio.withAuthentication().instance!;
+//     final response = await dio.put(API_URL + "users",
+//         data: {"email": email, "password": pass, "newPassword": newPass});
+//
+//     if (response.statusCode == 200) {
+//       //return await loginUser(email, newPass);
+//     } else {
+//     }
+//   } catch (e) {
+//   }
+// }
 
-  // Future refreshToken() async {
-  //   try {
-  //     Dio dio = CustomDio.withAuthentication().instance!;
-  //     final response = await dio.post(API_URL + "users/refresh-token");
-  //
-  //     if (response.statusCode == 201) {
-  //       final storage = FlutterSecureStorage();
-  //       await storage.write(key: "token", value: response.data["token"]);
-  //
-  //       return UserModel.fromJson(response.data["user"]);
-  //     } else {
-  //     }
-  //   } catch (e) {
-  //     return e.response.data["message"];
-  //   }
-  // }
+// Future refreshToken() async {
+//   try {
+//     Dio dio = CustomDio.withAuthentication().instance!;
+//     final response = await dio.post(API_URL + "users/refresh-token");
+//
+//     if (response.statusCode == 201) {
+//       final storage = FlutterSecureStorage();
+//       await storage.write(key: "token", value: response.data["token"]);
+//
+//       return UserModel.fromJson(response.data["user"]);
+//     } else {
+//     }
+//   } catch (e) {
+//     return e.response.data["message"];
+//   }
+// }
 }

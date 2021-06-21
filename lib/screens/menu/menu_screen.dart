@@ -1,13 +1,11 @@
 import 'package:covid_19/controllers/user_controller.dart';
-import 'package:covid_19/models/user_model.dart';
 import 'package:covid_19/routes/app_page.dart';
+
 import 'package:covid_19/screens/menu/components/header_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class MenuScreen extends StatelessWidget {
-
   final UserController userController = Get.find();
 
   @override
@@ -30,7 +28,7 @@ class MenuScreen extends StatelessWidget {
                     leading: Icon(Icons.person_add_alt_1),
                     title: Text('Cadastrar Aplicador'),
                     trailing: Icon(Icons.arrow_forward_ios),
-                    onTap: (){
+                    onTap: () {
                       Get.toNamed(Routes.REGISTRATIONUSERS);
                     },
                   ),
@@ -41,7 +39,7 @@ class MenuScreen extends StatelessWidget {
                     leading: Icon(Icons.add_alert_rounded),
                     title: Text('Avisa-me'),
                     trailing: Icon(Icons.arrow_forward_ios),
-                    onTap: (){
+                    onTap: () {
                       Get.toNamed(Routes.NOTIFYCOVID);
                     },
                   ),
@@ -49,14 +47,40 @@ class MenuScreen extends StatelessWidget {
                 Card(
                   elevation: 4,
                   child: ListTile(
-                    leading: Icon(Icons.credit_card_outlined),
-                    title: Text('Cartão de credito'),
+
+                    leading: Icon(Icons.schedule),
+                    title: Text('Agendamento'),
                     trailing: Icon(Icons.arrow_forward_ios),
-                    onTap: (){
-                      Get.toNamed(Routes.CREDITCARDS);
+                    onTap: () {
+                      Get.toNamed(Routes.AGENDAMENT);
                     },
                   ),
-                )
+                ),
+                Card(
+                  elevation: 4,
+                  child: ListTile(
+                    leading: Icon(Icons.qr_code),
+                    title: Text('Estoque'),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: () {
+                      Get.toNamed(Routes.StockVacina);
+
+                    },
+                  ),
+                ),
+                Card(
+                  elevation: 4,
+                  child: ListTile(
+                    leading: Icon(Icons.credit_card_outlined),
+                    title: Text('Cartão de Credito'),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: () {
+                      Get.toNamed(Routes.CREDITCARDS);
+
+                    },
+                  ),
+                ),
+
               ],
             ),
           )
