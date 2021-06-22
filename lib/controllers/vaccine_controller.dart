@@ -8,7 +8,7 @@ class VaccineController extends GetxController {
   VaccineController() {
     getAll();
   }
-  //m
+  //get all
   getAll() async {
     var vacine = await repository.getAllVacine();
 
