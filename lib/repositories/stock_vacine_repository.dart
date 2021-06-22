@@ -7,15 +7,13 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class StockVacineRepository {
   final String service = 'clinics/storage/list';
 
-  getAllVacine() async {
+  Future<List<StockVacineModel>> getAllVacine() async {
     try {
       Dio? dio = CustomDio().instance;
 
       final storage = FlutterSecureStorage();
 
       final token = await storage.read(key: "cookie");
-
-      print(token);
 
       // print('Tock:' + token!);
       dio!.options.headers["Cookie"] = token;
@@ -42,7 +40,6 @@ class StockVacineRepository {
       });
 
       return res;
-      //return StockVacineModel.fromJson(response.data);
     } catch (e) {
       print(e);
       return Future.error("error");
