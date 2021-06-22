@@ -9,7 +9,8 @@ class UserRepository {
     try {
       Dio? dio = CustomDio().instance;
 
-      final response = await dio?.post(API_URL_PAGARME + "transactions",
+      final response = await dio?.post(
+        API_URL + "login",
         data: {
           "email": email,
           "password": pass,
@@ -47,9 +48,6 @@ class UserRepository {
       return "Email e/ou Senha incorreto";
     }
   }
-
-
-
 
   // Future<String> loginUser2(String email, String pass) async {
   //    try {
@@ -107,34 +105,34 @@ class UserRepository {
     }
   }
 
-  // Future<UserModel> newPass(String email, String pass, String newPass) async {
-  //   try {
-  //     Dio dio = CustomDio.withAuthentication().instance!;
-  //     final response = await dio.put(API_URL + "users",
-  //         data: {"email": email, "password": pass, "newPassword": newPass});
-  //
-  //     if (response.statusCode == 200) {
-  //       //return await loginUser(email, newPass);
-  //     } else {
-  //     }
-  //   } catch (e) {
-  //   }
-  // }
+// Future<UserModel> newPass(String email, String pass, String newPass) async {
+//   try {
+//     Dio dio = CustomDio.withAuthentication().instance!;
+//     final response = await dio.put(API_URL + "users",
+//         data: {"email": email, "password": pass, "newPassword": newPass});
+//
+//     if (response.statusCode == 200) {
+//       //return await loginUser(email, newPass);
+//     } else {
+//     }
+//   } catch (e) {
+//   }
+// }
 
-  // Future refreshToken() async {
-  //   try {
-  //     Dio dio = CustomDio.withAuthentication().instance!;
-  //     final response = await dio.post(API_URL + "users/refresh-token");
-  //
-  //     if (response.statusCode == 201) {
-  //       final storage = FlutterSecureStorage();
-  //       await storage.write(key: "token", value: response.data["token"]);
-  //
-  //       return UserModel.fromJson(response.data["user"]);
-  //     } else {
-  //     }
-  //   } catch (e) {
-  //     return e.response.data["message"];
-  //   }
-  // }
+// Future refreshToken() async {
+//   try {
+//     Dio dio = CustomDio.withAuthentication().instance!;
+//     final response = await dio.post(API_URL + "users/refresh-token");
+//
+//     if (response.statusCode == 201) {
+//       final storage = FlutterSecureStorage();
+//       await storage.write(key: "token", value: response.data["token"]);
+//
+//       return UserModel.fromJson(response.data["user"]);
+//     } else {
+//     }
+//   } catch (e) {
+//     return e.response.data["message"];
+//   }
+// }
 }

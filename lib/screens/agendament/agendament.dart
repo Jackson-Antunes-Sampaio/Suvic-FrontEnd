@@ -1,10 +1,7 @@
 import 'package:covid_19/common/botton_navigation_bar/bottom_navigation_bar_new.dart';
 import 'package:covid_19/controllers/agendament_controller.dart';
 import 'package:covid_19/controllers/clinicController.dart';
-import 'package:covid_19/controllers/stock_vacine_controller.dart';
 import 'package:covid_19/models/agendament_model.dart';
-import 'package:covid_19/models/stock_vacine_model.dart';
-import 'package:covid_19/repositories/stock_vacine_repository.dart';
 import 'package:covid_19/screens/agendament/autocomplete/data/getTime.dart';
 import 'package:covid_19/screens/agendament/autocomplete/textFormField.dart';
 import 'package:covid_19/screens/agendament/elements/googleMaps.dart';

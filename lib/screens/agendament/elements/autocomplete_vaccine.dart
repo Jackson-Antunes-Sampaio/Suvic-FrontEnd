@@ -1,13 +1,15 @@
+import 'package:covid_19/screens/credit_card/components/text_form_field.dart';
 import 'package:flutter/material.dart';
 
-Widget autocompleTime() {
+Widget autocompleVaccine() {
   const List<String> _options = <String>[
-    '09:30',
-    '10:30',
-    '11:30',
-    '12:30',
-    '13:30',
-    '14:30',
+    'Vaccine 1',
+    'Vaccine 2',
+    'Vaccine 3',
+    'Vaccine 4',
+    'Vaccine 5',
+    'Vaccine 6',
+    'Vaccine 7',
   ];
   return RawAutocomplete<String>(
     optionsBuilder: (TextEditingValue textEditingValue) {
@@ -19,9 +21,19 @@ Widget autocompleTime() {
         TextEditingController textEditingController,
         FocusNode focusNode,
         VoidCallback onFieldSubmitted) {
+
+      // return TextFormFieldCustom(
+      //     controller: textEditingController,
+      //     keyboardType: TextInputType.text,
+      //     inputFormatters: [],
+      //     labelText: 'Vacina',
+      //     hintText: 'Vacina',
+      //     validator: (value){},
+      //     //keyboardType: keyboardType,
+      //     onChanget: (value){});
       return TextFormField(
         decoration: InputDecoration(
-          labelText: 'Horário',
+          labelText: 'Vacina',
           isDense: true,
           border: OutlineInputBorder(),
         ),
@@ -50,9 +62,12 @@ Widget autocompleTime() {
                     onSelected(option);
                   },
                   child: ListTile(
-                    leading: Icon(Icons.timer),
+                    leading: Image.asset(
+                      'assets/images/iconVacine.png',
+                      width: 30,
+                      height: 30,
+                    ),
                     title: Text(option),
-                    trailing: Text('$index/5'),
                   ),
                 );
               },
