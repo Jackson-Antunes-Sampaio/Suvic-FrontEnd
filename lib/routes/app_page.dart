@@ -57,7 +57,6 @@ class AppPage {
       page: () => RegistrationUsersScreen(),
     ),
     GetPage(
-
       name: Routes.StockVacina,
       page: () => DashboardStock(),
     ),
@@ -65,8 +64,6 @@ class AppPage {
       name: Routes.AGENDAMENT,
       page: () => Agendament(),
     ),
-    GetPage(
-        name: Routes.CREDITCARDS,
-        page: ()=> CreditCardScreen())
+    GetPage(name: Routes.CREDITCARDS, page: () => CreditCardScreen())
   ];
 }

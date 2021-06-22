@@ -9,7 +9,8 @@ class UserRepository {
     try {
       Dio? dio = CustomDio().instance;
 
-      final response = await dio?.post(API_URL + "login",
+      final response = await dio?.post(
+        API_URL + "login",
         data: {
           "email": email,
           "password": pass,
@@ -47,9 +48,6 @@ class UserRepository {
       return "Email e/ou Senha incorreto";
     }
   }
-
-
-
 
   // Future<String> loginUser2(String email, String pass) async {
   //    try {
