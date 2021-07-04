@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Suvic',
       theme: ThemeData(
           scaffoldBackgroundColor: kBackgroundColor,
-          //scaffoldBackgroundColor: const Color.fromARGB(255,241,241,255),
+          primaryColor: Color(0xff303f9f),
           fontFamily: "Poppins",
           textTheme: TextTheme(
             body1: TextStyle(color: kBodyTextColor),

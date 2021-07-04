@@ -9,7 +9,8 @@ class UserRepository {
     try {
       Dio? dio = CustomDio().instance;
 
-      final response = await dio?.post(API_URL + "login",
+      final response = await dio?.post(
+        API_URL + "login",
         data: {
           "email": email,
           "password": pass,
@@ -36,7 +37,7 @@ class UserRepository {
       if (response?.statusCode == 200) {
         final storage = FlutterSecureStorage();
         await storage.write(key: "token", value: cookie);
-
+        print("aquuuuuuuuuuuuuuuuuuuuuui");
         return "Usuario Logado!";
       } else {
         print("Erro 1: Email e/ou Senha incorreto");
@@ -47,9 +48,6 @@ class UserRepository {
       return "Email e/ou Senha incorreto";
     }
   }
-
-
-
 
   // Future<String> loginUser2(String email, String pass) async {
   //    try {
@@ -94,16 +92,31 @@ class UserRepository {
 
       final storage = FlutterSecureStorage();
       final token = await storage.read(key: "token");
+      if(token == null){
+        return Future.error("error");
+      }
       print(token);
       dio!.options.headers["Cookie"] = token;
       final response = await dio.get(API_URL + "users");
 
-      print("${response.data}");
+      print("Returno api: ${response.data}");
 
       return UserModel.fromJson(response.data);
     } catch (e) {
-      print(e);
+      print("Erro repositorio: $e");
       return Future.error("error");
+    }
+  }
+
+  Future logout() async {
+    try {
+      Dio? dio = CustomDio().instance;
+
+      final response = await dio!.post(API_URL + "logout");
+
+      print("${response.data}");
+    } catch (e) {
+      print(e);
     }
   }
 

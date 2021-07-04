@@ -9,23 +9,28 @@ class UserController extends GetxController {
   RxString token = "".obs;
   RxBool isLogged = false.obs;
 
-  Future<String> loginIn(String email, String pass)async{
-
+  Future<String> loginIn(String email, String pass) async {
     final response = await userRepository.loginUser(email, pass);
     await loginDate();
     return response;
-
   }
 
-  Future<void> loginDate()async{
-
+  Future<void> loginDate() async {
     try {
       user = await userRepository.loginGetDate();
       isLogged.value = true;
-    }catch(e){
+    } catch (e) {
       print(e);
     }
   }
 
-
+  Future<void> logout() async {
+    try {
+      final storage = FlutterSecureStorage();
+      await storage.delete(key: "token");
+      await userRepository.logout();
+    } catch (e) {
+      print(e);
+    }
+  }
 }

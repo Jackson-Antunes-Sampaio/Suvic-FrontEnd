@@ -1,5 +1,4 @@
 class PagarMeModel {
-  String? apiKey;
   int? amount;
   String? cardNumber;
   String? cardCvv;
@@ -7,23 +6,19 @@ class PagarMeModel {
   String? cardHolderName;
   Customer? customer;
   Billing? billing;
-  Shipping? shipping;
-  List<Items>? items;
+  List<Items?>? items;
 
   PagarMeModel(
-      {this.apiKey,
-        this.amount,
+      {this.amount,
         this.cardNumber,
         this.cardCvv,
         this.cardExpirationDate,
         this.cardHolderName,
         this.customer,
         this.billing,
-        this.shipping,
         this.items});
 
   PagarMeModel.fromJson(Map<String, dynamic> json) {
-    apiKey = json['api_key'];
     amount = json['amount'];
     cardNumber = json['card_number'];
     cardCvv = json['card_cvv'];
@@ -34,11 +29,8 @@ class PagarMeModel {
         : null;
     billing =
     json['billing'] != null ? new Billing.fromJson(json['billing']) : null;
-    shipping = json['shipping'] != null
-        ? new Shipping.fromJson(json['shipping'])
-        : null;
     if (json['items'] != null) {
-      items = [];
+      items =  [];
       json['items'].forEach((v) {
         items?.add(new Items.fromJson(v));
       });
@@ -47,7 +39,6 @@ class PagarMeModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['api_key'] = this.apiKey;
     data['amount'] = this.amount;
     data['card_number'] = this.cardNumber;
     data['card_cvv'] = this.cardCvv;
@@ -59,11 +50,8 @@ class PagarMeModel {
     if (this.billing != null) {
       data['billing'] = this.billing?.toJson();
     }
-    if (this.shipping != null) {
-      data['shipping'] = this.shipping?.toJson();
-    }
     if (this.items != null) {
-      data['items'] = this.items?.map((v) => v.toJson()).toList();
+      data['items'] = this.items?.map((v) => v?.toJson()).toList();
     }
     return data;
   }
@@ -75,8 +63,8 @@ class Customer {
   String? type;
   String? country;
   String? email;
-  List<Documents>? documents;
-  List<String>? phoneNumbers;
+  List<Documents?>? documents;
+  List<String?>? phoneNumbers;
   String? birthday;
 
   Customer(
@@ -96,7 +84,6 @@ class Customer {
     country = json['country'];
     email = json['email'];
     if (json['documents'] != null) {
-      //documents = new List<Documents>();
       documents = [];
       json['documents'].forEach((v) {
         documents?.add(new Documents.fromJson(v));
@@ -114,7 +101,7 @@ class Customer {
     data['country'] = this.country;
     data['email'] = this.email;
     if (this.documents != null) {
-      data['documents'] = this.documents?.map((v) => v.toJson()).toList();
+      data['documents'] = this.documents?.map((v) => v?.toJson()).toList();
     }
     data['phone_numbers'] = this.phoneNumbers;
     data['birthday'] = this.birthday;
@@ -200,38 +187,6 @@ class Address {
     data['street'] = this.street;
     data['street_number'] = this.streetNumber;
     data['zipcode'] = this.zipcode;
-    return data;
-  }
-}
-
-class Shipping {
-  String? name;
-  int? fee;
-  String? deliveryDate;
-  bool? expedited;
-  Address? address;
-
-  Shipping(
-      {this.name, this.fee, this.deliveryDate, this.expedited, this.address});
-
-  Shipping.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    fee = json['fee'];
-    deliveryDate = json['delivery_date'];
-    expedited = json['expedited'];
-    address =
-    json['address'] != null ? new Address.fromJson(json['address']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['fee'] = this.fee;
-    data['delivery_date'] = this.deliveryDate;
-    data['expedited'] = this.expedited;
-    if (this.address != null) {
-      data['address'] = this.address?.toJson();
-    }
     return data;
   }
 }

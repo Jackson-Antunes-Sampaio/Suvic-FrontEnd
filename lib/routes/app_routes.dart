@@ -11,7 +11,8 @@ abstract class Routes {
   static const SUVIC = "WebViewSuvicScreen";
   static const REGISTRATIONUSERS = 'RegistrationUsersScreen';
   static const CREDITCARDS = 'CreditCardScreen';
-
+  static const CREDITCARDS2 = 'CreditCardScreen2';
   static const StockVacina = 'DashboardStock';
   static const AGENDAMENT = 'Agendament';
+  static const CONNECT = 'NotConnectScreen';
 }

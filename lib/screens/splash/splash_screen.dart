@@ -1,4 +1,5 @@
 import 'package:another_flushbar/flushbar.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:covid_19/controllers/user_controller.dart';
 import 'package:covid_19/routes/app_page.dart';
 import 'package:covid_19/screens/home/home_screen.dart';
@@ -7,27 +8,28 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
-
-
-
 class SplashScreenApp extends StatelessWidget {
-
   final UserController userController = Get.find();
 
-  SplashScreenApp(){
+  SplashScreenApp() {
     userLogged();
   }
 
-  void userLogged()async {
+  void userLogged() async {
     await Future.delayed(Duration(seconds: 3));
 
-    await userController.loginDate();
+    var connectivityResult = await (Connectivity().checkConnectivity());
 
-    if(userController.user?.email != null) {
-      Get.offNamed(Routes.BASE);
-    }else{
-       Get.offNamed(Routes.LOGIN);
+    if (connectivityResult == ConnectivityResult.none) {
+      Get.offNamed(Routes.CONNECT);
+    } else {
+      await userController.loginDate();
+
+      if (userController.user?.email != null) {
+        Get.offNamed(Routes.BASE);
+      } else {
+        Get.offNamed(Routes.LOGIN);
+      }
     }
   }
 
@@ -38,10 +40,10 @@ class SplashScreenApp extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [Color(0xff011579b), Color(0xffe0f2f1)],
-              )),
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [Color(0xff011579b), Color(0xffe0f2f1)],
+          )),
         ),
         Align(
           alignment: Alignment.center,
@@ -54,13 +56,6 @@ class SplashScreenApp extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
 
 // class SplashScreenApp2 extends StatefulWidget {
 //   @override

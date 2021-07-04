@@ -15,8 +15,24 @@ class MenuScreen extends StatelessWidget {
         children: [
           HeaderMenu(
             image: "assets/images/unnamed.png",
-            email: '${userController.user!.email}',
+            email: '${userController.user?.socialName ?? '-'}',
             offset: 0,
+          ),
+          InkWell(
+            onTap: () async {
+              await userController.logout();
+              Get.offAllNamed(Routes.LOGIN);
+            },
+            child: Padding(
+              padding: EdgeInsets.only(right: 20),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  "Sair",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
           ),
           Padding(
             padding: EdgeInsets.only(top: 20, left: 10, right: 10),
@@ -47,7 +63,6 @@ class MenuScreen extends StatelessWidget {
                 Card(
                   elevation: 4,
                   child: ListTile(
-
                     leading: Icon(Icons.schedule),
                     title: Text('Agendamento'),
                     trailing: Icon(Icons.arrow_forward_ios),
@@ -64,7 +79,6 @@ class MenuScreen extends StatelessWidget {
                     trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () {
                       Get.toNamed(Routes.StockVacina);
-
                     },
                   ),
                 ),
@@ -75,12 +89,10 @@ class MenuScreen extends StatelessWidget {
                     title: Text('Cartão de Credito'),
                     trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () {
-                      Get.toNamed(Routes.CREDITCARDS);
-
+                      Get.toNamed(Routes.CREDITCARDS2);
                     },
                   ),
                 ),
-
               ],
             ),
           )

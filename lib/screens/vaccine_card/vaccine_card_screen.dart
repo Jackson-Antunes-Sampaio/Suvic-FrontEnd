@@ -62,15 +62,16 @@ class _VaccineCardScreenState extends State<VaccineCardScreen> {
                             iconData: Icons.search,
                           ),
                           hintText: "Filtro",
-                          hintStyle: TextStyle(
-                            color: Colors.blue[700]
-                          ),
+                          hintStyle: TextStyle(color: Colors.blue[700]),
                           border: OutlineInputBorder(
                             borderRadius: const BorderRadius.all(
                               const Radius.circular(10.0),
                             ),
                           ),
                         ),
+                        onChanged: (value) {
+                          vaccinesController.filter(value);
+                        },
                       ),
                     ),
                   ),
@@ -80,15 +81,17 @@ class _VaccineCardScreenState extends State<VaccineCardScreen> {
                   child: Container(
                     height: 45,
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.grey)
-                    ),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.grey)),
                     child: FlatButton(
                       onPressed: () {},
                       child: Row(
                         children: [
-                          Text("2 Dependentes", style: TextStyle(fontSize: 11),),
+                          Text(
+                            "2 Dependentes",
+                            style: TextStyle(fontSize: 11),
+                          ),
                           Icon(Icons.arrow_drop_down)
                         ],
                       ),
@@ -98,24 +101,41 @@ class _VaccineCardScreenState extends State<VaccineCardScreen> {
                 ),
               ],
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: new NeverScrollableScrollPhysics(),
-              itemCount: vaccinesController.vaccinesCard.length,
-                itemBuilder: (build, index){
-                String date = vaccinesController.vaccinesCard[index].applicationDate!.split("-").last + "/" + vaccinesController.vaccinesCard[index].applicationDate!.split("-")[1] + "/" + vaccinesController.vaccinesCard[index].applicationDate!.split("-").first;
-                  return VaccineItem(
-                      title: "${vaccinesController.vaccinesCard[index].vaccine?.name}",
-                      quantity: "1º dose",
-                      date: "${date}",
-                      city: "São Paulo",
-                      local: "Ubs Maria Tereza De Andrade"
-                  );
-                })
+            Obx(() {
+              return vaccinesController.loading.value
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      physics: new NeverScrollableScrollPhysics(),
+                      itemCount: vaccinesController.vaccinesFilterCard.length,
+                      itemBuilder: (build, index) {
+                        String date = vaccinesController
+                                .vaccinesFilterCard[index].applicationDate!
+                                .split("-")
+                                .last +
+                            "/" +
+                            vaccinesController
+                                .vaccinesFilterCard[index].applicationDate!
+                                .split("-")[1] +
+                            "/" +
+                            vaccinesController
+                                .vaccinesFilterCard[index].applicationDate!
+                                .split("-")
+                                .first;
+                        return VaccineItem(
+                            title:
+                                "${vaccinesController.vaccinesFilterCard[index].vaccine?.name}",
+                            quantity: "1º dose",
+                            date: "${date}",
+                            city: "São Paulo",
+                            local: "Ubs Maria Tereza De Andrade");
+                      });
+            }),
           ],
         ),
       ),
-
     );
   }
 }
