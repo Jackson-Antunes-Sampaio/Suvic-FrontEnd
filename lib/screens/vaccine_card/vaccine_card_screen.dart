@@ -133,7 +133,9 @@ class _VaccineCardScreenState extends State<VaccineCardScreen> {
                             local: "Ubs Maria Tereza De Andrade");
                       });
             }),
+            SizedBox(height: 10,)
           ],
+
         ),
       ),
     );

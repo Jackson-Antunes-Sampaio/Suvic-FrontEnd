@@ -89,7 +89,7 @@ class MenuScreen extends StatelessWidget {
                     title: Text('Cartão de Credito'),
                     trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () {
-                      Get.toNamed(Routes.CREDITCARDS2);
+                      Get.toNamed(Routes.PRODUCTCARD);
                     },
                   ),
                 ),

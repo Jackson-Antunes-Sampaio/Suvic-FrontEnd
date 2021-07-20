@@ -66,7 +66,7 @@ class RegistrationUsersScreen extends StatelessWidget {
                 TextFieldCustom(
                   iconData: Icons.article_sharp,
                   hintText: 'Certificação',
-                  labelText: '123456479',
+                  labelText: 'Certificação',
                   textInputType: TextInputType.emailAddress,
                   validator: (text){
                     if(text != null){

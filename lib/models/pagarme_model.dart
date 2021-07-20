@@ -55,6 +55,11 @@ class PagarMeModel {
     }
     return data;
   }
+
+  @override
+  String toString() {
+    return 'PagarMeModel{amount: $amount, cardNumber: $cardNumber, cardCvv: $cardCvv, cardExpirationDate: $cardExpirationDate, cardHolderName: $cardHolderName, customer: $customer, billing: $billing, items: $items}';
+  }
 }
 
 class Customer {

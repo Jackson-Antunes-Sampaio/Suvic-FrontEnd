@@ -7,7 +7,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class CreditCardRepository {
 
-  Future<String> postTransactionsPagarme(Map<String, dynamic> data)async{
+  Future<String> postTransactionsPagarme(Map<dynamic, dynamic> data)async{
 
     try {
       Dio? dio = CustomDio().instance;
@@ -23,7 +23,7 @@ class CreditCardRepository {
 
       return response.data.toString();
     }catch(e){
-      print(e);
+      print("ERRO ${e}");
       return Future.error("error");
     }
   }

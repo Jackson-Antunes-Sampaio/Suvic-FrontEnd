@@ -106,13 +106,12 @@ class _CreditCardNewScreenState extends State<CreditCardNewScreen> {
                           creditCardController.stateCreditCard.value =
                               StateCreditCard.FORMDATA;
                         }
-                      } else if (creditCardController.stateCreditCard.value ==
-                          StateCreditCard.FORMDATA || creditCardController.stateCreditCard.value == StateCreditCard.FAIL) {
+                      } else if (creditCardController.stateCreditCard.value == StateCreditCard.FORMDATA || creditCardController.stateCreditCard.value == StateCreditCard.FAIL) {
                         print("form: ${formKeyData.currentState}");
                         if (formKeyData.currentState!.validate()) {
-                          print("aquiiii");
-                          Map<String,dynamic> map = toMap();
-                          creditCardController.transactionsPagarme(map);
+                          pagarmeObject();
+                          Get.back();
+                          //creditCardController.transactionsPagarme(map);
                         }
                       }
                     },
@@ -508,10 +507,11 @@ class _CreditCardNewScreenState extends State<CreditCardNewScreen> {
             })));
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      "amount": 21000,
-        "card_number": "${cardNumberController.text.replaceAll(' ', '')}",
+  void pagarmeObject() {
+
+    creditCardController.pagarMeModel.value = PagarMeModel.fromJson({
+      "amount": 0,
+      "card_number": "${cardNumberController.text.replaceAll(' ', '')}",
       "card_cvv": "${cvvCodeController.text}",
       "card_expiration_date": "${expiryDateController.text.replaceAll("/", "")}",
       "card_holder_name": "${cardHoldernameController.text}",
@@ -541,21 +541,17 @@ class _CreditCardNewScreenState extends State<CreditCardNewScreen> {
       },
       "items": [
         {
-          "id": "r123",
-          "title": "Red pill",
-          "unit_price": 10000,
-          "quantity": 1,
-          "tangible": true
+          "id": null,
+          "title": null,
+          "unit_price": null,
+          "quantity": null,
+          "tangible": null
         },
-        {
-          "id": "b123",
-          "title": "Blue pill",
-          "unit_price": 10000,
-          "quantity": 1,
-          "tangible": true
-        }
       ]
-    };
+    });
+
+    print("pagarme: ${creditCardController.pagarMeModel.value}");
+
   }
 
 
@@ -570,7 +566,7 @@ class _CreditCardNewScreenState extends State<CreditCardNewScreen> {
           content: SingleChildScrollView(
             child: ListBody(
               children: const <Widget>[
-                Text('Deseja realmente voltar?'),
+                Text('Deseja voltar?'),
                 Text('Você perdera todos os dados preenchido.'),
 
               ],

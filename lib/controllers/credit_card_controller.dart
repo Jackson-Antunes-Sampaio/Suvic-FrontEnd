@@ -1,13 +1,17 @@
 
+import 'package:covid_19/models/pagarme_model.dart';
 import 'package:covid_19/repositories/credit_card_repository.dart';
 import 'package:get/get.dart';
 
 
 enum StateCreditCard {LOADING, FORMCARD, FORMDATA, SUCCESS, FAIL}
+enum StateProductCard {LOADING, IDL, SUCCESS, FAIL}
 class CreditCardController extends GetxController{
 
   Rx<StateCreditCard> stateCreditCard = StateCreditCard.FORMCARD.obs;
+  Rx<StateProductCard> stateProductCard = StateProductCard.IDL.obs;
   RxBool cardSave = false.obs;
+  Rx<PagarMeModel> pagarMeModel = PagarMeModel().obs;
 
   CreditCardRepository creditCardRepository = CreditCardRepository();
 
@@ -28,14 +32,15 @@ class CreditCardController extends GetxController{
   RxBool selected = true.obs;
 
 
-  Future<void> transactionsPagarme(Map<String, dynamic> map)async{
-    stateCreditCard.value = StateCreditCard.LOADING;
+  Future<void> transactionsPagarme()async{
+    stateProductCard.value = StateProductCard.LOADING;
     try{
-      await creditCardRepository.postTransactionsPagarme(map);
-      stateCreditCard.value = StateCreditCard.SUCCESS;
+      await creditCardRepository.postTransactionsPagarme(pagarMeModel.toJson());
+      stateProductCard.value = StateProductCard.SUCCESS;
     }catch(e){
-      stateCreditCard.value = StateCreditCard.FAIL;
-      print("ERRO: $e");
+
+      stateProductCard.value = StateProductCard.FAIL;
+      print("ERRO");
     }
 
   }
