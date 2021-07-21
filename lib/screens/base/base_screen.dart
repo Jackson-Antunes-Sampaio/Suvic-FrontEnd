@@ -53,12 +53,12 @@ class _BaseScreenState extends State<BaseScreen> {
       );
       print('Permissão concedida pelo usuário: ${settings.authorizationStatus}');
     }
-    print("token: ${messaging}");
+    messaging.getToken().then((value){
+      print("token: $value");
+    });
     // APLICATIVO ABERTO
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Mensagem app Aberto: ${message.data}');
       if (message.notification != null) {
-        print("Mensagem != null");
         showNotification(
           message.notification!.title,
           message.notification!.body,

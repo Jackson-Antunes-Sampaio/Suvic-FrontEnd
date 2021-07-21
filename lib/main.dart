@@ -12,7 +12,7 @@ import 'bindings/app_bindings.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  //FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await Firebase.initializeApp();
   runApp(MyApp());
 }
