@@ -4,6 +4,7 @@ import 'package:covid_19/screens/base/base_screen.dart';
 import 'package:covid_19/screens/credit_card/credit_card_screen.dart';
 import 'package:covid_19/screens/credit_card/credit_card_screen2.dart';
 import 'package:covid_19/screens/credit_card/product_card.dart';
+import 'package:covid_19/screens/historic_vaccine/historic_vaccine_screen.dart';
 import 'package:covid_19/screens/home/home_screen.dart';
 import 'package:covid_19/screens/info/info_screen.dart';
 import 'package:covid_19/screens/login/login_screen.dart';
@@ -85,6 +86,10 @@ class AppPage {
     GetPage(
       name: Routes.APPLYVACCINE,
       page: ()=> ApplyVaccineScreen(),
-    )
+    ),
+    GetPage(
+      name: Routes.HISTORICVACCINE,
+      page: ()=> HistoricVaccineScreen(),
+    ),
   ];
 }

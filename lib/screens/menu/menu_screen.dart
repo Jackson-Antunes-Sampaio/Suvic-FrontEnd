@@ -11,7 +11,7 @@ class MenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: ListView(
         children: [
           HeaderMenu(
             image: "assets/images/unnamed.png",
@@ -97,13 +97,24 @@ class MenuScreen extends StatelessWidget {
                   elevation: 4,
                   child: ListTile(
                     leading: Icon(Icons.article_outlined),
-                    title: Text('Aplicar Vacina '),
+                    title: Text('Aplicar Vacina'),
                     trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () {
                       Get.toNamed(Routes.APPLYVACCINE);
                     },
                   ),
-                )
+                ),
+                Card(
+                  elevation: 4,
+                  child: ListTile(
+                    leading: Icon(Icons.history),
+                    title: Text('Historico de vacinas'),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: () {
+                      Get.toNamed(Routes.HISTORICVACCINE);
+                    },
+                  ),
+                ),
               ],
             ),
           )
