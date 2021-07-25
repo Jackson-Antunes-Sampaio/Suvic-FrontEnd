@@ -93,6 +93,17 @@ class MenuScreen extends StatelessWidget {
                     },
                   ),
                 ),
+                Card(
+                  elevation: 4,
+                  child: ListTile(
+                    leading: Icon(Icons.article_outlined),
+                    title: Text('Aplicar Vacina '),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: () {
+                      Get.toNamed(Routes.APPLYVACCINE);
+                    },
+                  ),
+                )
               ],
             ),
           )
