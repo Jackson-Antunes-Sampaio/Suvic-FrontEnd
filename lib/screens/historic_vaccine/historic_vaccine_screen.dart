@@ -13,9 +13,8 @@ class HistoricVaccineScreen extends StatefulWidget {
 }
 
 class _HistoricVaccineScreenState extends State<HistoricVaccineScreen> {
-
-  final HistoricVaccineController historicVaccineController = Get.put(HistoricVaccineController());
-
+  final HistoricVaccineController historicVaccineController =
+      Get.put(HistoricVaccineController());
 
   @override
   void initState() {
@@ -30,9 +29,8 @@ class _HistoricVaccineScreenState extends State<HistoricVaccineScreen> {
       appBar: AppBar(
         title: Text("Historico de vacinas"),
       ),
-      body: Obx((){
-        switch(historicVaccineController.stateHistoric.value){
-
+      body: Obx(() {
+        switch (historicVaccineController.stateHistoric.value) {
           case StateHistoric.IDLE:
             return Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
@@ -40,7 +38,8 @@ class _HistoricVaccineScreenState extends State<HistoricVaccineScreen> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                       child: Container(
                         height: 45,
                         child: TextField(
@@ -67,13 +66,18 @@ class _HistoricVaccineScreenState extends State<HistoricVaccineScreen> {
                     ListView.builder(
                         shrinkWrap: true,
                         physics: new NeverScrollableScrollPhysics(),
-                        itemCount: historicVaccineController.listFilterHistoric.length,
+                        itemCount:
+                            historicVaccineController.listFilterHistoric.length,
                         itemBuilder: (build, index) {
                           return CardHistoricVaccine(
-                            applicationDate: historicVaccineController.listFilterHistoric[index].applicationDate!,
-                            doseNumber: historicVaccineController.listFilterHistoric[index].doseNumber!,
-                            user: historicVaccineController.listFilterHistoric[index].user!,
-                            vaccineName: historicVaccineController.listFilterHistoric[index].vaccineName!,
+                            applicationDate: historicVaccineController
+                                .listFilterHistoric[index].applicationDate!,
+                            doseNumber: historicVaccineController
+                                .listFilterHistoric[index].doseNumber!,
+                            user: historicVaccineController
+                                .listFilterHistoric[index].user!,
+                            vaccineName: historicVaccineController
+                                .listFilterHistoric[index].vaccineName!,
                           );
                         })
                   ],

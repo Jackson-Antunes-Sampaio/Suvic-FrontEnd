@@ -6,18 +6,16 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class CardHistoricVaccine extends StatelessWidget {
-  CardHistoricVaccine({
-    required this.vaccineName,
-    required this.applicationDate,
-    required this.user,
-    required this.doseNumber
-});
+  CardHistoricVaccine(
+      {required this.vaccineName,
+      required this.applicationDate,
+      required this.user,
+      required this.doseNumber});
 
   final String vaccineName;
   final String applicationDate;
   final User user;
   final int doseNumber;
-
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +29,8 @@ class CardHistoricVaccine extends StatelessWidget {
         children: [
           TextFormField(
             enabled: false,
-            initialValue: '${DateFormat('dd/MM/yyyy').format(DateTime.parse(applicationDate))}',
+            initialValue:
+                '${DateFormat('dd/MM/yyyy').format(DateTime.parse(applicationDate))}',
             decoration: InputDecoration(
               labelText: 'Data APlicação',
               border: InputBorder.none,
