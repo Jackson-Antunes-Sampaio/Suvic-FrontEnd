@@ -18,4 +18,5 @@ abstract class Routes {
   static const PRODUCTCARD = 'ProductCardScreen';
   static const APPLYVACCINE = 'ApplyVaccineScreen';
   static const HISTORICVACCINE = 'HistoricVaccineScreen';
+  static const SINGUP = 'SingUpScreen';
 }

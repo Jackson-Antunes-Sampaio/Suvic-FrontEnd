@@ -174,17 +174,22 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(
                     height: 18,
                   ),
-                  Container(
-                    color: Colors.grey[50],
-                    padding: EdgeInsets.only(bottom: 16),
-                    height: 60,
-                    child: Center(
-                      child: Text(
-                        'Não tem conta? Cadastre-se agora',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: facebookColor,
-                          fontSize: 16,
+                  InkWell(
+                    onTap: (){
+                      Get.toNamed(Routes.SINGUP);
+                    },
+                    child: Container(
+                      color: Colors.grey[50],
+                      padding: EdgeInsets.only(bottom: 16),
+                      height: 60,
+                      child: Center(
+                        child: Text(
+                          'Não tem conta? Cadastre-se agora',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: facebookColor,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
