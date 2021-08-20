@@ -1,5 +1,6 @@
 import 'package:covid_19/controllers/user_controller.dart';
 import 'package:covid_19/routes/app_page.dart';
+import 'package:covid_19/screens/agendament/agendam.dart';
 
 import 'package:covid_19/screens/menu/components/header_menu.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,7 @@ class MenuScreen extends StatelessWidget {
                     title: Text('Agendamento'),
                     trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () {
-                      Get.toNamed(Routes.AGENDAMENT);
+                      Get.to(Agendam());
                     },
                   ),
                 ),

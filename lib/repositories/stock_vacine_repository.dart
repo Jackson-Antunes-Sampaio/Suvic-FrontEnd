@@ -10,9 +10,7 @@ class StockVacineRepository {
   Future<List<StockVacineModel>> getAllVacine() async {
     try {
       Dio? dio = CustomDio().instance;
-
       final storage = FlutterSecureStorage();
-
       final token = await storage.read(key: "cookie");
 
       // print('Tock:' + token!);
@@ -22,26 +20,26 @@ class StockVacineRepository {
       // print("aqui vacine");
       print("StatusCode: ${response.statusCode}");
 
-      print("${response.data}");
+      print("Resposta ${response.data}");
 
-      List<StockVacineModel> res = [];
+      // List<StockVacineModel> res = [];
 
-      response.data.forEach((element) {
-        // print(element);
-        res.add(
-          StockVacineModel(
-            name: element['vaccine'].toString(),
-            lote: int.parse(element['batch']),
-            dataValidade: element['expirationdate'],
-            quantidade: element['count'],
-            valor: 0,
-          ),
-        );
-      });
+      // response.data.forEach((element) {
+      //   // print(element);
+      //   res.add(
+      //     StockVacineModel(
+      //       name: element['vaccine'].toString(),
+      //       lote: int.parse(element['batch']),
+      //       dataValidade: element['expirationdate'],
+      //       quantidade: element['count'],
+      //       valor: 0,
+      //     ),
+      //   );
+      // });
 
-      return res;
+      return [];
     } catch (e) {
-      print(e);
+      print('Erro VL: $e');
       return Future.error("error");
     }
   }

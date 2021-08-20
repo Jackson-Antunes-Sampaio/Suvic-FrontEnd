@@ -8,6 +8,10 @@ class GetTimeScheld {
     '14:30',
   ];
 
+  static List<String> getTimer() {
+    return times;
+  }
+
   static List<String> getSuggestions(String query) {
     List<String> matches = <String>[];
     matches.addAll(times);
