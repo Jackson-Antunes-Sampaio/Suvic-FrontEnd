@@ -2,6 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+<<<<<<< HEAD
+=======
+	<key>LSApplicationCategoryType</key>
+	<string></string>
+>>>>>>> 364b78f9302a7361a91f131984e32cd75b83fd96
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -11,7 +16,11 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
+<<<<<<< HEAD
 	<string>covid_19</string>
+=======
+	<string>suvic_frontend_antunes</string>
+>>>>>>> 364b78f9302a7361a91f131984e32cd75b83fd96
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -39,6 +48,13 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+<<<<<<< HEAD
+=======
+	<key>NSAllowsLocalNetworking</key>
+	<string></string>
+	<key>NSAppTransportSecurity</key>
+	<dict/>
+>>>>>>> 364b78f9302a7361a91f131984e32cd75b83fd96
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>

@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "449597615334",
-    "project_id": "receive-notifications-99ffe",
-    "storage_bucket": "receive-notifications-99ffe.appspot.com"
+    "project_number": "244469059023",
+    "project_id": "suvic-f875e",
+    "storage_bucket": "suvic-f875e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:449597615334:android:524e7df24d2262af731f27",
+        "mobilesdk_app_id": "1:244469059023:android:7d8347d6da8902cc8e16ba",
         "android_client_info": {
           "package_name": "com.example.covid_19"
         }
       },
       "oauth_client": [
         {
-          "client_id": "449597615334-6i9uttubrh266flu798dsc72i0oc4g93.apps.googleusercontent.com",
+          "client_id": "244469059023-m318j4scsrg5fs7sspn965ko3dsoas41.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB4Ryy7xACJp-fv8vlA7z3wOEOzYcqqeFU"
+          "current_key": "AIzaSyA4BKlNRdMi3rgCwZFgg7xYR8oJCm60spc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "449597615334-6i9uttubrh266flu798dsc72i0oc4g93.apps.googleusercontent.com",
+              "client_id": "244469059023-m318j4scsrg5fs7sspn965ko3dsoas41.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

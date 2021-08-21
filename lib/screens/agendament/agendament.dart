@@ -215,6 +215,7 @@ class _AgendamentState extends State<Agendament> {
                           ),
                         ),
                       ),
+
                     ),
                     Padding(
                       padding: EdgeInsets.only(
@@ -240,6 +241,7 @@ class _AgendamentState extends State<Agendament> {
                                 )
                               : Icon(Icons.add)),
                           label: Text('Agendar'),
+
                         ),
                       ),
                     ),

@@ -15,8 +15,6 @@ class VaccineRepository {
       dio!.options.headers["Cookie"] = token;
       final response = await dio.get(API_URL + "users/vaccinecard");
 
-      print("${response.data}");
-
       return (response.data as List).map<VaccineCardModel>((e) {
         return VaccineCardModel.fromJson(e);
       }).toList();

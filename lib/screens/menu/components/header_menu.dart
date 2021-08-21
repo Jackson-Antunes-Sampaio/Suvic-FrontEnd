@@ -41,27 +41,30 @@ class _HeaderMenuState extends State<HeaderMenu> {
           ),
         ),
         Positioned(
-          bottom: -20,
-          right: MediaQuery.of(context).size.width * 0.365,
+          bottom: -3,
+          right: 0,
+          left: 0,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(100),
-                child: Container(
+              Container(
                   height: 80,
                   width: 80,
                   decoration: BoxDecoration(
-                      border: Border.all(
-                    color: Colors.black,
-                  )),
-                  child: Image.asset(
-                    widget.image!,
-                    width: 230,
-                    fit: BoxFit.fitWidth,
-                    alignment: Alignment.topCenter,
+                    borderRadius: BorderRadius.circular(100),
+                    image: DecorationImage(
+                      image: AssetImage(
+                              widget.image!,
+                      )
+                    ),
+                  //     border: Border.all(
+                  //   color: Colors.grey,
+                  //       width: 3
+                  // )
                   ),
-                ),
-              ),
+
+        ),
+
               Container(
                 //width: MediaQuery.of(context).size.width,
                 child: Text(
@@ -73,18 +76,18 @@ class _HeaderMenuState extends State<HeaderMenu> {
                   ),
                 ),
               ),
-              InkWell(
-                onTap: () {},
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    "Sair",
-                    style: TextStyle(
-                      color: Colors.blue,
-                    ),
-                  ),
-                ),
-              ),
+              // InkWell(
+              //   onTap: () {},
+              //   child: Align(
+              //     alignment: Alignment.centerRight,
+              //     child: Text(
+              //       "Sair",
+              //       style: TextStyle(
+              //         color: Colors.blue,
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

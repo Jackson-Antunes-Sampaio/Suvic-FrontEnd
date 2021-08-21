@@ -1,5 +1,6 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:covid_19/common/button_custom.dart';
 import 'package:covid_19/controllers/credit_card_controller.dart';
 import 'package:covid_19/screens/credit_card/components/text_form_field.dart';
 import 'package:credit_card_type_detector/credit_card_type_detector.dart';
@@ -33,6 +34,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
       appBar: AppBar(
         title: Text("Cadastrar cartão de credito"),
       ),
+
       body: SingleChildScrollView(
         child: Obx((){
           return Padding(
@@ -40,26 +42,26 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
             child: Column(
               children: [
                 if (creditCardController.card.value)
-                  CarouselSlider(
-                    options: CarouselOptions(),
-                    items: creditCardController.cardNumber.map((e) {
-                      return CreditCardWidget(
-                        cardNumber: e,
-                        expiryDate: creditCardController.expiryDate.value,
-                        cardHolderName:
-                        creditCardController.cardHoldername.value,
-                        cvvCode: creditCardController.cvvCode.value,
-                        showBackView: creditCardController.showBackView,
-                        obscureCardNumber: true,
-                        obscureCardCvv: true,
-                        height: 200,
-                        width: MediaQuery.of(context).size.width,
-                        animationDuration: Duration(
-                            milliseconds:
-                            1000), // true when you want to show cvv(back) view
-                      );
-                    }).toList(),
-                  ),
+                  // CarouselSlider(
+                  //   options: CarouselOptions(),
+                  //   items: creditCardController.cardNumber.map((e) {
+                  //     return CreditCardWidget(
+                  //       cardNumber: e,
+                  //       expiryDate: creditCardController.expiryDate.value,
+                  //       cardHolderName:
+                  //       creditCardController.cardHoldername.value,
+                  //       cvvCode: creditCardController.cvvCode.value,
+                  //       showBackView: creditCardController.showBackView,
+                  //       obscureCardNumber: true,
+                  //       obscureCardCvv: true,
+                  //       height: 200,
+                  //       width: MediaQuery.of(context).size.width,
+                  //       animationDuration: Duration(
+                  //           milliseconds:
+                  //           1000), // true when you want to show cvv(back) view
+                  //     );
+                  //   }).toList(),
+                  // ),
                 if (!creditCardController.card.value)
                   CreditCardWidget(
                     cardNumber: creditCardController.newCardNumber.value,
@@ -229,37 +231,19 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                             ],
                           );
                         }),
+
                         Padding(
-                          padding: EdgeInsets.only(top: 15, left: 10, right: 10),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.red,
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.grey,
-                                      blurRadius: 5.0,
-                                      offset: Offset(2.0, 2.0))
-                                ]),
-                            height: 50,
-                            child: RaisedButton(
-                              onPressed: () {
+                            padding: EdgeInsets.only(right: 10),
+                          child: ButtonCustom(
+                              onPressed: (){
+                                print("${cardHoldernameController.text}");
                                 if (formKey.currentState!.validate()) {
                                   print("ok");
                                 }
                               },
-                              color: Colors.blueAccent,
-                              child: Center(
-                                child: Text(
-                                  "Enviar",
-                                  style: TextStyle(
-                                    color: Colors.white70,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
+                              title: 'Proximo'),
+                        ),
+
                       ],
                     ),
                   )

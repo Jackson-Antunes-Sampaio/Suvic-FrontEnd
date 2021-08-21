@@ -13,7 +13,8 @@
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="covid_19"
+
+        android:label="Suvic"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCxtwRiSBc-gRqA7MMOpKVpGVdVPvsIddE"/>

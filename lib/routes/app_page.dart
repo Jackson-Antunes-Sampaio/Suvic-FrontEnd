@@ -1,11 +1,17 @@
 import 'package:covid_19/screens/agendament/agendament.dart';
+import 'package:covid_19/screens/apply_vaccine/apply_vaccine_screen.dart';
 import 'package:covid_19/screens/base/base_screen.dart';
 import 'package:covid_19/screens/credit_card/credit_card_screen.dart';
+import 'package:covid_19/screens/credit_card/credit_card_screen2.dart';
+import 'package:covid_19/screens/credit_card/product_card.dart';
+import 'package:covid_19/screens/historic_vaccine/historic_vaccine_screen.dart';
 import 'package:covid_19/screens/home/home_screen.dart';
 import 'package:covid_19/screens/info/info_screen.dart';
 import 'package:covid_19/screens/login/login_screen.dart';
+import 'package:covid_19/screens/login/singup.dart';
+import 'package:covid_19/screens/not_connect/not_connect_screen.dart';
 import 'package:covid_19/screens/notify_covid/notify_covid_screen.dart';
-import 'package:covid_19/screens/registration_users/registration_users_screen.dart';
+import 'package:covid_19/screens/register_applicator/registration_users_screen.dart';
 import 'package:covid_19/screens/splash/splash_screen.dart';
 import 'package:covid_19/screens/stock/dashboard.dart';
 import 'package:covid_19/screens/vaccine_card/vaccine_card_screen.dart';
@@ -54,7 +60,7 @@ class AppPage {
     ),
     GetPage(
       name: Routes.REGISTRATIONUSERS,
-      page: () => RegistrationUsersScreen(),
+      page: () => RegisterApplicator(),
     ),
     GetPage(
       name: Routes.StockVacina,
@@ -64,6 +70,31 @@ class AppPage {
       name: Routes.AGENDAMENT,
       page: () => Agendament(),
     ),
-    GetPage(name: Routes.CREDITCARDS, page: () => CreditCardScreen())
+
+    GetPage(
+        name: Routes.CREDITCARDS,
+        page: ()=> CreditCardScreen()),
+    GetPage(
+        name: Routes.CREDITCARDS2,
+        page: ()=> CreditCardNewScreen()),
+    GetPage(
+        name: Routes.CONNECT,
+        page: ()=> NotConnect()),
+    GetPage(
+        name: Routes.PRODUCTCARD,
+        page: ()=> ProductCardScreen(),
+    ),
+    GetPage(
+      name: Routes.APPLYVACCINE,
+      page: ()=> ApplyVaccineScreen(),
+    ),
+    GetPage(
+      name: Routes.HISTORICVACCINE,
+      page: ()=> HistoricVaccineScreen(),
+    ),
+    GetPage(
+      name: Routes.SINGUP,
+      page: ()=> SingUp(),
+    ),
   ];
 }

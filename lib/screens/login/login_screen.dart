@@ -1,3 +1,5 @@
+
+import 'package:connectivity/connectivity.dart';
 import 'package:covid_19/common/my_header_widget.dart';
 import 'package:covid_19/controllers/user_controller.dart';
 import 'package:covid_19/routes/app_page.dart';
@@ -9,6 +11,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+
+
+import 'components/input_text_field.dart';
+import 'components/label_text.dart';
+import 'components/login_social_media.dart';
+
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController email = TextEditingController();
@@ -72,28 +80,37 @@ class LoginScreen extends StatelessWidget {
                       width: 160,
                       child: RaisedButton(
                         onPressed: () async {
-                          final String response = await userController.loginIn(
-                              "user@email.co", "admin");
-                          if (response == "Usuario Logado!") {
-                            Get.offNamed(Routes.BASE);
-                          } else {
-                            Get.snackbar(
-                              "Falha ao Entrar",
-                              "$response",
-                            );
-                            final snackBar = SnackBar(
-                              content: Text('$response'),
-                              backgroundColor: Colors.red,
-                              // action: SnackBarAction(
-                              //   label: 'Undo',
-                              //   onPressed: () {
-                              //     // Some code to undo the change.
-                              //   },
-                              // ),
-                            );
 
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
+                          var connectivityResult =
+                              await (Connectivity().checkConnectivity());
+
+                          if (connectivityResult == ConnectivityResult.none) {
+                            Get.snackbar(
+                                "Conexão", "Sem conexão com a internet");
+                          } else {
+                            final String response = await userController
+                                .loginIn("jackson@email.com", "jackson");
+                            if (response == "Usuario Logado!") {
+                              Get.offNamed(Routes.BASE);
+                            } else {
+                              Get.snackbar(
+                                "Falha ao Entrar",
+                                "$response",
+                              );
+                              final snackBar = SnackBar(
+                                content: Text('$response'),
+                                backgroundColor: Colors.red,
+                                // action: SnackBarAction(
+                                //   label: 'Undo',
+                                //   onPressed: () {
+                                //     // Some code to undo the change.
+                                //   },
+                                // ),
+                              );
+
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            }
                           }
 
                           // final response2 = await  dio.post(
@@ -161,17 +178,22 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(
                     height: 18,
                   ),
-                  Container(
-                    color: Colors.grey[50],
-                    padding: EdgeInsets.only(bottom: 16),
-                    height: 60,
-                    child: Center(
-                      child: Text(
-                        'Não tem conta? Cadastre-se agora',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: facebookColor,
-                          fontSize: 16,
+                  InkWell(
+                    onTap: (){
+                      Get.toNamed(Routes.SINGUP);
+                    },
+                    child: Container(
+                      color: Colors.grey[50],
+                      padding: EdgeInsets.only(bottom: 16),
+                      height: 60,
+                      child: Center(
+                        child: Text(
+                          'Não tem conta? Cadastre-se agora',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: facebookColor,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
