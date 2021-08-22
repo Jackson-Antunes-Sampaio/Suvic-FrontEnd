@@ -23,7 +23,7 @@ class StockRepository {
     } catch (e) {
       Get.snackbar(
         'Erro',
-        'Não possível obter os nomes das vaccinas no backend, $e',
+        'Não possível obter os nomes das vaccinas',
         backgroundColor: Colors.red,
       );
       return Future.error("error");
@@ -39,6 +39,35 @@ class StockRepository {
       dio!.options.headers["Cookie"] = token;
       // print('Token: ' + token.toString());
       final response = await dio.get(API_URL + 'clinics/storage/list');
+      // print("Resposta-> ${response.data}");
+
+      return response.data;
+    } catch (e) {
+      Get.snackbar(
+        'Erro',
+        'Não possível obter as vaccinas em stock, $e',
+        backgroundColor: Colors.red,
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return Future.error("error");
+    }
+  }
+
+  getStockVaccineByIdClinic(String idClinic) async {
+    try {
+      Dio? dio = CustomDio().instance;
+      final storage = FlutterSecureStorage();
+      final token = await storage.read(key: "token");
+
+      dio!.options.headers["Cookie"] = token;
+      // print('Token: ' + token.toString());
+      final response = await dio.get(API_URL + 'clinics/storage/list');
+      // final response = await dio.post(
+      //   API_URL + 'clinics/vaccines',
+      //   data: {
+      //     "clinic": int.parse(idClinic),
+      //   },
+      // );
       // print("Resposta-> ${response.data}");
 
       return response.data;

@@ -120,7 +120,13 @@ class _AddVacinaState extends State<AddVacina> {
                     SizedBox(
                       height: 10,
                     ),
-                    ButtonCustom(onPressed: () {}, title: "Adicionar"),
+                    // ButtonCustom(onPressed: () {}, title: "Adicionar"),
+                    ElevatedButton(
+                      onPressed: () {
+                        addVacineInStock();
+                      },
+                      child: Text('Adicionar'),
+                    )
                   ],
                 ),
               )
@@ -131,13 +137,14 @@ class _AddVacinaState extends State<AddVacina> {
     );
   }
 
-  void addVacineInStock() {
+  addVacineInStock() {
+    print('object');
     if (_formKey.currentState!.validate()) {
       stockVacineController.insert(
         StockVacineModel(
           idClinica: 'idClinica',
           name: vacineName.text,
-          lote: int.parse(lote.text),
+          lote: lote.text,
           dataValidade: experationdate.text,
           quantidade: int.parse(quantidade.text),
           valor: double.parse(valor.text),

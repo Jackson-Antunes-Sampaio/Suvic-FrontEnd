@@ -1,8 +1,10 @@
+import 'package:covid_19/controllers/user_controller.dart';
 import 'package:covid_19/models/stock_vacine_model.dart';
 import 'package:covid_19/repositories/StockRepository.dart';
 import 'package:get/get.dart';
 
 class StockController extends GetxController {
+  //user clinic
   var repository = StockRepository();
   List<String> vaccines = [];
   List<StockVacineModel> vaccineInStock = [];
@@ -33,11 +35,20 @@ class StockController extends GetxController {
     loading = true;
     var getvaccinesStock = await repository.getStockVaccine();
 
-    if (getvaccinesStock != null) {
+    if (getvaccinesStock.isNotEmpty) {
+      // print(getvaccinesStock);
       getvaccinesStock.forEach((vaccine) {
+        var name;
+        if (vaccine['vaccine'] == null) {
+          name = '';
+        } else {
+          name = vaccine['vaccine']['name'];
+        }
+
         vaccineInStock.add(
           StockVacineModel(
-            name: vaccine['vaccine']['name'],
+            name: name,
+            // name: 'Teste',
             lote: vaccine['batch'] == null ? '' : vaccine['batch'],
             dataValidade: vaccine['expirationdate'] == null
                 ? ''
@@ -48,6 +59,9 @@ class StockController extends GetxController {
         );
       });
       getFourMoreVaccines();
+      loading = false;
+      update();
+    } else {
       loading = false;
       update();
     }
@@ -62,12 +76,14 @@ class StockController extends GetxController {
 
   getFourMoreVaccines() {
     var vacineS = vaccineInStock;
-    vacineS.sort((a, b) => b.quantidade.compareTo(a.quantidade));
+    if (vacineS.isNotEmpty) {
+      vacineS.sort((a, b) => b.quantidade.compareTo(a.quantidade));
 
-    //clear older vaccines
-    vaccineInChart.clear();
-    for (var x = 0; x < 4; x++) {
-      vaccineInChart.add(vacineS[x]);
+      //clear older vaccines
+      vaccineInChart.clear();
+      for (var x = 0; x < 4; x++) {
+        vaccineInChart.add(vacineS[x]);
+      }
     }
   }
 }

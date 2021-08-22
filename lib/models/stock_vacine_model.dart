@@ -2,7 +2,7 @@ class StockVacineModel {
   final int? id;
   final String? idClinica;
   final String name;
-  final int lote;
+  final String lote;
   final String dataValidade;
   final int quantidade;
   final double valor;

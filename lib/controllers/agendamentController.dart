@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'package:covid_19/controllers/clinicController.dart';
 import 'package:covid_19/repositories/clinicRepository.dart';
 import 'package:covid_19/screens/agendament/selectVacines.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -14,7 +12,7 @@ class AgentamentController extends GetxController {
   final longitude = 0.0.obs;
   final raio = 0.0.obs;
 
-  late StreamSubscription<Position> positionStream;
+  // late StreamSubscription<Position> positionStream;
   // LatLng _position = LatLng(-23.571505, -46.689104);
   LatLng _position = LatLng(-30.0557, -51.1988);
   late GoogleMapController _mapsController;
@@ -148,18 +146,18 @@ class AgentamentController extends GetxController {
     // );
   }
 
-  watchPosicao() async {
-    positionStream = Geolocator.getPositionStream().listen((Position position) {
-      latitude.value = position.latitude;
-      longitude.value = position.longitude;
-    });
-  }
+  // watchPosicao() async {
+  //   positionStream = Geolocator.getPositionStream().listen((Position position) {
+  //     latitude.value = position.latitude;
+  //     longitude.value = position.longitude;
+  //   });
+  // }
 
-  @override
-  void onClose() {
-    positionStream.cancel();
-    super.onClose();
-  }
+  // @override
+  // void onClose() {
+  //   positionStream.cancel();
+  //   super.onClose();
+  // }
 
   Future<Position> _posicaoAtual() async {
     LocationPermission permissao;

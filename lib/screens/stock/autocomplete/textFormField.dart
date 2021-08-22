@@ -6,11 +6,17 @@ Widget autocompleVaccines(BuildContext context, TextEditingController vacine) {
   return TypeAheadField(
     textFieldConfiguration: TextFieldConfiguration(
       controller: vacine,
-      autofocus: true,
       decoration: InputDecoration(
+        isDense: true,
         prefixIcon: Icon(Icons.medical_services),
         labelText: 'Vacina',
-        border: OutlineInputBorder(),
+        hintText: 'Vacina',
+        //enabledBorder: InputBorder.none,
+        border: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(
+            const Radius.circular(10.0),
+          ),
+        ),
       ),
     ),
     suggestionsCallback: (pattern) async {
@@ -24,8 +30,6 @@ Widget autocompleVaccines(BuildContext context, TextEditingController vacine) {
     },
     onSuggestionSelected: (Map<String, String> suggestion) {
       vacine.text = suggestion['name']!;
-      // Navigator.of(context).push(MaterialPageRoute(
-      //     builder: (context) => ProductPage(product: suggestion)));
     },
   );
 }

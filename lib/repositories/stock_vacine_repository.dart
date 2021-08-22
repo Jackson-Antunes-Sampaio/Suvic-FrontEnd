@@ -11,16 +11,11 @@ class StockVacineRepository {
     try {
       Dio? dio = CustomDio().instance;
       final storage = FlutterSecureStorage();
-      final token = await storage.read(key: "cookie");
+      final token = await storage.read(key: "token");
 
       // print('Tock:' + token!);
       dio!.options.headers["Cookie"] = token;
       final response = await dio.get(API_URL + service);
-
-      // print("aqui vacine");
-      print("StatusCode: ${response.statusCode}");
-
-      print("Resposta ${response.data}");
 
       // List<StockVacineModel> res = [];
 
@@ -39,7 +34,6 @@ class StockVacineRepository {
 
       return [];
     } catch (e) {
-      print('Erro VL: $e');
       return Future.error("error");
     }
   }
