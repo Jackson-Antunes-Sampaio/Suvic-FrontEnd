@@ -30,8 +30,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 
 class MyApp extends StatelessWidget {
-  final StockVacineController stockVacineController =
-      Get.put(StockVacineController());
 
   // This widget is the root of your application.
   @override

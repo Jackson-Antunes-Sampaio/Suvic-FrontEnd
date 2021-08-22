@@ -61,17 +61,17 @@ class MenuScreen extends StatelessWidget {
                     },
                   ),
                 ),
-                Card(
-                  elevation: 4,
-                  child: ListTile(
-                    leading: Icon(Icons.schedule),
-                    title: Text('Agendamento'),
-                    trailing: Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                      Get.to(Agendam());
-                    },
-                  ),
-                ),
+                // Card(
+                //   elevation: 4,
+                //   child: ListTile(
+                //     leading: Icon(Icons.add),
+                //     title: Text('Estoque'),
+                //     trailing: Icon(Icons.arrow_forward_ios),
+                //     onTap: () {
+                //       Get.toNamed(Routes.StockVacina);
+                //     },
+                //   ),
+                // ),
                 Card(
                   elevation: 4,
                   child: ListTile(

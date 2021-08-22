@@ -1,3 +1,4 @@
+import 'package:covid_19/screens/agendament/agendam.dart';
 import 'package:covid_19/screens/agendament/agendament.dart';
 import 'package:covid_19/screens/apply_vaccine/apply_vaccine_screen.dart';
 import 'package:covid_19/screens/base/base_screen.dart';
@@ -95,6 +96,10 @@ class AppPage {
     GetPage(
       name: Routes.SINGUP,
       page: ()=> SingUp(),
+    ),
+    GetPage(
+      name: Routes.AGENDAM,
+      page: ()=> Agendam(),
     ),
   ];
 }

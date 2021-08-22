@@ -8,8 +8,8 @@ class AppBindings implements Bindings {
   @override
   void dependencies() {
     Get.put(UserController(), permanent: true);
-    Get.put(ClinicController(), permanent: true);
-    Get.put(StockVacineController(), permanent: true);
-    Get.put(AgendamentController(), permanent: true);
+    // Get.put(ClinicController(), permanent: true);
+    // Get.put(StockVacineController(), permanent: true);
+    // Get.put(AgendamentController(), permanent: true);
   }
 }

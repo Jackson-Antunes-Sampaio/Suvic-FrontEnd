@@ -40,8 +40,8 @@ class _BottomNavigationBarNewState extends State<BottomNavigationBarNew> {
               selectedColor: Theme.of(context).primaryColor,
             ),
             SalomonBottomBarItem(
-              icon: Icon(Icons.add),
-              title: Text("Adicionar"),
+              icon: Icon(Icons.access_time),
+              title: Text("Agendar"),
               selectedColor: Theme.of(context).primaryColor,
             ),
             SalomonBottomBarItem(

@@ -1,6 +1,11 @@
 import 'dart:ui';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:covid_19/common/my_header_widget.dart';
+import 'package:covid_19/models/page_manager.dart';
+import 'package:covid_19/routes/app_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'components/custom_carrousel.dart';
 import 'components/custom_carrousel_slider.dart';
 
 class HomeScreenNew extends StatefulWidget {
@@ -11,6 +16,7 @@ class HomeScreenNew extends StatefulWidget {
 class _HomeScreenNewState extends State<HomeScreenNew> {
 
   final controller = ScrollController();
+  final PageManager pageManager = Get.find();
   double offset = 0;
 
 
@@ -62,18 +68,38 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
-                  CustomCarouselSlider(
-                    itemsString: [
-                  "O App SUVIC é a sua Carteirinha de Vacinação Digital e GRATUITA, com\n"
-                  "funções de Agendamento (SUS e Particular), Histórico, Calendário e\n"
-                  "muito mais!",
-                      "Avise-me quando a vacina chegar em minha cidade"
-                    ],
-                    itemsImage: [
-                      "assets/images/suvic.png",
-                      "assets/images/undraw_Map_dark_re_36sy.png"
+                  CarouselCustom(
+                    carouselModel: [
+                      CarouselModel(
+                          image: "assets/images/suvic.png",
+                          onTap: (){
+                            Get.toNamed(Routes.SUVIC);
+                          },
+                      ),
+                      CarouselModel(
+                        image: "assets/images/carteirinha-vacinacao-960x540.jpg",
+                        title: "Acesse sua carteirinha",
+                        onTap: (){
+                          pageManager.indexNavigation.value = 1;
+                          pageManager.pageController.jumpToPage(1);
+                        },
+                      )
+
                     ],
                   ),
+                  // SizedBox(height: 100,),
+                  // CustomCarouselSlider(
+                  //   itemsString: [
+                  // "O App SUVIC é a sua Carteirinha de Vacinação Digital e GRATUITA, com\n"
+                  // "funções de Agendamento (SUS e Particular), Histórico, Calendário e\n"
+                  // "muito mais!",
+                  //     "Avise-me quando a vacina chegar em minha cidade"
+                  //   ],
+                  //   itemsImage: [
+                  //     "assets/images/suvic.png",
+                  //     "assets/images/undraw_Map_dark_re_36sy.png"
+                  //   ],
+                  // ),
                   SizedBox(height: 10,),
                 ],
               ),

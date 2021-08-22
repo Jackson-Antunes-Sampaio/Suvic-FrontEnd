@@ -464,7 +464,9 @@ class _CreditCardNewScreenState extends State<CreditCardNewScreen> {
                                                 return null;
                                               }
                                             },
-                                            inputFormatters: [],
+                                            inputFormatters: [
+                                              LengthLimitingTextInputFormatter(2),
+                                            ],
                                             keyboardType:
                                             TextInputType.text,
                                             onChanget: (text) {}),
@@ -488,7 +490,8 @@ class _CreditCardNewScreenState extends State<CreditCardNewScreen> {
                                               TextInputType.text,
                                               onChanget: (text) {}))
                                     ],
-                                  )
+                                  ),
+                                  SizedBox(height: 100,),
                                 ],
                               )
                                   : Container()

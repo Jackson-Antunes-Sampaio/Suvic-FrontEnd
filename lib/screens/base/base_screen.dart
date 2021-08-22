@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:covid_19/common/botton_navigation_bar/bottom_navigation_bar_new.dart';
 import 'package:covid_19/controllers/credit_card_controller.dart';
+import 'package:covid_19/controllers/stock_vacine_controller.dart';
 import 'package:covid_19/models/page_manager.dart';
+import 'package:covid_19/screens/agendament/agendam.dart';
 import 'package:covid_19/screens/credit_card/credit_card_screen.dart';
 import 'package:covid_19/screens/home/home_screen_new.dart';
 import 'package:covid_19/screens/info/info_screen.dart';
@@ -26,6 +28,7 @@ class _BaseScreenState extends State<BaseScreen> {
 
   final PageManager pageManager = Get.put(PageManager());
   final CreditCardController creditCardController = Get.put(CreditCardController());
+  final StockVacineController stockVacineController = Get.put(StockVacineController());
 
   @override
   void initState() {
@@ -100,9 +103,9 @@ class _BaseScreenState extends State<BaseScreen> {
           HomeScreenNew(),
           VaccineCardScreen(),
           //InfoScreen(),
-          DashboardStock(),
+          Agendam(),
           MenuScreen(),
-          CreditCardScreen(),
+          //CreditCardScreen(),
           // Scaffold(
           //   body: Center(
           //     child: Text("Em Desenvolvimento", style: TextStyle(fontSize: 20),),
