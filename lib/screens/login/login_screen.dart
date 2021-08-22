@@ -73,67 +73,69 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                      height: 46,
-                      width: 160,
-                      child: RaisedButton(
-                        onPressed: () async {
+                  Obx((){
+                    return                   Align(
+                      alignment: Alignment.center,
+                      child: !userController.loading.value ? Container(
+                        height: 46,
+                        width: 160,
+                        child: RaisedButton(
+                          onPressed: () async {
 
-                          var connectivityResult =
-                              await (Connectivity().checkConnectivity());
+                            var connectivityResult =
+                            await (Connectivity().checkConnectivity());
 
-                          if (connectivityResult == ConnectivityResult.none) {
-                            Get.snackbar(
-                                "Conexão", "Sem conexão com a internet");
-                          } else {
-                            final String response = await userController
-                                .loginIn("jackson@email.com", "jackson");
-                            if (response == "Usuario Logado!") {
-                              Get.offNamed(Routes.BASE);
-                            } else {
+                            if (connectivityResult == ConnectivityResult.none) {
                               Get.snackbar(
-                                "Falha ao Entrar",
-                                "$response",
-                              );
-                              final snackBar = SnackBar(
-                                content: Text('$response'),
-                                backgroundColor: Colors.red,
-                                // action: SnackBarAction(
-                                //   label: 'Undo',
-                                //   onPressed: () {
-                                //     // Some code to undo the change.
-                                //   },
-                                // ),
-                              );
+                                  "Conexão", "Sem conexão com a internet");
+                            } else {
+                              final String response = await userController
+                                  .loginIn("jackson@email.com", "jackson");
+                              if (response == "Usuario Logado!") {
+                                Get.offNamed(Routes.BASE);
+                              } else {
+                                Get.snackbar(
+                                  "Falha ao Entrar",
+                                  "$response",
+                                );
+                                final snackBar = SnackBar(
+                                  content: Text('$response'),
+                                  backgroundColor: Colors.red,
+                                  // action: SnackBarAction(
+                                  //   label: 'Undo',
+                                  //   onPressed: () {
+                                  //     // Some code to undo the change.
+                                  //   },
+                                  // ),
+                                );
 
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              }
                             }
-                          }
 
-                          // final response2 = await  dio.post(
-                          //   "https://ec2-18-231-166-223.sa-east-1.compute.amazonaws.com:8443/login/",
-                          //   data: {
-                          //     "email" : "jack@user.com",
-                          //     "password" : "123456",
-                          //   }
-                          // );
-                          // print("aqui ${response2.data}");
-                        },
-                        child: Text(
-                          "ENTRAR",
-                          style: TextStyle(fontSize: 16),
+                            // final response2 = await  dio.post(
+                            //   "https://ec2-18-231-166-223.sa-east-1.compute.amazonaws.com:8443/login/",
+                            //   data: {
+                            //     "email" : "jack@user.com",
+                            //     "password" : "123456",
+                            //   }
+                            // );
+                            // print("aqui ${response2.data}");
+                          },
+                          child: Text(
+                            "ENTRAR",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          color: Color(0xff303f9f),
+                          textColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
                         ),
-                        color: Color(0xff303f9f),
-                        textColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                    ),
-                  ),
+                      ) : CircularProgressIndicator(),
+                    );
+                  }),
                   SizedBox(
                     height: 12,
                   ),

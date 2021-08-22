@@ -8,10 +8,13 @@ class UserController extends GetxController {
   UserModel? user;
   RxString token = "".obs;
   RxBool isLogged = false.obs;
+  RxBool loading = false.obs;
 
   Future<String> loginIn(String email, String pass) async {
+    loading.value = true;
     final response = await userRepository.loginUser(email, pass);
     await loginDate();
+    loading.value = false;
     return response;
   }
 
