@@ -1,4 +1,5 @@
 import 'package:covid_19/models/stock_vacine_model.dart';
+import 'package:covid_19/models/vaccine_model.dart';
 import 'package:covid_19/utils/constants.dart';
 import 'package:covid_19/utils/dio/custom_dio.dart';
 import 'package:dio/dio.dart';
@@ -68,6 +69,30 @@ class StockVacineRepository {
       }
     } catch (e) {
       print('Error Insert $e');
+    }
+  }
+  Future<List<VaccinesModel>> getAllVaccines() async {
+    try {
+      Dio? dio = CustomDio().instance;
+
+      final storage = FlutterSecureStorage();
+
+      final token = await storage.read(key: "cookie");
+      dio!.options.headers["Cookie"] = token;
+
+      final response = await dio.post(API_URL + 'vaccines');
+
+      if (response.statusCode == 200) {
+        return (response.data as List).map<VaccinesModel>((e) {
+          return VaccinesModel.fromJson(e);
+        }).toList();
+
+      } else {
+        print('Error code ${response.statusCode}');
+        return [];
+      }
+    } catch (e) {
+      return Future.error(e);
     }
   }
 }

@@ -46,7 +46,7 @@ class CustomExpansionTile extends StatelessWidget {
               child: Text("Dose   "),
             ),
             DropdownButton<String>(
-              value: _applyVaccineController.selectDose.value,
+              value: "_applyVaccineController.selectDose.value",
               elevation: 16,
               //style: const TextStyle(color: Colors.deepPurple),
               underline: Container(
@@ -55,7 +55,7 @@ class CustomExpansionTile extends StatelessWidget {
                 color: Colors.transparent,
               ),
               onChanged: (newValue) {
-                _applyVaccineController.selectDose.value = newValue!;
+                _applyVaccineController.selectDose.value = newValue! as int;
               },
               items: <String>['Única', '1º', '2º', '3º']
                   .map<DropdownMenuItem<String>>((String value) {

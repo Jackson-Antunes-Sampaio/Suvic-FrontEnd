@@ -11,11 +11,16 @@ class UserController extends GetxController {
   RxBool loading = false.obs;
 
   Future<String> loginIn(String email, String pass) async {
-    loading.value = true;
-    final response = await userRepository.loginUser(email, pass);
-    await loginDate();
-    loading.value = false;
-    return response;
+    try{
+      loading.value = true;
+      final response = await userRepository.loginUser(email, pass);
+      await loginDate();
+      loading.value = false;
+      return response;
+    }catch (e){
+      return Future.error(e);
+    }
+
   }
 
   Future<void> loginDate() async {
