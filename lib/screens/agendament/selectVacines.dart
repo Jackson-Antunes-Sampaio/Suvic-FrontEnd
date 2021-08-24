@@ -470,7 +470,7 @@ class _SelectVacineState extends State<SelectVacine> {
               );
             }),
       ),
-      bottomNavigationBar: BottomNavigationBarNew(),
+      //bottomNavigationBar: BottomNavigationBarNew(),
     );
   }
 }
