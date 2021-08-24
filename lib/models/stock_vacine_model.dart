@@ -3,18 +3,18 @@ class StockVacineModel {
   final String? idClinica;
   final String name;
   final String lote;
+  final int? reserved;
   final String dataValidade;
   final int quantidade;
-  final double valor;
 
   StockVacineModel({
     this.id,
     this.idClinica,
     required this.name,
     required this.lote,
+    this.reserved,
     required this.dataValidade,
     required this.quantidade,
-    required this.valor,
   });
 
   factory StockVacineModel.fromJson(Map<String, dynamic> json) =>
@@ -23,9 +23,9 @@ class StockVacineModel {
         idClinica: json['idClinica'],
         name: json['name'],
         lote: json['lote'],
+        reserved: json['reserved'],
         dataValidade: json['dataValidade'],
         quantidade: json['quantidade'],
-        valor: json['valor'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -33,8 +33,8 @@ class StockVacineModel {
         'idClinica': idClinica,
         "name": name,
         "lote": lote,
+        "reserved": reserved,
         "dataValidade": dataValidade,
         "quantidade": quantidade,
-        'valor': valor,
       };
 }

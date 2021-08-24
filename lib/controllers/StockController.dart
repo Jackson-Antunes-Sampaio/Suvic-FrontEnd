@@ -1,4 +1,4 @@
-import 'package:covid_19/controllers/user_controller.dart';
+import 'package:covid_19/models/priceVacine.dart';
 import 'package:covid_19/models/stock_vacine_model.dart';
 import 'package:covid_19/repositories/StockRepository.dart';
 import 'package:get/get.dart';
@@ -9,6 +9,8 @@ class StockController extends GetxController {
   List<String> vaccines = [];
   List<StockVacineModel> vaccineInStock = [];
   List<StockVacineModel> vaccineInChart = [];
+  List<PriceVacine> priceVaccine = [];
+
   bool loading = false;
 
   StockController() {
@@ -31,9 +33,62 @@ class StockController extends GetxController {
     }
   }
 
+  getPriceVaccines() async {
+    var getPricesVaccines = await repository.getPriceVaccine();
+
+    if (getPricesVaccines.isNotEmpty) {
+      getPricesVaccines.forEach((priceVaccines) {
+        priceVaccine.add(
+          PriceVacine(
+            vacine: priceVaccines['vaccine'],
+            price: priceVaccines['price'],
+          ),
+        );
+      });
+      update();
+    }
+  }
+
   getVaccinesInStock() async {
     loading = true;
+    vaccineInStock.clear();
+
     var getvaccinesStock = await repository.getStockVaccine();
+
+    if (getvaccinesStock.isNotEmpty) {
+      // print(getvaccinesStock);
+      getvaccinesStock.forEach((vaccine) {
+        var name;
+        if (vaccine['vaccine'] == null) {
+          name = '';
+        } else {
+          name = vaccine['vaccine']['name'];
+        }
+
+        vaccineInStock.add(
+          StockVacineModel(
+            name: name,
+            // name: 'Teste',
+            lote: vaccine['batch'] == null ? '' : vaccine['batch'],
+            reserved: vaccine['reserved'] == null ? '' : vaccine['reserved'],
+            dataValidade: vaccine['expirationdate'] == null
+                ? ''
+                : vaccine['expirationdate'],
+            quantidade: vaccine['count'],
+          ),
+        );
+      });
+      getFourMoreVaccines();
+      loading = false;
+      update();
+    }
+  }
+
+  getVaccinesInStockByClinic(String idClinic) async {
+    loading = true;
+    vaccineInStock.clear();
+
+    var getvaccinesStock = await repository.getStockVaccineByIdClinic(idClinic);
 
     if (getvaccinesStock.isNotEmpty) {
       // print(getvaccinesStock);
@@ -54,14 +109,9 @@ class StockController extends GetxController {
                 ? ''
                 : vaccine['expirationdate'],
             quantidade: vaccine['count'],
-            valor: 0,
           ),
         );
       });
-      getFourMoreVaccines();
-      loading = false;
-      update();
-    } else {
       loading = false;
       update();
     }
@@ -74,7 +124,21 @@ class StockController extends GetxController {
     update();
   }
 
+  delete(StockVacineModel vaccine) {
+    repository.delete(vaccine);
+    vaccineInStock.remove(vaccine);
+    getFourMoreVaccines();
+    update();
+  }
+
+  insertPrice(PriceVacine price) {
+    repository.insertPrice(price);
+    priceVaccine.add(price);
+    update();
+  }
+
   getFourMoreVaccines() {
+    vaccineInChart.clear();
     var vacineS = vaccineInStock;
     if (vacineS.isNotEmpty) {
       vacineS.sort((a, b) => b.quantidade.compareTo(a.quantidade));

@@ -66,7 +66,6 @@ class ClinicController extends GetxController {
                 ? ''
                 : vaccine['expirationdate'],
             quantidade: vaccine['count'],
-            valor: 0,
           ),
         );
       });

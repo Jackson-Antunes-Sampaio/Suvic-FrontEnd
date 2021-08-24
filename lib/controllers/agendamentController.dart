@@ -71,7 +71,7 @@ class AgentamentController extends GetxController {
       clinics.add({
         'id': element.id.toString(),
         'name': element.name.toString(),
-        'icon': 'assets/images/clinic60.png',
+        'icon': 'assets/images/hospital128.png',
         'position': {
           'latitude': element.latitude,
           'longitude': element.longitude

@@ -5,6 +5,7 @@ import 'package:covid_19/screens/agendament/autocomplete/data/getTime.dart';
 import 'package:covid_19/utils/styles/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -75,10 +76,10 @@ class _SelectVacineState extends State<SelectVacine> {
                       height: 70,
                       child: ListTile(
                         leading: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: 20,
-                            child:
-                                Text('Logo', style: TextStyle(fontSize: 10))),
+                          backgroundColor: Colors.white,
+                          radius: 20,
+                          child: FaIcon(FontAwesomeIcons.hospitalSymbol),
+                        ),
                         title: Text(
                           clinic.name!,
                           style: TextStyle(color: Colors.white),

@@ -2,12 +2,15 @@ import 'package:covid_19/common/botton_navigation_bar/bottom_navigation_bar_new.
 import 'package:covid_19/common/text_fiel_custom.dart';
 import 'package:covid_19/controllers/StockController.dart';
 import 'package:covid_19/controllers/user_controller.dart';
+import 'package:covid_19/models/priceVacine.dart';
 import 'package:covid_19/models/stock_vacine_model.dart';
 import 'package:covid_19/screens/stock/autocomplete/textFormField.dart';
 import 'package:covid_19/screens/stock/graphics/pie_chart.dart';
 import 'package:covid_19/utils/styles/style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class Stock extends StatefulWidget {
@@ -18,7 +21,7 @@ class Stock extends StatefulWidget {
 }
 
 class _StockState extends State<Stock> {
-  TextEditingController vacine = TextEditingController();
+  TextEditingController vaccine = TextEditingController();
   TextEditingController lote = TextEditingController();
   TextEditingController datavalidade = TextEditingController();
   TextEditingController quantidade = TextEditingController();
@@ -77,6 +80,10 @@ class _StockState extends State<Stock> {
 
   Widget listProductInStock(StockController controller) {
     var vacines = controller.vaccineInStock;
+    var prices = controller.priceVaccine;
+    var price = 0.0;
+    final oCcy = NumberFormat("R\$ #,##0.00", "en_US");
+
     return vacines.length == 0
         ? Center(child: Text('Sem vacina em Stock'))
         : Padding(
@@ -84,17 +91,74 @@ class _StockState extends State<Stock> {
             child: ListView.builder(
                 itemCount: vacines.length,
                 itemBuilder: (context, index) {
-                  return Card(
-                    child: ExpansionTile(
-                      leading: Icon(
-                        Icons.medication,
-                        color: kPrimaryColor,
-                      ),
-                      title: Text(vacines[index].name),
-                      subtitle: Text(
-                        'Quantidade(${vacines[index].quantidade})',
+                  if ((prices.where((element) =>
+                          element.vacine == vacines[index].name)).length !=
+                      0) {
+                    price = prices
+                        .firstWhere(
+                            (element) => element.vacine == vacines[index].name)
+                        .price;
+                  }
+                  return Slidable(
+                    actionPane: SlidableDrawerActionPane(),
+                    actionExtentRatio: 0.25,
+                    child: Container(
+                      color: Colors.white,
+                      child: Card(
+                        child: ExpansionTile(
+                          leading: Icon(
+                            Icons.medication,
+                            color: kPrimaryColor,
+                          ),
+                          title: Text(vacines[index].name),
+                          subtitle: Text(
+                            'Quantidade(${vacines[index].quantidade})',
+                          ),
+                          children: [
+                            ListTile(
+                              leading: Icon(Icons.add_box),
+                              title: Text('Lote'),
+                              subtitle: Text(vacines[index].lote),
+                            ),
+                            ListTile(
+                              leading: Icon(Icons.calendar_today),
+                              title: Text('Data de Validade'),
+                              subtitle: Text(vacines[index].dataValidade),
+                            ),
+                            ListTile(
+                              leading: Icon(Icons.schedule),
+                              title: Text('Reservadas'),
+                              subtitle:
+                                  Text(vacines[index].reserved.toString()),
+                            ),
+                            ListTile(
+                              leading: Icon(Icons.attach_money),
+                              title: Text('Valor'),
+                              subtitle: Text(oCcy.format(price)),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
+                    actions: <Widget>[
+                      IconSlideAction(
+                        color: Colors.blue,
+                        icon: Icons.add,
+                        onTap: () => _add(vacines[index]),
+                      ),
+                      IconSlideAction(
+                        color: Colors.indigo,
+                        icon: Icons.remove,
+                        onTap: () => _remove(vacines[index]),
+                      ),
+                    ],
+                    secondaryActions: <Widget>[
+                      IconSlideAction(
+                        color: Colors.red,
+                        icon: Icons.delete,
+                        onTap: () => controller.delete(vacines[index]),
+                      ),
+                    ],
                   );
                 }),
           );
@@ -130,7 +194,7 @@ class _StockState extends State<Stock> {
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    autocompleVaccines(context, vacine),
+                    autocompleVaccines(context, vaccine),
                     SizedBox(
                       height: 10,
                     ),
@@ -243,23 +307,207 @@ class _StockState extends State<Stock> {
   void addVacineInStock(StockController controller) {
     if (_formKey.currentState!.validate()) {
       //valid name of vacine
-      if (controller.vaccines.contains(vacine.text)) {
+      if (controller.vaccines.contains(vaccine.text)) {
         controller.insert(
           StockVacineModel(
-            name: vacine.text,
+            name: vaccine.text,
             lote: lote.text,
             dataValidade: datavalidade.text,
             quantidade: int.parse(quantidade.text),
-            valor: double.parse(valor.text),
+          ),
+        );
+        controller.insertPrice(
+          PriceVacine(
+            vacine: vaccine.text,
+            price: double.parse(valor.text),
           ),
         );
       } else {
         Get.snackbar(
           'Erro no Formulario',
-          'Selecione um nome valido na de lista de vacinas',
+          'Selecione nome valido na lista de vacinas',
+          colorText: Colors.white,
           backgroundColor: Colors.deepOrange,
         );
       }
     }
+  }
+
+  _add(StockVacineModel vacine) {
+    Get.defaultDialog(
+      radius: 5,
+      title: 'Adicionar',
+      content: Container(
+        width: 350,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: TextFormField(
+                enabled: false,
+                initialValue: vacine.name,
+                decoration: InputDecoration(
+                  isDense: true,
+                  prefixIcon: Icon(Icons.medication),
+                  //enabledBorder: InputBorder.none,
+                  border: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      const Radius.circular(10.0),
+                    ),
+                  ),
+                ),
+                keyboardType: TextInputType.number,
+              ),
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                isDense: true,
+                prefixIcon: Icon(Icons.plus_one),
+                labelText: 'Quantidade',
+                hintText: 'Quantidade',
+                //enabledBorder: InputBorder.none,
+                border: OutlineInputBorder(
+                  borderRadius: const BorderRadius.all(
+                    const Radius.circular(10.0),
+                  ),
+                ),
+              ),
+              keyboardType: TextInputType.number,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: 150,
+                    child: ElevatedButton(
+                      onPressed: () => Get.back(),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          Color(0xff303f9f),
+                        ),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                        ),
+                      ),
+                      child: Text('Cancelar'),
+                    ),
+                  ),
+                  Container(
+                    width: 150,
+                    child: ElevatedButton(
+                      onPressed: () => Get.back(),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          Color(0xff303f9f),
+                        ),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                        ),
+                      ),
+                      child: Text('Adicionar'),
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  _remove(StockVacineModel vacine) {
+    Get.defaultDialog(
+      radius: 5,
+      title: 'Reduzir',
+      content: Container(
+        width: 350,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: TextFormField(
+                enabled: false,
+                initialValue: vacine.name,
+                decoration: InputDecoration(
+                  isDense: true,
+                  prefixIcon: Icon(Icons.medication),
+                  //enabledBorder: InputBorder.none,
+                  border: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      const Radius.circular(10.0),
+                    ),
+                  ),
+                ),
+                keyboardType: TextInputType.number,
+              ),
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                isDense: true,
+                prefixIcon: Icon(Icons.plus_one),
+                labelText: 'Quantidade',
+                hintText: 'Quantidade',
+                //enabledBorder: InputBorder.none,
+                border: OutlineInputBorder(
+                  borderRadius: const BorderRadius.all(
+                    const Radius.circular(10.0),
+                  ),
+                ),
+              ),
+              keyboardType: TextInputType.number,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: 150,
+                    child: ElevatedButton(
+                      onPressed: () => Get.back(),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          Color(0xff303f9f),
+                        ),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                        ),
+                      ),
+                      child: Text('Cancelar'),
+                    ),
+                  ),
+                  Container(
+                    width: 150,
+                    child: ElevatedButton(
+                      onPressed: () => Get.back(),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          Color(0xff303f9f),
+                        ),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                        ),
+                      ),
+                      child: Text('Reduzir'),
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
