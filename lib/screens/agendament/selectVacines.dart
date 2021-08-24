@@ -58,7 +58,7 @@ class _SelectVacineState extends State<SelectVacine> {
                             infoWindow: InfoWindow(title: clinic.name),
                             icon: await BitmapDescriptor.fromAssetImage(
                               ImageConfiguration(),
-                              'assets/images/clinic60.png',
+                              'assets/images/hospital128px.png',
                             ),
                           ),
                         );
