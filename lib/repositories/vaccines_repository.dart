@@ -1,4 +1,5 @@
 import 'package:covid_19/models/schedule_model.dart';
+import 'package:covid_19/models/vaccine_model.dart';
 import 'package:covid_19/models/vacine_card_model.dart';
 import 'package:covid_19/utils/constants.dart';
 import 'package:covid_19/utils/dio/custom_dio.dart';
@@ -54,7 +55,6 @@ class VaccineRepository {
       final token = await storage.read(key: "token");
       dio!.options.headers["Cookie"] = token;
 
-      print(dose);
       Map<String, dynamic> map = {
         "target" : cpf,
         "applicationDate" : date,
@@ -72,4 +72,31 @@ class VaccineRepository {
       return Future.error("error");
     }
   }
+
+  Future<List<VaccinesModel>> getAllVaccines() async {
+    try {
+
+      Dio? dio = CustomDio().instance;
+      final storage = FlutterSecureStorage();
+      final token = await storage.read(key: "token");
+      dio!.options.headers["Cookie"] = token;
+
+      final response = await dio.get(API_URL + 'vaccines');
+
+      print("response.data: ${response.data}");
+
+      if (response.statusCode == 200) {
+        return (response.data as List).map<VaccinesModel>((e) {
+          return VaccinesModel.fromJson(e);
+        }).toList();
+
+      } else {
+        print('Error code ${response.statusCode}');
+        return [];
+      }
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
 }

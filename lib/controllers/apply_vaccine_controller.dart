@@ -1,4 +1,5 @@
 import 'package:covid_19/models/schedule_model.dart';
+import 'package:covid_19/models/vaccine_model.dart';
 import 'package:covid_19/repositories/vaccines_repository.dart';
 import 'package:get/get.dart';
 
@@ -10,6 +11,13 @@ class ApplyVaccineController extends GetxController{
   //RxString userApply = ''.obs;
   VaccineRepository vaccineRepository = VaccineRepository();
   RxList<ScheduleModel> listvaccines = <ScheduleModel>[].obs;
+  List<VaccinesModel> listVaccines = [];
+
+  @override
+  void onInit() {
+    super.onInit();
+    getAllVaccines();
+  }
 
   Future<void> postUserVaccine(String cpf) async{
     try {
@@ -46,5 +54,12 @@ class ApplyVaccineController extends GetxController{
     listvaccines.value = [];
     stateApplyVaccine.value = StateApplyVaccine.SUCCESS;
 
+  }
+
+  getAllVaccines()async{
+    listVaccines = [];
+    var response = await vaccineRepository.getAllVaccines();
+    listVaccines.addAll(response);
+    print(listVaccines);
   }
 }

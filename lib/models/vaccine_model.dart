@@ -39,7 +39,7 @@ class Type {
   int? duration;
   String? manufacturer;
   int? numberOfDoses;
-  int? timeBetweenDoses;
+  String? timeBetweenDoses;
 
   Type(
       {this.duration,
@@ -51,7 +51,7 @@ class Type {
     duration = json['duration'];
     manufacturer = json['manufacturer'];
     numberOfDoses = json['numberOfDoses'];
-    timeBetweenDoses = json['timeBetweenDoses'];
+    timeBetweenDoses = json['timeBetweenDoses'].toString();
   }
 
   Map<String, dynamic> toJson() {

@@ -4,16 +4,11 @@ import 'package:get/get.dart';
 
 class VaccineController extends GetxController {
   var repository = StockVacineRepository();
-  List<VaccinesModel> listVaccines = [];
   List<String> vacines = [];
 
   static VaccineController get to => Get.find();
 
-  @override
-  void onInit() {
-    super.onInit();
-    getAllVaccines();
-  }
+
 
 
   VaccineController() {
@@ -30,12 +25,4 @@ class VaccineController extends GetxController {
     });
     update();
   }
-
-  getAllVaccines()async{
-    listVaccines = [];
-    var response = await repository.getAllVaccines();
-    listVaccines.addAll(response);
-    print(listVaccines);
-  }
-
 }
