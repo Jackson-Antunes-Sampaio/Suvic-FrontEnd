@@ -26,7 +26,10 @@ class ClinicController extends GetxController {
   List<StockVacineModel> vaccineInStock = [];
   List<StockVacineModel> vacineSelected = [];
 
-  ClinicController() {
+  //args
+  String? idClinic;
+
+  ClinicController({this.idClinic}) {
     getClinicAdress();
     getAllClinics();
     getVaccinesInStock();
@@ -44,19 +47,25 @@ class ClinicController extends GetxController {
 
   getVaccinesInStock() async {
     loading = true;
-    var getvaccinesStock = await repository.getStockVaccine();
+    var getvaccinesStock =
+        await repository.getStockVaccineByIdClinic(idClinic!);
 
     if (getvaccinesStock != null) {
       getvaccinesStock.forEach((vaccine) {
+        var name;
+        if (vaccine['vaccine'] == null) {
+          name = '';
+        } else {
+          name = vaccine['vaccine']['name'];
+        }
         vaccineInStock.add(
           StockVacineModel(
-            name: vaccine['vaccine']['name'],
+            name: name,
             lote: vaccine['batch'] == null ? '' : vaccine['batch'],
             dataValidade: vaccine['expirationdate'] == null
                 ? ''
                 : vaccine['expirationdate'],
             quantidade: vaccine['count'],
-            valor: 0,
           ),
         );
       });

@@ -15,6 +15,7 @@ import 'package:covid_19/screens/notify_covid/notify_covid_screen.dart';
 import 'package:covid_19/screens/register_applicator/registration_users_screen.dart';
 import 'package:covid_19/screens/splash/splash_screen.dart';
 import 'package:covid_19/screens/stock/dashboard.dart';
+import 'package:covid_19/screens/stock/stock_new.dart';
 import 'package:covid_19/screens/vaccine_card/vaccine_card_screen.dart';
 import 'package:covid_19/screens/webview_suvic/webview_suvic_screen.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
@@ -65,41 +66,34 @@ class AppPage {
     ),
     GetPage(
       name: Routes.StockVacina,
-      page: () => DashboardStock(),
+      page: () => Stock(),
     ),
     GetPage(
       name: Routes.AGENDAMENT,
       page: () => Agendament(),
     ),
-
+    GetPage(name: Routes.CREDITCARDS, page: () => CreditCardScreen()),
+    GetPage(name: Routes.CREDITCARDS2, page: () => CreditCardNewScreen()),
+    GetPage(name: Routes.CONNECT, page: () => NotConnect()),
     GetPage(
-        name: Routes.CREDITCARDS,
-        page: ()=> CreditCardScreen()),
-    GetPage(
-        name: Routes.CREDITCARDS2,
-        page: ()=> CreditCardNewScreen()),
-    GetPage(
-        name: Routes.CONNECT,
-        page: ()=> NotConnect()),
-    GetPage(
-        name: Routes.PRODUCTCARD,
-        page: ()=> ProductCardScreen(),
+      name: Routes.PRODUCTCARD,
+      page: () => ProductCardScreen(),
     ),
     GetPage(
       name: Routes.APPLYVACCINE,
-      page: ()=> ApplyVaccineScreen(),
+      page: () => ApplyVaccineScreen(),
     ),
     GetPage(
       name: Routes.HISTORICVACCINE,
-      page: ()=> HistoricVaccineScreen(),
+      page: () => HistoricVaccineScreen(),
     ),
     GetPage(
       name: Routes.SINGUP,
-      page: ()=> SingUp(),
+      page: () => SingUp(),
     ),
     GetPage(
       name: Routes.AGENDAM,
-      page: ()=> Agendam(),
+      page: () => Agendam(),
     ),
   ];
 }

@@ -13,14 +13,21 @@ class ClinicRepository {
       Dio? dio = CustomDio().instance;
       final storage = FlutterSecureStorage();
       final token = await storage.read(key: "token");
+      print('Tokenn:' + token.toString());
       dio!.options.headers["Cookie"] = token;
-      final response = await dio.get(API_URL + 'clinics');
+      // final response = await dio.get(API_URL + 'clinics');
+      final response = await dio.post(
+        API_URL + 'clinics/search',
+        data: {
+          "city": 'Porto Alegre',
+        },
+      );
 
       List<dynamic> data = response.data ?? [];
       List<ClinicModel> clinics = [];
 
       data.forEach((element) {
-        print('mirror:' + element.toString());
+        // print('mirror:' + element.toString());
         clinics.add(
           ClinicModel(
             id: element['id']!,
@@ -39,7 +46,8 @@ class ClinicRepository {
       print(e);
       Get.snackbar(
         'Erro',
-        e.toString(),
+        // e.toString(),
+        'Incapaz de obter as clínicas, verifique sua conexão',
         colorText: Colors.white,
         backgroundColor: Colors.red,
         snackPosition: SnackPosition.BOTTOM,
@@ -67,13 +75,14 @@ class ClinicRepository {
       var localClinic = locations.first;
 
       return ClinicModel(
-          id: clinic.id,
-          name: clinic.name,
-          phone: clinic.phone,
-          email: clinic.email,
-          address: clinic.address,
-          latitude: localClinic.latitude,
-          longitude: localClinic.latitude);
+        id: clinic.id,
+        name: clinic.name,
+        phone: clinic.phone,
+        email: clinic.email,
+        address: clinic.address,
+        latitude: localClinic.latitude,
+        longitude: localClinic.latitude,
+      );
     } catch (e) {
       print(e);
       Future.error('Não foi possível localizar a clínica');

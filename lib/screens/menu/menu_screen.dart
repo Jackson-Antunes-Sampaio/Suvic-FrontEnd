@@ -3,6 +3,7 @@ import 'package:covid_19/routes/app_page.dart';
 import 'package:covid_19/screens/agendament/agendam.dart';
 
 import 'package:covid_19/screens/menu/components/header_menu.dart';
+import 'package:covid_19/screens/stock/stock_new.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -79,7 +80,8 @@ class MenuScreen extends StatelessWidget {
                     title: Text('Estoque'),
                     trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () {
-                      Get.toNamed(Routes.StockVacina);
+                      // Get.toNamed(Routes.StockVacina);
+                      Get.to(Stock());
                     },
                   ),
                 ),
@@ -90,7 +92,6 @@ class MenuScreen extends StatelessWidget {
                     title: Text('Cartão de Credito'),
                     trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () {
-
                       Get.toNamed(Routes.PRODUCTCARD);
                     },
                   ),
