@@ -1,20 +1,37 @@
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:covid_19/common/button_custom.dart';
+import 'package:covid_19/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 import 'components/input_text_field.dart';
 import 'components/label_text.dart';
 
 class SingUp extends StatefulWidget {
-  const SingUp({Key? key}) : super(key: key);
+
+  SingUp({Key? key}) : super(key: key);
+
+
 
   @override
   _SingUpState createState() => _SingUpState();
 }
 
 class _SingUpState extends State<SingUp> {
+
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController cpfController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passController = TextEditingController();
+  final TextEditingController confirmPassController = TextEditingController();
+  final TextEditingController birthdateController = TextEditingController();
+  final UserController userController = UserController();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         title: Text("Criar conta"),
       ),
@@ -28,6 +45,7 @@ class _SingUpState extends State<SingUp> {
                 child: labelText('Nome:'),
               ),
               InputTextField(
+                controller: nameController,
                 hintText: "Nome",
                 obscureText: false,
               ),
@@ -39,6 +57,12 @@ class _SingUpState extends State<SingUp> {
                 child: labelText('CPF:'),
               ),
               InputTextField(
+                controller: cpfController,
+                textInputType: TextInputType.number,
+                textInputFormatter: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  CpfInputFormatter(),
+                ],
                 hintText: "CPF",
                 obscureText: false,
               ),
@@ -50,7 +74,26 @@ class _SingUpState extends State<SingUp> {
                 child: labelText('Email:'),
               ),
               InputTextField(
+                controller: emailController,
                 hintText: "Email",
+                textInputType: TextInputType.emailAddress,
+                obscureText: false,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: labelText('Data de nascimento:'),
+              ),
+              InputTextField(
+                controller: birthdateController,
+                textInputFormatter: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  DataInputFormatter()
+                ],
+                hintText: "21/04/1993",
+                textInputType: TextInputType.number,
                 obscureText: false,
               ),
               SizedBox(
@@ -61,6 +104,7 @@ class _SingUpState extends State<SingUp> {
                 child: labelText('Senha:'),
               ),
               InputTextField(
+                controller: passController,
                 hintText: "*******",
                 obscureText: true,
               ),
@@ -69,15 +113,36 @@ class _SingUpState extends State<SingUp> {
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                child: labelText('Confirma Senha:'),
+                child: labelText('Confirmar Senha:'),
               ),
               InputTextField(
+                controller: confirmPassController,
                 hintText: "*******",
                 obscureText: true,
               ),
               SizedBox(height: 20,),
               ButtonCustom(
-                  onPressed: (){},
+                  onPressed: (){
+                    userController.singUp(
+                      nameController.text,
+                      emailController.text,
+                      cpfController.text,
+                      passController.text,
+                      confirmPassController.text,
+                      birthdateController.text
+                    ).then((value){
+                      if(value){
+                        scaffoldKey.currentState?.showSnackBar(
+                          SnackBar(content: Text("${userController.message}"))
+                        );
+                        Get.back();
+                      }else{
+                        scaffoldKey.currentState?.showSnackBar(
+                            SnackBar(content: Text("${userController.message}",), backgroundColor: Colors.red,)
+                        );
+                      }
+                    });
+                  },
                   title: "Cadastra-se",
               )
             ],

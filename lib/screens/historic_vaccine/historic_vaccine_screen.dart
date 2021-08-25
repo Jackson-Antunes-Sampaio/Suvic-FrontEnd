@@ -66,12 +66,14 @@ class _HistoricVaccineScreenState extends State<HistoricVaccineScreen> {
                     ListView.builder(
                         shrinkWrap: true,
                         physics: new NeverScrollableScrollPhysics(),
-                        itemCount:
-                            historicVaccineController.listFilterHistoric.length,
+                        itemCount: historicVaccineController.listFilterHistoric.length,
                         itemBuilder: (build, index) {
+                          String applicationDate = historicVaccineController.listFilterHistoric[index].applicationDate ?? "2021-08-24";
+                          if(applicationDate == "2021-8-24"){
+                            applicationDate = "2021-08-24";
+                          }
                           return CardHistoricVaccine(
-                            applicationDate: historicVaccineController
-                                .listFilterHistoric[index].applicationDate!,
+                            applicationDate: applicationDate,
                             doseNumber: historicVaccineController
                                 .listFilterHistoric[index].doseNumber!,
                             user: historicVaccineController

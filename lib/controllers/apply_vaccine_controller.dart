@@ -46,9 +46,9 @@ class ApplyVaccineController extends GetxController{
     stateApplyVaccine.value = StateApplyVaccine.LOADING;
     List<String> responses = [];
     for(var item in listvaccines){
-      //String date = "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}";
+      String date = "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2,'0')}-${DateTime.now().day.toString().padLeft(2,'0')}";
       String response = await vaccineRepository.postApplyVaccine(
-          item.cpf!, item.date!, item.vaccine!.name!, item.vaccine!.dose!, item.vaccine?.manufacturer);
+          item.cpf!, date, item.vaccine!.name!, item.vaccine!.dose!, item.vaccine?.manufacturer);
     }
     print(responses);
     listvaccines.value = [];

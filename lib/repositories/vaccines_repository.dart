@@ -63,6 +63,7 @@ class VaccineRepository {
         "doseNumber" : dose,
         "manufacturer" : manufacturer
       };
+      print("date: ${date}");
       final response = await dio.post(API_URL + "users/vaccinecard", data: map);
       print(response);
 

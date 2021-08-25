@@ -111,19 +111,25 @@ class _VaccineCardScreenState extends State<VaccineCardScreen> {
                       physics: new NeverScrollableScrollPhysics(),
                       itemCount: vaccinesController.vaccinesFilterCard.length,
                       itemBuilder: (build, index) {
-                        String date = vaccinesController
-                                .vaccinesFilterCard[index].applicationDate!
-                                .split("-")
-                                .last +
-                            "/" +
-                            vaccinesController
-                                .vaccinesFilterCard[index].applicationDate!
-                                .split("-")[1] +
-                            "/" +
-                            vaccinesController
-                                .vaccinesFilterCard[index].applicationDate!
-                                .split("-")
-                                .first;
+                        String date;
+                        if(vaccinesController.vaccinesFilterCard[index].applicationDate == null){
+                          date = "-";
+                        }else{
+                          date = vaccinesController
+                              .vaccinesFilterCard[index].applicationDate!
+                              .split("-")
+                              .last +
+                              "/" +
+                              vaccinesController
+                                  .vaccinesFilterCard[index].applicationDate!
+                                  .split("-")[1] +
+                              "/" +
+                              vaccinesController
+                                  .vaccinesFilterCard[index].applicationDate!
+                                  .split("-")
+                                  .first;
+                        }
+
                         return VaccineItem(
                             title:
                                 "${vaccinesController.vaccinesFilterCard[index].vaccine?.name}",
