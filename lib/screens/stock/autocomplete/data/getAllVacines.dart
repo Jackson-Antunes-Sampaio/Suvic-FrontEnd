@@ -7,6 +7,8 @@ class GetAllVacines {
     await Future.delayed(Duration(seconds: 1));
     StockController stockController = Get.find();
 
+    print('Vaccines' + stockController.vaccineInStock.toString());
+
     List<String> vaccines = [];
     stockController.vaccines.forEach((element) {
       vaccines.add(element);

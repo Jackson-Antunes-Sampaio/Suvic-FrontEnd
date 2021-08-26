@@ -1,9 +1,25 @@
+// import 'package:flutter/material.dart';
+
+// class Scheduled extends StatefulWidget {
+//   const Scheduled({Key? key}) : super(key: key);
+
+//   @override
+//   _ScheduledState createState() => _ScheduledState();
+// }
+
+// class _ScheduledState extends State<Scheduled> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold();
+//   }
+// }
+
 import 'package:covid_19/common/botton_navigation_bar/bottom_navigation_bar_new.dart';
-import 'package:covid_19/common/text_fiel_custom.dart';
 import 'package:covid_19/controllers/StockController.dart';
 import 'package:covid_19/controllers/user_controller.dart';
 import 'package:covid_19/models/priceVacine.dart';
 import 'package:covid_19/models/stock_vacine_model.dart';
+import 'package:covid_19/screens/agendament/graphics/pie_chart.dart';
 import 'package:covid_19/screens/stock/autocomplete/textFormField.dart';
 import 'package:covid_19/screens/stock/graphics/pie_chart.dart';
 import 'package:covid_19/utils/styles/style.dart';
@@ -13,14 +29,14 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-class Stock extends StatefulWidget {
-  const Stock({Key? key}) : super(key: key);
+class Scheduled extends StatefulWidget {
+  const Scheduled({Key? key}) : super(key: key);
 
   @override
-  _StockState createState() => _StockState();
+  _ScheduledState createState() => _ScheduledState();
 }
 
-class _StockState extends State<Stock> {
+class _ScheduledState extends State<Scheduled> {
   TextEditingController vaccine = TextEditingController();
   TextEditingController lote = TextEditingController();
   TextEditingController datavalidade = TextEditingController();
@@ -42,9 +58,9 @@ class _StockState extends State<Stock> {
             automaticallyImplyLeading: false,
             backgroundColor: kPrimaryColor,
             bottom: TabBar(indicatorColor: Colors.white, tabs: [
-              Tab(child: Text('Estatiscas'), icon: Icon(Icons.list)),
+              Tab(child: Text('Concluídos'), icon: Icon(Icons.done)),
               Tab(child: Text('Dashboard'), icon: Icon(Icons.dashboard)),
-              Tab(child: Text('Adicionar'), icon: Icon(Icons.add)),
+              Tab(child: Text('Pendentes'), icon: Icon(Icons.schedule)),
             ]),
           ),
           body: GetBuilder<StockController>(
@@ -62,13 +78,13 @@ class _StockState extends State<Stock> {
                       )
                     : TabBarView(children: [
                         Center(
-                          child: listProductInStock(controller),
+                          child: agendamentDone(controller),
                         ),
                         Center(
                           child: dashbaordTabPage(controller),
                         ),
                         Center(
-                          child: addProductStock(controller),
+                          child: agendamentPendent(controller),
                         ),
                       ]);
               }),
@@ -78,14 +94,14 @@ class _StockState extends State<Stock> {
     );
   }
 
-  Widget listProductInStock(StockController controller) {
+  Widget agendamentDone(StockController controller) {
     var vacines = controller.vaccineInStock;
     var prices = controller.priceVaccine;
     var price = 0;
     final oCcy = NumberFormat("R\$ #,##0.00", "en_US");
 
     return vacines.length == 0
-        ? Center(child: Text('Sem vacina em Stock'))
+        ? Center(child: Text('Sem agendamentos concluídos'))
         : Padding(
             padding: const EdgeInsets.all(10.0),
             child: ListView.builder(
@@ -171,7 +187,7 @@ class _StockState extends State<Stock> {
             child: Container(
               width: double.maxFinite,
               height: 600,
-              child: PieChartStock(vaccines: controller.vaccineInChart),
+              child: PieChartScheduled(vaccines: controller.vaccineInChart),
             ),
           )
         : Center(
@@ -179,129 +195,90 @@ class _StockState extends State<Stock> {
           );
   }
 
-  Widget addProductStock(StockController controller) {
-    var maskDate = new MaskTextInputFormatter(mask: '##-##-####');
+  Widget agendamentPendent(StockController controller) {
+    var vacines = controller.vaccineInStock;
+    var prices = controller.priceVaccine;
+    var price = 0;
+    final oCcy = NumberFormat("R\$ #,##0.00", "en_US");
 
-    return SingleChildScrollView(
-      child: Container(
-        padding: EdgeInsets.only(top: 30, bottom: 150),
-        child: Column(
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(left: 20, right: 20),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    autocompleVaccines(context, vaccine),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
-                      controller: lote,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        prefixIcon: Icon(Icons.add_box),
-                        labelText: 'Lote',
-                        hintText: 'Lote',
-                        //enabledBorder: InputBorder.none,
-                        border: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(
-                            const Radius.circular(10.0),
+    return vacines.length == 0
+        ? Center(child: Text('Sem vacina em Stock'))
+        : Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ListView.builder(
+                itemCount: vacines.length,
+                itemBuilder: (context, index) {
+                  if ((prices.where((element) =>
+                          element.vacine == vacines[index].name)).length !=
+                      0) {
+                    price = prices
+                        .firstWhere(
+                            (element) => element.vacine == vacines[index].name)
+                        .price;
+                  }
+                  return Slidable(
+                    actionPane: SlidableDrawerActionPane(),
+                    actionExtentRatio: 0.25,
+                    child: Container(
+                      color: Colors.white,
+                      child: Card(
+                        child: ExpansionTile(
+                          leading: Icon(
+                            Icons.medication,
+                            color: kPrimaryColor,
                           ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
-                      controller: datavalidade,
-                      inputFormatters: [maskDate],
-                      decoration: InputDecoration(
-                        isDense: true,
-                        prefixIcon: Icon(Icons.calendar_today),
-                        labelText: 'Data de Validade',
-                        hintText: 'Data de Validade',
-                        //enabledBorder: InputBorder.none,
-                        border: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(
-                            const Radius.circular(10.0),
+                          title: Text(vacines[index].name),
+                          subtitle: Text(
+                            'Quantidade(${vacines[index].quantidade})',
                           ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
-                      controller: quantidade,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        prefixIcon: Icon(Icons.plus_one),
-                        labelText: 'Quantidade',
-                        hintText: 'Quantidade',
-                        //enabledBorder: InputBorder.none,
-                        border: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(
-                            const Radius.circular(10.0),
-                          ),
-                        ),
-                      ),
-                      keyboardType: TextInputType.number,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
-                      controller: valor,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        prefixIcon: Icon(Icons.attach_money),
-                        labelText: 'Valor',
-                        hintText: 'Valor',
-
-                        //enabledBorder: InputBorder.none,
-                        border: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(
-                            const Radius.circular(10.0),
-                          ),
-                        ),
-                      ),
-                      keyboardType: TextInputType.number,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    // ButtonCustom(onPressed: () {}, title: "Adicionar"),
-                    Container(
-                      width: double.maxFinite,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          addVacineInStock(controller);
-                        },
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                            Color(0xff303f9f),
-                          ),
-                          shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
+                          children: [
+                            ListTile(
+                              leading: Icon(Icons.add_box),
+                              title: Text('Lote'),
+                              subtitle: Text(vacines[index].lote),
                             ),
-                          ),
+                            ListTile(
+                              leading: Icon(Icons.calendar_today),
+                              title: Text('Data de Validade'),
+                              subtitle: Text(vacines[index].dataValidade),
+                            ),
+                            ListTile(
+                              leading: Icon(Icons.schedule),
+                              title: Text('Reservadas'),
+                              subtitle:
+                                  Text(vacines[index].reserved.toString()),
+                            ),
+                            ListTile(
+                              leading: Icon(Icons.attach_money),
+                              title: Text('Valor'),
+                              subtitle: Text(oCcy.format(price)),
+                            ),
+                          ],
                         ),
-                        child: Text('Adicionar'),
                       ),
-                    )
-                  ],
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+                    ),
+                    actions: <Widget>[
+                      IconSlideAction(
+                        color: Colors.blue,
+                        icon: Icons.add,
+                        onTap: () => _add(vacines[index]),
+                      ),
+                      IconSlideAction(
+                        color: Colors.indigo,
+                        icon: Icons.remove,
+                        onTap: () => _remove(vacines[index]),
+                      ),
+                    ],
+                    secondaryActions: <Widget>[
+                      IconSlideAction(
+                        color: Colors.red,
+                        icon: Icons.delete,
+                        onTap: () => controller.delete(vacines[index]),
+                      ),
+                    ],
+                  );
+                }),
+          );
   }
 
   void addVacineInStock(StockController controller) {

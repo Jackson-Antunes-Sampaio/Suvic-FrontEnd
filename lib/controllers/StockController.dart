@@ -12,14 +12,21 @@ class StockController extends GetxController {
   List<PriceVacine> priceVaccine = [];
 
   bool loading = false;
+  String? idClinic;
 
-  StockController() {
-    init();
+  StockController({this.idClinic}) {
+    var id = idClinic ?? '';
+    if (id.isNotEmpty) {
+      getVaccinesInStockByClinic(idClinic!);
+    } else {
+      init();
+    }
   }
 
   init() {
     getVaccinesInStock();
     getVaccines();
+    getPriceVaccines();
   }
 
   getVaccines() async {
@@ -40,8 +47,8 @@ class StockController extends GetxController {
       getPricesVaccines.forEach((priceVaccines) {
         priceVaccine.add(
           PriceVacine(
-            vacine: priceVaccines['vaccine'],
-            price: priceVaccines['price'],
+            vacine: priceVaccines['vaccine']['name'],
+            price: priceVaccines['value'],
           ),
         );
       });
@@ -86,9 +93,9 @@ class StockController extends GetxController {
 
   getVaccinesInStockByClinic(String idClinic) async {
     loading = true;
-    vaccineInStock.clear();
 
     var getvaccinesStock = await repository.getStockVaccineByIdClinic(idClinic);
+    vaccineInStock.clear();
 
     if (getvaccinesStock.isNotEmpty) {
       // print(getvaccinesStock);
