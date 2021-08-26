@@ -1,3 +1,4 @@
+import 'package:covid_19/models/vaccine_model.dart';
 import 'package:covid_19/repositories/stock_vacine_repository.dart';
 import 'package:get/get.dart';
 
@@ -6,6 +7,9 @@ class VaccineController extends GetxController {
   List<String> vacines = [];
 
   static VaccineController get to => Get.find();
+
+
+
 
   VaccineController() {
     getAll();

@@ -46,6 +46,7 @@ class LoginScreen extends StatelessWidget {
                     child: labelText('E-mail:'),
                   ),
                   InputTextField(
+                    controller: email,
                     hintText: "exemplo@email.com",
                     obscureText: false,
                   ),
@@ -57,6 +58,7 @@ class LoginScreen extends StatelessWidget {
                     child: labelText('Senha:'),
                   ),
                   InputTextField(
+                    controller: pass,
                     hintText: "*******",
                     obscureText: true,
                   ),
@@ -90,14 +92,14 @@ class LoginScreen extends StatelessWidget {
                                   "Conexão", "Sem conexão com a internet");
                             } else {
                               final String response = await userController
-                                  .loginIn("jackson@email.com", "jackson");
+                                  .loginIn(email.text, pass.text);
                               if (response == "Usuario Logado!") {
                                 Get.offNamed(Routes.BASE);
                               } else {
-                                Get.snackbar(
-                                  "Falha ao Entrar",
-                                  "$response",
-                                );
+                                // Get.snackbar(
+                                //   "Falha ao Entrar",
+                                //   "$response",
+                                // );
                                 final snackBar = SnackBar(
                                   content: Text('$response'),
                                   backgroundColor: Colors.red,

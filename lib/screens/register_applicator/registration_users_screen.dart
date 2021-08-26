@@ -8,47 +8,85 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class RegisterApplicator extends StatelessWidget {
-
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final RegisterApplicatorController registerApplicatorController = Get.put(RegisterApplicatorController());
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final RegisterApplicatorController registerApplicatorController =
+      Get.put(RegisterApplicatorController());
+  final TextEditingController cpfController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       bottomNavigationBar: BottomNavigationBarNew(),
       appBar: AppBar(
         title: Text("Cadastrar Aplicador"),
       ),
       body: SingleChildScrollView(
         child: Form(
-          key: formKey,
+          key: _formKey,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             child: Column(
               children: [
-                TextFieldCustom(
-                  iconData: Icons.list,
-                  hintText: '000.000.000-00',
-                  labelText: 'CPF',
-                  textInputType: TextInputType.name,
-                  onChanged: (text){
-                    if(text.length == 14){
-                      print("AQUI");
-                      registerApplicatorController.postRegisterApplicator(text.replaceAll(".", "").replaceAll("-", ""));
-
-                    }
-                  },
-                  textInputFormatter: [
-                    FilteringTextInputFormatter.digitsOnly,
-                    CpfInputFormatter(),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFieldCustom(
+                        controller: cpfController,
+                        iconData: Icons.list,
+                        hintText: '000.000.000-00',
+                        labelText: 'CPF',
+                        textInputType: TextInputType.number,
+                        onChanged: (text) {},
+                        textInputFormatter: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          CpfInputFormatter(),
+                        ],
+                        validator: (text) {
+                          if (text?.length != 14) {
+                            return 'Validar Campo';
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    RaisedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          registerApplicatorController
+                              .postRegisterApplicator(cpfController.text
+                                  .replaceAll(".", "")
+                                  .replaceAll("-", ""))
+                              .then((value) {
+                            if (value) {
+                              _scaffoldKey.currentState!.showSnackBar(
+                                SnackBar(content: Text("Aplicador cadastrado com sucesso."))
+                              );
+                            } else {
+                              _scaffoldKey.currentState!.showSnackBar(
+                                  SnackBar(content: Text("Usuario não encontrado no banco de dados."), backgroundColor: Colors.red,)
+                              );
+                            }
+                          });
+                        } else {
+                          _scaffoldKey.currentState!.showSnackBar(SnackBar(
+                            content: Text(
+                              "CPF incompleto",
+                            ),
+                            backgroundColor: Colors.red,
+                          ));
+                        }
+                      },
+                      color: Theme.of(context).primaryColor,
+                      textColor: Colors.white,
+                      child: Text("Cadastrar"),
+                    )
                   ],
-                  validator: (text){
-                    if(text != null){
-                      return 'Validar Campo';
-                    }else{
-                      return null;
-                    }
-                  },
                 ),
                 // SizedBox(height: 10,),
                 // ButtonCustom(

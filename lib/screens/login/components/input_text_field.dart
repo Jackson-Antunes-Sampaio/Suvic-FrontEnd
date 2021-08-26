@@ -1,12 +1,16 @@
 import 'package:covid_19/utils/styles/style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class InputTextField extends StatelessWidget {
 
-  InputTextField({required this.hintText, required this.obscureText});
+  InputTextField({required this.hintText, required this.obscureText, this.controller, this.textInputFormatter, this.textInputType});
 
   final String hintText;
   final bool obscureText;
+  final TextEditingController? controller;
+  final List<TextInputFormatter>? textInputFormatter;
+  final TextInputType? textInputType;
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +21,9 @@ class InputTextField extends StatelessWidget {
       decoration: raisedDecoration,
       child: Center(
         child: TextField(
+          inputFormatters: textInputFormatter,
+          keyboardType: textInputType,
+          controller: controller,
           obscureText: obscureText,
           decoration: InputDecoration(
               border: InputBorder.none,

@@ -14,6 +14,7 @@ class _VaccineCardScreenState extends State<VaccineCardScreen> {
   final controller = ScrollController();
   final VaccinesController vaccinesController = Get.put(VaccinesController());
   double offset = 0;
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -38,6 +39,7 @@ class _VaccineCardScreenState extends State<VaccineCardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       body: SingleChildScrollView(
         controller: controller,
         child: Column(
@@ -85,7 +87,11 @@ class _VaccineCardScreenState extends State<VaccineCardScreen> {
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: Colors.grey)),
                     child: FlatButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        scaffoldKey.currentState?.showSnackBar(
+                          SnackBar(content: Text("Em Manutenção"))
+                        );
+                      },
                       child: Row(
                         children: [
                           Text(
@@ -111,26 +117,32 @@ class _VaccineCardScreenState extends State<VaccineCardScreen> {
                       physics: new NeverScrollableScrollPhysics(),
                       itemCount: vaccinesController.vaccinesFilterCard.length,
                       itemBuilder: (build, index) {
-                        String date = vaccinesController
-                                .vaccinesFilterCard[index].applicationDate!
-                                .split("-")
-                                .last +
-                            "/" +
-                            vaccinesController
-                                .vaccinesFilterCard[index].applicationDate!
-                                .split("-")[1] +
-                            "/" +
-                            vaccinesController
-                                .vaccinesFilterCard[index].applicationDate!
-                                .split("-")
-                                .first;
+                        String date;
+                        if(vaccinesController.vaccinesFilterCard[index].applicationDate == null){
+                          date = "-";
+                        }else{
+                          date = vaccinesController
+                              .vaccinesFilterCard[index].applicationDate!
+                              .split("-")
+                              .last +
+                              "/" +
+                              vaccinesController
+                                  .vaccinesFilterCard[index].applicationDate!
+                                  .split("-")[1] +
+                              "/" +
+                              vaccinesController
+                                  .vaccinesFilterCard[index].applicationDate!
+                                  .split("-")
+                                  .first;
+                        }
+
                         return VaccineItem(
                             title:
                                 "${vaccinesController.vaccinesFilterCard[index].vaccine?.name}",
-                            quantity: "1º dose",
+                            quantity: "${vaccinesController.vaccinesFilterCard[index].doseNumber}º dose",
                             date: "${date}",
                             city: "São Paulo",
-                            local: "Ubs Maria Tereza De Andrade");
+                            status : "${vaccinesController.vaccinesFilterCard[index].status}");
                       });
             }),
             SizedBox(height: 10,)

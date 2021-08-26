@@ -5,7 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class RegisterApplicatorRepository {
 
-  Future<String> postRegisterApplicator(String CPF)async{
+  Future<String> postRegisterApplicator(String cpf)async{
 
     try {
       Dio? dio = CustomDio().instance;
@@ -15,15 +15,15 @@ class RegisterApplicatorRepository {
 
       dio!.options.headers["Cookie"] = token;
       final response = await dio.post(API_URL + "clinics/staff", data: {
-        "CPF" : "$CPF",
+        "target" : "$cpf",
         "permission" : "Applicator"
       });
-      if(response.data["error"]=="Missing target"){
+      print(response);
+      if(response.data["error"] != null){
         return "Usuario não encontrado no banco de dados.";
       }else{
         return response.data.toString();
       }
-
 
     }catch(e){
       print(e);

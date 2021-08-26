@@ -1,4 +1,5 @@
 import 'package:covid_19/models/stock_vacine_model.dart';
+import 'package:covid_19/models/vaccine_model.dart';
 import 'package:covid_19/utils/constants.dart';
 import 'package:covid_19/utils/dio/custom_dio.dart';
 import 'package:dio/dio.dart';
