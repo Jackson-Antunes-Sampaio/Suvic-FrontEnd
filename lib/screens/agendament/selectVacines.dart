@@ -157,48 +157,6 @@ class _SelectVacineState extends State<SelectVacine> {
                                             )
                                           : Column(
                                               children: [
-                                                // Padding(
-                                                //   padding: EdgeInsets.only(
-                                                //       left: 10,
-                                                //       top: 20,
-                                                //       right: 10,
-                                                //       bottom: 10),
-                                                //   child: Slidable(
-                                                //     actionPane:
-                                                //         SlidableDrawerActionPane(),
-                                                //     actionExtentRatio: 0.25,
-                                                //     child: Card(
-                                                //       margin: EdgeInsets.all(0),
-                                                //       child: ListTile(
-                                                //         leading: Image.asset(
-                                                //           'assets/images/iconVacine.png',
-                                                //           width: 30,
-                                                //           height: 30,
-                                                //         ),
-                                                //         title: Text(
-                                                //             vaccinesInCart
-                                                //                 .first.name),
-                                                //         trailing: Text(
-                                                //           oCcy.format(
-                                                //             vaccinesInCart.first
-                                                //                     .price ??
-                                                //                 0,
-                                                //           ),
-                                                //         ),
-                                                //       ),
-                                                //     ),
-                                                //     secondaryActions: <Widget>[
-                                                //       IconSlideAction(
-                                                //         color: Colors.red,
-                                                //         icon: Icons.delete,
-                                                //         onTap: () => controller
-                                                //             .removeVacineInCart(
-                                                //                 vaccinesInCart
-                                                //                     .first),
-                                                //       ),
-                                                //     ],
-                                                //   ),
-                                                // ),
                                                 Padding(
                                                   padding: EdgeInsets.only(
                                                     left: 10,
