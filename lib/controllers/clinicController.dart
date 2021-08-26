@@ -30,9 +30,13 @@ class ClinicController extends GetxController {
   String? idClinic;
 
   ClinicController({this.idClinic}) {
-    getClinicAdress();
+    // getClinicAdress();
     getAllClinics();
-    getVaccinesInStock();
+    // var cli = idClinic ?? '';
+    // if (cli.isNotEmpty) {
+    //   print('Entro');
+    //   getVaccinesInStock();
+    // }
   }
 
   addVacineInCart(StockVacineModel vacine) {
@@ -45,34 +49,36 @@ class ClinicController extends GetxController {
     update();
   }
 
-  getVaccinesInStock() async {
-    loading = true;
-    var getvaccinesStock =
-        await repository.getStockVaccineByIdClinic(idClinic!);
+  // getVaccinesInStock() async {
+  //   loading = true;
+  //   var getvaccinesStock =
+  //       await repository.getStockVaccineByIdClinic(idClinic!);
 
-    if (getvaccinesStock != null) {
-      getvaccinesStock.forEach((vaccine) {
-        var name;
-        if (vaccine['vaccine'] == null) {
-          name = '';
-        } else {
-          name = vaccine['vaccine']['name'];
-        }
-        vaccineInStock.add(
-          StockVacineModel(
-            name: name,
-            lote: vaccine['batch'] == null ? '' : vaccine['batch'],
-            dataValidade: vaccine['expirationdate'] == null
-                ? ''
-                : vaccine['expirationdate'],
-            quantidade: vaccine['count'],
-          ),
-        );
-      });
-      loading = false;
-      update();
-    }
-  }
+  //   if (getvaccinesStock != null) {
+  //     vaccineInStock.clear();
+  //     getvaccinesStock.forEach((vaccine) {
+  //       var name;
+  //       if (vaccine['vaccineName'] == null) {
+  //         name = '';
+  //       } else {
+  //         name = vaccine['vaccineName'];
+  //       }
+  //       vaccineInStock.add(
+  //         StockVacineModel(
+  //           name: name,
+  //           lote: vaccine['batch'] == null ? '' : vaccine['batch'],
+  //           dataValidade: vaccine['expirationdate'] == null
+  //               ? ''
+  //               : vaccine['expirationdate'],
+  //           quantidade: vaccine['count'],
+  //         ),
+  //       );
+  //     });
+  //     loading = false;
+  //     print('Update:' + vaccineInStock.toString());
+  //     update();
+  //   }
+  // }
 
   getAllClinics() async {
     var clinicsList = await clinicRepository.getAllClinis();
@@ -83,19 +89,19 @@ class ClinicController extends GetxController {
     update();
   }
 
-  getClinicAdress() async {
-    try {
-      userOn.value = await userRepository.loginGetDate();
-      var clinics = await clinicRepository.getClinicById(userOn.value.clinicId);
-      clinic.value = clinics!;
-    } catch (e) {
-      Get.snackbar(
-        'Erro',
-        e.toString(),
-        backgroundColor: kPrimaryColor,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-      );
-    }
-  }
+  // getClinicAdress() async {
+  //   try {
+  //     userOn.value = await userRepository.loginGetDate();
+  //     var clinics = await clinicRepository.getClinicById(userOn.value.clinicId);
+  //     clinic.value = clinics!;
+  //   } catch (e) {
+  //     Get.snackbar(
+  //       'Erro',
+  //       e.toString(),
+  //       backgroundColor: kPrimaryColor,
+  //       colorText: Colors.white,
+  //       snackPosition: SnackPosition.BOTTOM,
+  //     );
+  //   }
+  // }
 }

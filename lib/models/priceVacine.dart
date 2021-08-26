@@ -1,6 +1,6 @@
 class PriceVacine {
   final String vacine;
-  final double price;
+  final int price;
 
   PriceVacine({
     required this.vacine,

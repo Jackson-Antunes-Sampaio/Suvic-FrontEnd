@@ -6,6 +6,7 @@ class StockVacineModel {
   final int? reserved;
   final String dataValidade;
   final int quantidade;
+  final int? price;
 
   StockVacineModel({
     this.id,
@@ -15,6 +16,7 @@ class StockVacineModel {
     this.reserved,
     required this.dataValidade,
     required this.quantidade,
+    this.price,
   });
 
   factory StockVacineModel.fromJson(Map<String, dynamic> json) =>
@@ -26,6 +28,7 @@ class StockVacineModel {
         reserved: json['reserved'],
         dataValidade: json['dataValidade'],
         quantidade: json['quantidade'],
+        price: json['price'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -36,5 +39,6 @@ class StockVacineModel {
         "reserved": reserved,
         "dataValidade": dataValidade,
         "quantidade": quantidade,
+        "price": price,
       };
 }

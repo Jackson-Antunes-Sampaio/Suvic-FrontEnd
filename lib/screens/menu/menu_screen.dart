@@ -1,6 +1,7 @@
 import 'package:covid_19/controllers/user_controller.dart';
 import 'package:covid_19/routes/app_page.dart';
 import 'package:covid_19/screens/agendament/agendam.dart';
+import 'package:covid_19/screens/agendament/scheduled.dart';
 
 import 'package:covid_19/screens/menu/components/header_menu.dart';
 import 'package:covid_19/screens/stock/stock_new.dart';
@@ -62,17 +63,17 @@ class MenuScreen extends StatelessWidget {
                     },
                   ),
                 ),
-                // Card(
-                //   elevation: 4,
-                //   child: ListTile(
-                //     leading: Icon(Icons.add),
-                //     title: Text('Estoque'),
-                //     trailing: Icon(Icons.arrow_forward_ios),
-                //     onTap: () {
-                //       Get.toNamed(Routes.StockVacina);
-                //     },
-                //   ),
-                // ),
+                Card(
+                  elevation: 4,
+                  child: ListTile(
+                    leading: Icon(Icons.schedule),
+                    title: Text('Agendados'),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: () {
+                      Get.to(Scheduled());
+                    },
+                  ),
+                ),
                 Card(
                   elevation: 4,
                   child: ListTile(

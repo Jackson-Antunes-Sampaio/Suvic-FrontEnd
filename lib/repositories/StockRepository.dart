@@ -91,7 +91,7 @@ class StockRepository {
           "clinic": int.parse(idClinic),
         },
       );
-      print("Resposta-> ${response.data}");
+      // print("Resposta Aqui-> ${response.data}");
 
       return response.data;
     } catch (e) {
@@ -197,9 +197,9 @@ class StockRepository {
         'batch': stockvacine.lote.toString(),
         'expirationdate': stockvacine.dataValidade,
         'purge': true,
-        'count': stockvacine.quantidade,
+        // 'count': stockvacine.quantidade,
         // 'reserved': stockvacine.reserved,
-        'vaccine': {'name': stockvacine.name}
+        'vaccine': stockvacine.name
       });
 
       print({
@@ -209,7 +209,7 @@ class StockRepository {
         'count': stockvacine.quantidade,
         // 'count': stockvacine.quantidade,
         // 'reserved': stockvacine.reserved,
-        'vaccine': {'name': stockvacine.name}
+        'vaccine': stockvacine.name
       });
 
       if (response.statusCode == 200) {
