@@ -9,17 +9,13 @@ import 'components/input_text_field.dart';
 import 'components/label_text.dart';
 
 class SingUp extends StatefulWidget {
-
   SingUp({Key? key}) : super(key: key);
-
-
 
   @override
   _SingUpState createState() => _SingUpState();
 }
 
 class _SingUpState extends State<SingUp> {
-
   final TextEditingController nameController = TextEditingController();
   final TextEditingController cpfController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -28,6 +24,7 @@ class _SingUpState extends State<SingUp> {
   final TextEditingController birthdateController = TextEditingController();
   final UserController userController = UserController();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,31 +117,52 @@ class _SingUpState extends State<SingUp> {
                 hintText: "*******",
                 obscureText: true,
               ),
-              SizedBox(height: 20,),
-              ButtonCustom(
-                  onPressed: (){
-                    userController.singUp(
-                      nameController.text,
-                      emailController.text,
-                      cpfController.text,
-                      passController.text,
-                      confirmPassController.text,
-                      birthdateController.text
-                    ).then((value){
-                      if(value){
-                        scaffoldKey.currentState?.showSnackBar(
-                          SnackBar(content: Text("${userController.message}"))
-                        );
-                        Get.back();
-                      }else{
-                        scaffoldKey.currentState?.showSnackBar(
-                            SnackBar(content: Text("${userController.message}",), backgroundColor: Colors.red,)
-                        );
+              SizedBox(
+                height: 20,
+              ),
+              Obx(() {
+                if (userController.loading.value) {
+                  return Align(
+                    alignment: Alignment.centerRight,
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return ButtonCustom(
+                    onPressed: () async{
+                      print("começo");
+                      bool status = await userController.singUp(
+                              nameController.text,
+                              emailController.text,
+                              cpfController.text,
+                              passController.text,
+                              confirmPassController.text,
+                              birthdateController.text);
+                      if (status) {
+                        print("foi ${status}");
+                        scaffoldKey.currentState?.showSnackBar(SnackBar(
+                            content: Text("${userController.message}")));
+                        //Get.back();
+                        nameController.text = "";
+                      emailController.text= "";
+                      cpfController.text= "";
+                      passController.text= "";
+                      confirmPassController.text= "";
+                      birthdateController.text= "";
+
+                      } else {
+                        print("não foi${status}");
+                        scaffoldKey.currentState?.showSnackBar(SnackBar(
+                          content: Text(
+                            "${userController.message}",
+                          ),
+                          backgroundColor: Colors.red,
+                        ));
                       }
-                    });
-                  },
-                  title: "Cadastra-se",
-              )
+                    },
+                    title: "Cadastra-se",
+                  );
+                }
+              })
             ],
           ),
         ),

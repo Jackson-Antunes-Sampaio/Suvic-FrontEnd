@@ -11,7 +11,7 @@ class ApplyVaccineController extends GetxController{
   //RxString userApply = ''.obs;
   VaccineRepository vaccineRepository = VaccineRepository();
   RxList<ScheduleModel> listvaccines = <ScheduleModel>[].obs;
-  List<VaccinesModel> listVaccines = [];
+  List<VaccinesModel> listAllVaccines = [];
 
   @override
   void onInit() {
@@ -28,6 +28,20 @@ class ApplyVaccineController extends GetxController{
           listvaccines.value = value;
           listvaccines.forEach((element) {
             element.cpf = cpf;
+            int? vac = listAllVaccines.where((e) {
+              return e.name == element.vaccine?.name;
+            }).first.type?.first.numberOfDoses;
+            if(vac == null ){
+              print("aqui");
+              element.vaccine?.listDose?.add(1);
+            }else{
+              print("aqui2 $vac");
+              for(int i=1; i<= vac; i++){
+                print("a $i");
+                element.vaccine?.listDose?.add(i);
+              }
+            }
+            print(element.vaccine?.listDose);
           });
           print(listvaccines);
           stateApplyVaccine.value = StateApplyVaccine.VACCINES;
@@ -57,9 +71,9 @@ class ApplyVaccineController extends GetxController{
   }
 
   getAllVaccines()async{
-    listVaccines = [];
+    listAllVaccines = [];
     var response = await vaccineRepository.getAllVaccines();
-    listVaccines.addAll(response);
-    print(listVaccines);
+    listAllVaccines.addAll(response);
+    print(listAllVaccines);
   }
 }

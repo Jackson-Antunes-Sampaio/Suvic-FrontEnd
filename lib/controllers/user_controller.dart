@@ -71,8 +71,9 @@ class UserController extends GetxController {
         "birthdate" : date
       });
       message = response;
-      loading.value = true;
-      return false;
+      print("aquiii");
+      loading.value = false;
+      return true;
 
     } catch (e) {
       print(e);

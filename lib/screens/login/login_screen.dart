@@ -96,10 +96,10 @@ class LoginScreen extends StatelessWidget {
                               if (response == "Usuario Logado!") {
                                 Get.offNamed(Routes.BASE);
                               } else {
-                                Get.snackbar(
-                                  "Falha ao Entrar",
-                                  "$response",
-                                );
+                                // Get.snackbar(
+                                //   "Falha ao Entrar",
+                                //   "$response",
+                                // );
                                 final snackBar = SnackBar(
                                   content: Text('$response'),
                                   backgroundColor: Colors.red,

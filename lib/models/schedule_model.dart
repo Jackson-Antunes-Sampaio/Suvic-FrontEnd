@@ -127,13 +127,15 @@ class Vaccine {
   String? name;
   int? dose;
   String? manufacturer;
+  List<int>? listDose;
 
-  Vaccine({this.name, this.dose, this.manufacturer});
+  Vaccine({this.name, this.dose, this.manufacturer, this.listDose});
 
   Vaccine.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     dose = json['dose'] ?? 1;
     manufacturer = json['manufacturer'];
+    listDose = json['listDose'] ?? [];
   }
 
   Map<String, dynamic> toJson() {

@@ -16,8 +16,6 @@ class VaccinesController extends GetxController{
   }
 
   
-
-  
   Future<void> getVaccines()async{
     loading.value = true;
     try {

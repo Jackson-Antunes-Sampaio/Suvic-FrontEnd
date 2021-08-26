@@ -78,7 +78,14 @@ class UserRepository {
 
       if (response?.statusCode == 200) {
         print(response?.data);
-        return "Usuario criado com sucesso.";
+        if(response?.data["error"] != null){
+          return response?.data["error"];
+        }else if(response?.data["name"] == "SequelizeUniqueConstraintError"){
+          return "CFF já cadastrado";
+        }else{
+          return "Usuario criado com sucesso.";
+        }
+
       } else {
         return "Erro";
       }

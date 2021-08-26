@@ -221,8 +221,8 @@ class _ApplyVaccineScreenState extends State<ApplyVaccineScreen> {
 
                                           });
                                         },
-                                        items: <int>[1, 2, 3, 4]
-                                            .map<DropdownMenuItem<int>>((int value) {
+                                        items: e.vaccine?.listDose
+                                            ?.map<DropdownMenuItem<int>>((int value) {
                                           return DropdownMenuItem<int>(
                                             value: value,
                                             child: Text(value.toString()),
