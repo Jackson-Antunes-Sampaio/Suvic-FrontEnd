@@ -15,10 +15,11 @@ class StockController extends GetxController {
   String? idClinic;
 
   StockController({this.idClinic}) {
-    init();
     var id = idClinic ?? '';
     if (id.isNotEmpty) {
       getVaccinesInStockByClinic(idClinic!);
+    } else {
+      init();
     }
   }
 

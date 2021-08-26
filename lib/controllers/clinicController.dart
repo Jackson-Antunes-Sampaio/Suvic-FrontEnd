@@ -25,6 +25,8 @@ class ClinicController extends GetxController {
   //vacine selected
   List<StockVacineModel> vaccineInStock = [];
   List<StockVacineModel> vacineSelected = [];
+  //seach
+  bool seachStatus = false;
 
   //args
   String? idClinic;
@@ -46,6 +48,15 @@ class ClinicController extends GetxController {
 
   removeVacineInCart(StockVacineModel vacine) {
     vacineSelected.remove(vacine);
+    update();
+  }
+
+  changeSeachStatus() {
+    if (seachStatus) {
+      seachStatus = false;
+    } else {
+      seachStatus = true;
+    }
     update();
   }
 

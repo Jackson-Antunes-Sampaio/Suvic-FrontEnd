@@ -2,7 +2,9 @@ import 'package:covid_19/common/botton_navigation_bar/bottom_navigation_bar_new.
 import 'package:covid_19/controllers/StockController.dart';
 import 'package:covid_19/controllers/agendament_controller.dart';
 import 'package:covid_19/controllers/clinicController.dart';
+import 'package:covid_19/models/Clinic_model.dart';
 import 'package:covid_19/models/stock_vacine_model.dart';
+import 'package:covid_19/screens/agendament/autocomplete/aVaccinesAgend.dart';
 import 'package:covid_19/screens/agendament/autocomplete/data/getTime.dart';
 import 'package:covid_19/utils/styles/style.dart';
 import 'package:flutter/material.dart';
@@ -76,32 +78,13 @@ class _SelectVacineState extends State<SelectVacine> {
                           markers: markers,
                         ),
                       ),
-                      Container(
-                        color: kPrimaryColor,
-                        child: Container(
-                          width: double.maxFinite,
-                          height: 70,
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              backgroundColor: Colors.white,
-                              radius: 20,
-                              child: FaIcon(FontAwesomeIcons.hospitalSymbol),
-                            ),
-                            title: Text(
-                              clinic.name!,
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            subtitle: Text(
-                              clinic.address!,
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            trailing: Icon(
-                              Icons.search,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
+                      controller.seachStatus
+                          ? vaccinesInCart.length == 0
+                              ? seachCard(context, controller)
+                              : showCardBtnClose(clinic, controller)
+                          : vaccinesInCart.length == 0
+                              ? showCompanyNameCard(clinic, controller)
+                              : showCardBtnClose(clinic, controller),
                       Container(
                         width: double.maxFinite,
                         height: 469,
@@ -174,45 +157,82 @@ class _SelectVacineState extends State<SelectVacine> {
                                             )
                                           : Column(
                                               children: [
+                                                // Padding(
+                                                //   padding: EdgeInsets.only(
+                                                //       left: 10,
+                                                //       top: 20,
+                                                //       right: 10,
+                                                //       bottom: 10),
+                                                //   child: Slidable(
+                                                //     actionPane:
+                                                //         SlidableDrawerActionPane(),
+                                                //     actionExtentRatio: 0.25,
+                                                //     child: Card(
+                                                //       margin: EdgeInsets.all(0),
+                                                //       child: ListTile(
+                                                //         leading: Image.asset(
+                                                //           'assets/images/iconVacine.png',
+                                                //           width: 30,
+                                                //           height: 30,
+                                                //         ),
+                                                //         title: Text(
+                                                //             vaccinesInCart
+                                                //                 .first.name),
+                                                //         trailing: Text(
+                                                //           oCcy.format(
+                                                //             vaccinesInCart.first
+                                                //                     .price ??
+                                                //                 0,
+                                                //           ),
+                                                //         ),
+                                                //       ),
+                                                //     ),
+                                                //     secondaryActions: <Widget>[
+                                                //       IconSlideAction(
+                                                //         color: Colors.red,
+                                                //         icon: Icons.delete,
+                                                //         onTap: () => controller
+                                                //             .removeVacineInCart(
+                                                //                 vaccinesInCart
+                                                //                     .first),
+                                                //       ),
+                                                //     ],
+                                                //   ),
+                                                // ),
                                                 Padding(
                                                   padding: EdgeInsets.only(
-                                                      left: 10,
-                                                      top: 20,
-                                                      right: 10,
-                                                      bottom: 10),
-                                                  child: Slidable(
-                                                    actionPane:
-                                                        SlidableDrawerActionPane(),
-                                                    actionExtentRatio: 0.25,
-                                                    child: Card(
-                                                      margin: EdgeInsets.all(0),
-                                                      child: ListTile(
-                                                        leading: Image.asset(
-                                                          'assets/images/iconVacine.png',
-                                                          width: 30,
-                                                          height: 30,
+                                                    left: 10,
+                                                    top: 20,
+                                                    right: 10,
+                                                    bottom: 10,
+                                                  ),
+                                                  child: TextFormField(
+                                                    enabled: false,
+                                                    initialValue: vaccinesInCart
+                                                        .first.name,
+                                                    decoration: InputDecoration(
+                                                      isDense: true,
+
+                                                      // icon: Image.asset(
+                                                      //   'assets/images/iconVacine.png',
+                                                      //   width: 35,
+                                                      //   height: 35,
+                                                      // ),
+                                                      // prefix: ,
+                                                      //enabledBorder: InputBorder.none,
+                                                      disabledBorder:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            const BorderRadius
+                                                                .all(
+                                                          const Radius.circular(
+                                                              10.0),
                                                         ),
-                                                        title: Text(
-                                                            vaccinesInCart
-                                                                .first.name),
-                                                        trailing: Text(
-                                                          oCcy.format(
-                                                            vaccinesInCart
-                                                                .first.price,
-                                                          ),
+                                                        borderSide: BorderSide(
+                                                          color: Colors.grey,
                                                         ),
                                                       ),
                                                     ),
-                                                    secondaryActions: <Widget>[
-                                                      IconSlideAction(
-                                                        color: Colors.red,
-                                                        icon: Icons.delete,
-                                                        onTap: () => controller
-                                                            .removeVacineInCart(
-                                                                vaccinesInCart
-                                                                    .first),
-                                                      ),
-                                                    ],
                                                   ),
                                                 ),
                                                 Padding(
@@ -245,82 +265,12 @@ class _SelectVacineState extends State<SelectVacine> {
                                                 ),
                                                 Padding(
                                                   padding: EdgeInsets.only(
-                                                      left: 10,
-                                                      right: 10,
-                                                      bottom: 10),
-                                                  // child: autoCompleteTime(),
-                                                  // child: autocompleTime(),
-                                                  child:
-                                                      DropdownButtonFormField<
-                                                          String>(
-                                                    value: _dropdownValue,
-                                                    decoration: InputDecoration(
-                                                      isDense: true,
-                                                      //enabledBorder: InputBorder.none,
-                                                      border:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            const BorderRadius
-                                                                .all(
-                                                          const Radius.circular(
-                                                              10.0),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    focusColor:
-                                                        Colors.deepOrange,
-                                                    icon: const Icon(
-                                                      Icons.arrow_downward,
-                                                      color: kPrimaryColor,
-                                                    ),
-                                                    hint: const Text(
-                                                        'Selecione o horário'),
-                                                    iconSize: 24,
-                                                    elevation: 16,
-                                                    style: const TextStyle(
-                                                        color: Colors.black87),
-                                                    onChanged:
-                                                        (String? newValue) {
-                                                      setState(() {
-                                                        _dropdownValue =
-                                                            newValue;
-                                                      });
-                                                    },
-                                                    items: GetTimeScheld
-                                                            .getTimer()
-                                                        .map<
-                                                            DropdownMenuItem<
-                                                                String>>((String
-                                                            value) {
-                                                      return DropdownMenuItem<
-                                                          String>(
-                                                        value: value,
-                                                        child: Container(
-                                                            width: 200,
-                                                            child: Row(
-                                                              children: [
-                                                                Padding(
-                                                                  padding: const EdgeInsets
-                                                                          .only(
-                                                                      right: 5),
-                                                                  child: Icon(
-                                                                      Icons
-                                                                          .timer,
-                                                                      color:
-                                                                          kPrimaryColor),
-                                                                ),
-                                                                Text(value),
-                                                              ],
-                                                            )),
-                                                      );
-                                                    }).toList(),
-                                                    validator: (String? value) {
-                                                      if (value == null) {
-                                                        return 'Deve fazer uma seleção.';
-                                                      }
-                                                      return null;
-                                                    },
+                                                    left: 10,
+                                                    right: 10,
+                                                    bottom: 10,
                                                   ),
+                                                  child:
+                                                      DropdownButtonSelectTimer(),
                                                 ),
                                                 Padding(
                                                   padding: EdgeInsets.only(
@@ -586,6 +536,153 @@ class _SelectVacineState extends State<SelectVacine> {
                 }),
       ),
       bottomNavigationBar: BottomNavigationBarNew(),
+    );
+  }
+
+  DropdownButtonFormField<String> DropdownButtonSelectTimer() {
+    return DropdownButtonFormField<String>(
+      value: _dropdownValue,
+      decoration: InputDecoration(
+        isDense: true,
+        //enabledBorder: InputBorder.none,
+        border: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(
+            const Radius.circular(10.0),
+          ),
+        ),
+      ),
+      focusColor: Colors.deepOrange,
+      icon: const Icon(
+        Icons.arrow_downward,
+        color: kPrimaryColor,
+      ),
+      hint: const Text('Selecione o horário'),
+      iconSize: 24,
+      elevation: 16,
+      style: const TextStyle(color: Colors.black87),
+      onChanged: (String? newValue) {
+        setState(() {
+          _dropdownValue = newValue;
+        });
+      },
+      items: GetTimeScheld.getTimer()
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Container(
+              width: 200,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 5),
+                    child: Icon(Icons.timer, color: kPrimaryColor),
+                  ),
+                  Text(value),
+                ],
+              )),
+        );
+      }).toList(),
+      validator: (String? value) {
+        if (value == null) {
+          return 'Deve fazer uma seleção.';
+        }
+        return null;
+      },
+    );
+  }
+
+  Card showCardBtnClose(ClinicModel clinic, ClinicController controller) {
+    return Card(
+      margin: EdgeInsets.all(0),
+      child: Container(
+        color: kPrimaryColor,
+        child: Container(
+          width: double.maxFinite,
+          height: 70,
+          child: ListTile(
+            leading: CircleAvatar(
+              backgroundColor: Colors.white,
+              radius: 20,
+              child: FaIcon(FontAwesomeIcons.hospitalSymbol),
+            ),
+            title: Text(
+              clinic.name!,
+              style: TextStyle(color: Colors.white),
+            ),
+            subtitle: Text(
+              clinic.address!,
+              style: TextStyle(color: Colors.white),
+            ),
+            trailing: IconButton(
+              onPressed: () => controller
+                  .removeVacineInCart(controller.vacineSelected.first),
+              icon: Icon(
+                Icons.close,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Card showCompanyNameCard(ClinicModel clinic, ClinicController controller) {
+    return Card(
+      margin: EdgeInsets.all(0),
+      child: Container(
+        color: kPrimaryColor,
+        child: Container(
+          width: double.maxFinite,
+          height: 70,
+          child: ListTile(
+            leading: CircleAvatar(
+              backgroundColor: Colors.white,
+              radius: 20,
+              child: FaIcon(FontAwesomeIcons.hospitalSymbol),
+            ),
+            title: Text(
+              clinic.name!,
+              style: TextStyle(color: Colors.white),
+            ),
+            subtitle: Text(
+              clinic.address!,
+              style: TextStyle(color: Colors.white),
+            ),
+            trailing: IconButton(
+              onPressed: () => controller.changeSeachStatus(),
+              icon: Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Card seachCard(BuildContext context, ClinicController controller) {
+    return Card(
+      margin: EdgeInsets.all(0),
+      child: Container(
+        color: kPrimaryColor,
+        child: Container(
+          width: double.maxFinite,
+          height: 70,
+          child: Center(
+              child: Padding(
+            padding: const EdgeInsets.only(left: 6, right: 4),
+            child: Container(
+              width: double.maxFinite,
+              child: autocompleVaccinesAgendaments(
+                context,
+                controller,
+              ),
+            ),
+          )),
+        ),
+      ),
     );
   }
 }
