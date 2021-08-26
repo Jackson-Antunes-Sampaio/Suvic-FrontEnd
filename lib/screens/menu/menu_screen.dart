@@ -18,7 +18,7 @@ class MenuScreen extends StatelessWidget {
         children: [
           HeaderMenu(
             image: "assets/images/unnamed.png",
-            email: '${userController.user?.socialName ?? '-'}',
+            email: '${userController.user?.civilName ?? '-'}',
             offset: 0,
           ),
           InkWell(
@@ -41,7 +41,8 @@ class MenuScreen extends StatelessWidget {
             padding: EdgeInsets.only(top: 20, left: 10, right: 10),
             child: Column(
               children: [
-                Card(
+                userController.user?.permissionLevel == "Superadmin"
+                ? Card(
                   elevation: 4,
                   child: ListTile(
                     leading: Icon(Icons.person_add_alt_1),
@@ -51,19 +52,20 @@ class MenuScreen extends StatelessWidget {
                       Get.toNamed(Routes.REGISTRATIONUSERS);
                     },
                   ),
-                ),
-                Card(
-                  elevation: 4,
-                  child: ListTile(
-                    leading: Icon(Icons.add_alert_rounded),
-                    title: Text('Avisa-me'),
-                    trailing: Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                      Get.toNamed(Routes.NOTIFYCOVID);
-                    },
-                  ),
-                ),
-                Card(
+                ) : Container(),
+                // Card(
+                //   elevation: 4,
+                //   child: ListTile(
+                //     leading: Icon(Icons.add_alert_rounded),
+                //     title: Text('Avisa-me'),
+                //     trailing: Icon(Icons.arrow_forward_ios),
+                //     onTap: () {
+                //       Get.toNamed(Routes.NOTIFYCOVID);
+                //     },
+                //   ),
+                // ),
+                userController.user?.permissionLevel == "Applicator" || userController.user?.permissionLevel == "Oversser" || userController.user?.permissionLevel == "Admin" || userController.user?.permissionLevel == "Superadmin"
+                ? Card(
                   elevation: 4,
                   child: ListTile(
                     leading: Icon(Icons.schedule),
@@ -73,8 +75,9 @@ class MenuScreen extends StatelessWidget {
                       Get.to(Scheduled());
                     },
                   ),
-                ),
-                Card(
+                ) : Container(),
+                userController.user?.permissionLevel == "Oversser" || userController.user?.permissionLevel == "Admin" || userController.user?.permissionLevel == "Superadmin"
+                ? Card(
                   elevation: 4,
                   child: ListTile(
                     leading: Icon(Icons.qr_code),
@@ -85,40 +88,42 @@ class MenuScreen extends StatelessWidget {
                       Get.to(Stock());
                     },
                   ),
-                ),
+                ) : Container(),
                 Card(
                   elevation: 4,
                   child: ListTile(
                     leading: Icon(Icons.credit_card_outlined),
-                    title: Text('Cartão de Credito'),
+                    title: Text('Adicionar cartão de crédito'),
                     trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () {
                       Get.toNamed(Routes.PRODUCTCARD);
                     },
                   ),
                 ),
-                Card(
+                userController.user?.permissionLevel == "Applicator" || userController.user?.permissionLevel == "Admin" || userController.user?.permissionLevel == "Superadmin"
+                ? Card(
                   elevation: 4,
                   child: ListTile(
                     leading: Icon(Icons.article_outlined),
-                    title: Text('Aplicar Vacina'),
+                    title: Text('Aplicar vacina'),
                     trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () {
                       Get.toNamed(Routes.APPLYVACCINE);
                     },
                   ),
-                ),
-                Card(
+                ) : Container(),
+                userController.user?.permissionLevel == "Applicator" || userController.user?.permissionLevel == "Admin" || userController.user?.permissionLevel == "Superadmin" || userController.user?.permissionLevel == "Overseer"
+                ? Card(
                   elevation: 4,
                   child: ListTile(
                     leading: Icon(Icons.history),
-                    title: Text('Historico de vacinas'),
+                    title: Text('Historico de vacinas aplicadas'),
                     trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () {
                       Get.toNamed(Routes.HISTORICVACCINE);
                     },
                   ),
-                ),
+                ) : Container(),
               ],
             ),
           )
