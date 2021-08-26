@@ -3,6 +3,7 @@ import 'package:covid_19/controllers/StockController.dart';
 import 'package:covid_19/controllers/agendament_controller.dart';
 import 'package:covid_19/controllers/clinicController.dart';
 import 'package:covid_19/models/Clinic_model.dart';
+import 'package:covid_19/models/agendament_model.dart';
 import 'package:covid_19/models/stock_vacine_model.dart';
 import 'package:covid_19/screens/agendament/autocomplete/aVaccinesAgend.dart';
 import 'package:covid_19/screens/agendament/autocomplete/data/getTime.dart';
@@ -24,7 +25,12 @@ class SelectVacine extends StatefulWidget {
 }
 
 class _SelectVacineState extends State<SelectVacine> {
-  AgendamentController agendamentController = Get.put(AgendamentController());
+  final AgendamentController agendamentController = Get.put(AgendamentController());
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController vaccine = TextEditingController();
+  final TextEditingController time = TextEditingController();
+  final TextEditingController data = TextEditingController();
+
   String? _dropdownValue;
   bool docilio = false;
   final markers = Set<Marker>();
@@ -140,13 +146,9 @@ class _SelectVacineState extends State<SelectVacine> {
                                                     onTap: () => controller
                                                         .addVacineInCart(
                                                       StockVacineModel(
-                                                        name: vaccines[index]
-                                                            .name,
-                                                        lote: vaccines[index]
-                                                            .lote,
-                                                        dataValidade:
-                                                            vaccines[index]
-                                                                .dataValidade,
+                                                        name: vaccines[index].name,
+                                                        lote: vaccines[index].lote,
+                                                        dataValidade: vaccines[index].dataValidade,
                                                         quantidade: 1,
                                                         price: price,
                                                       ),
@@ -165,9 +167,9 @@ class _SelectVacineState extends State<SelectVacine> {
                                                     bottom: 10,
                                                   ),
                                                   child: TextFormField(
+                                                    controller: vaccine,
                                                     enabled: false,
-                                                    initialValue: vaccinesInCart
-                                                        .first.name,
+                                                    initialValue: vaccinesInCart.first.name,
                                                     decoration: InputDecoration(
                                                       isDense: true,
 
@@ -201,6 +203,7 @@ class _SelectVacineState extends State<SelectVacine> {
                                                   // child: autoCompleteTime(),
                                                   // child: autocompleTime(),
                                                   child: TextFormField(
+                                                    controller: data,
                                                     inputFormatters: [maskDate],
                                                     decoration: InputDecoration(
                                                       isDense: true,
@@ -484,7 +487,7 @@ class _SelectVacineState extends State<SelectVacine> {
                                                         ),
                                                       ),
                                                       onPressed: () {
-                                                        // return schedule();
+                                                         return schedule();
                                                       },
                                                       icon: Obx(() =>
                                                           AgendamentController
@@ -518,6 +521,16 @@ class _SelectVacineState extends State<SelectVacine> {
       ),
       bottomNavigationBar: BottomNavigationBarNew(),
     );
+  }
+  schedule() {
+    if (_formKey.currentState!.validate()) {
+      AgendamentController.to.insert(AgendamentModel(
+        vaccine: vaccine.text,
+        data: time.text,
+        time: _dropdownValue,
+      ));
+      _formKey.currentState!.reset();
+    }
   }
 
   DropdownButtonFormField<String> DropdownButtonSelectTimer() {

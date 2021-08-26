@@ -101,10 +101,10 @@ class StockController extends GetxController {
       // print(getvaccinesStock);
       getvaccinesStock.forEach((vaccine) {
         var name;
-        if (vaccine['vaccine'] == null) {
+        if (vaccine['vaccineName'] == null) {
           name = '';
         } else {
-          name = vaccine['vaccine']['name'];
+          name = vaccine['vaccineName'];
         }
 
         vaccineInStock.add(
