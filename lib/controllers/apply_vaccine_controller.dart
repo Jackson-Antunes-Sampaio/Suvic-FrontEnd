@@ -3,7 +3,7 @@ import 'package:covid_19/models/vaccine_model.dart';
 import 'package:covid_19/repositories/vaccines_repository.dart';
 import 'package:get/get.dart';
 
-enum StateApplyVaccine{IDLE, VACCINES, LOADING, ERROR, SUCCESS}
+enum StateApplyVaccine{IDLE, VACCINES, LOADING, ERROR, SUCCESS, EMPTY}
 
 class ApplyVaccineController extends GetxController{
   Rx<StateApplyVaccine> stateApplyVaccine = StateApplyVaccine.IDLE.obs;
@@ -32,10 +32,8 @@ class ApplyVaccineController extends GetxController{
               return e.name == element.vaccine?.name;
             }).first.type?.first.numberOfDoses;
             if(vac == null ){
-              print("aqui");
               element.vaccine?.listDose?.add(1);
             }else{
-              print("aqui2 $vac");
               for(int i=1; i<= vac; i++){
                 print("a $i");
                 element.vaccine?.listDose?.add(i);

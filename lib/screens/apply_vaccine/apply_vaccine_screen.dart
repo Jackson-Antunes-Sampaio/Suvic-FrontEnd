@@ -281,12 +281,54 @@ class _ApplyVaccineScreenState extends State<ApplyVaccineScreen> {
             break;
           case StateApplyVaccine.ERROR:
             return Center(
-              child: Text("Erro"),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.error, size: 60,),
+                  SizedBox(height: 10,),
+                  Text("Nenhuma agenda encontra para esse usuario.", textAlign: TextAlign.center, style: TextStyle(fontSize: 18),),
+                  SizedBox(height: 10,),
+                  RaisedButton(
+                    color: Theme.of(context).primaryColor,
+                      textColor: Colors.white,
+                      onPressed: (){
+
+                        cpfController.text = '';
+                        _applyVaccineController.stateApplyVaccine.value =
+                            StateApplyVaccine.IDLE;
+                      },
+                      child: Text("Buscar outro CPF"),
+                  )
+                ],
+              ),
             );
           case StateApplyVaccine.SUCCESS:
             return Center(
-              child: Text("Sucesso"),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.check, size: 60,color: Colors.green,),
+                  SizedBox(height: 10,),
+                  Text("Sucesso!", textAlign: TextAlign.center, style: TextStyle(fontSize: 18),),
+                  SizedBox(height: 10,),
+                  RaisedButton(
+                    color: Theme.of(context).primaryColor,
+                    textColor: Colors.white,
+                    onPressed: (){
+                      cpfController.text = '';
+                      _applyVaccineController.stateApplyVaccine.value =
+                          StateApplyVaccine.IDLE;
+                    },
+                    child: Text("Buscar outro CPF"),
+                  )
+                ],
+              ),
             );
+          case StateApplyVaccine.EMPTY:
+            return Center(
+              child: Text("Usuario não encontado"),
+            );
+            break;
         }
       }),
     );
