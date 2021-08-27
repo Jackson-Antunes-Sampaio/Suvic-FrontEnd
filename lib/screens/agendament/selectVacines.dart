@@ -36,6 +36,8 @@ class _SelectVacineState extends State<SelectVacine> {
   bool docilio = false;
   final markers = Set<Marker>();
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -687,15 +689,4 @@ class _SelectVacineState extends State<SelectVacine> {
     );
   }
 
-  schedule() {
-    if (_formKey.currentState!.validate()) {
-      AgendamentController.to.insert(AgendamentModel(
-        vaccine: vaccine.text,
-        data: data.text,
-        time: _dropdownValue,
-        idClinica: widget.clinic,
-      ));
-      _formKey.currentState!.reset();
-    }
-  }
 }
