@@ -70,7 +70,7 @@ class MenuScreen extends StatelessWidget {
                     title: Text('Agendados'),
                     trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () {
-                      Get.to(Scheduled());
+                      Get.to(DuaAgendament());
                     },
                   ),
                 ),

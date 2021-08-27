@@ -93,7 +93,7 @@ class AppPage {
     ),
     GetPage(
       name: Routes.AGENDAM,
-      page: () => Agendam(),
+      page: () => Agendament(),
     ),
   ];
 }
