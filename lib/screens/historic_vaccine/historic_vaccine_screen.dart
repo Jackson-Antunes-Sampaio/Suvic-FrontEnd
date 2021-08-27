@@ -75,7 +75,7 @@ class _HistoricVaccineScreenState extends State<HistoricVaccineScreen> {
                           return CardHistoricVaccine(
                             applicationDate: applicationDate,
                             doseNumber: historicVaccineController
-                                .listFilterHistoric[index].doseNumber!,
+                                .listFilterHistoric[index].doseNumber ?? 0,
                             user: historicVaccineController
                                 .listFilterHistoric[index].user!,
                             vaccineName: historicVaccineController

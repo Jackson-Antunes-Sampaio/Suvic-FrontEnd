@@ -25,7 +25,12 @@ class SelectVacine extends StatefulWidget {
 }
 
 class _SelectVacineState extends State<SelectVacine> {
-  AgendamentController agendamentController = Get.put(AgendamentController());
+  final AgendamentController agendamentController = Get.put(AgendamentController());
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController vaccine = TextEditingController();
+  final TextEditingController time = TextEditingController();
+  final TextEditingController data = TextEditingController();
+
   String? _dropdownValue;
   bool docilio = false;
   final markers = Set<Marker>();
@@ -147,13 +152,9 @@ class _SelectVacineState extends State<SelectVacine> {
                                                     onTap: () => controller
                                                         .addVacineInCart(
                                                       StockVacineModel(
-                                                        name: vaccines[index]
-                                                            .name,
-                                                        lote: vaccines[index]
-                                                            .lote,
-                                                        dataValidade:
-                                                            vaccines[index]
-                                                                .dataValidade,
+                                                        name: vaccines[index].name,
+                                                        lote: vaccines[index].lote,
+                                                        dataValidade: vaccines[index].dataValidade,
                                                         quantidade: 1,
                                                         reserved: 1,
                                                         price: price,
@@ -163,6 +164,7 @@ class _SelectVacineState extends State<SelectVacine> {
                                                 );
                                               },
                                             )
+
                                           : Form(
                                               key: _formKey,
                                               child: Column(
@@ -194,10 +196,12 @@ class _SelectVacineState extends State<SelectVacine> {
                                                               BorderSide(
                                                             color: Colors.grey,
                                                           ),
+
                                                         ),
                                                       ),
                                                     ),
                                                   ),
+
                                                   Padding(
                                                     padding: EdgeInsets.only(
                                                         left: 10,
@@ -231,6 +235,7 @@ class _SelectVacineState extends State<SelectVacine> {
                                                             const Radius
                                                                 .circular(10.0),
                                                           ),
+
                                                         ),
                                                       ),
                                                     ),
@@ -524,6 +529,30 @@ class _SelectVacineState extends State<SelectVacine> {
                                                                     Icons.add)),
                                                         label: Text('Agendar'),
                                                       ),
+
+                                                      onPressed: () {
+                                                         return schedule();
+                                                      },
+                                                      icon: Obx(() =>
+                                                          AgendamentController
+                                                                  .to
+                                                                  .loading
+                                                                  .value
+                                                              ? Container(
+                                                                  width: 15,
+                                                                  height: 15,
+                                                                  child:
+                                                                      CircularProgressIndicator(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    strokeWidth:
+                                                                        2,
+                                                                  ),
+                                                                )
+                                                              : Icon(
+                                                                  Icons.add)),
+                                                      label: Text('Agendar'),
+
                                                     ),
                                                   ),
                                                 ],
@@ -537,6 +566,16 @@ class _SelectVacineState extends State<SelectVacine> {
       ),
       bottomNavigationBar: BottomNavigationBarNew(),
     );
+  }
+  schedule() {
+    if (_formKey.currentState!.validate()) {
+      AgendamentController.to.insert(AgendamentModel(
+        vaccine: vaccine.text,
+        data: time.text,
+        time: _dropdownValue,
+      ));
+      _formKey.currentState!.reset();
+    }
   }
 
   DropdownButtonFormField<String> dropdownButtonSelectTimer() {

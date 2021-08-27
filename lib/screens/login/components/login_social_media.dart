@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 
 class LoginSocialMediaBtn extends StatelessWidget {
 
-  LoginSocialMediaBtn({required this.icon, required this.color});
+  LoginSocialMediaBtn({required this.icon, required this.color, required this.onPress});
 
   final IconData icon;
   final Color color;
+  final Callback onPress;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class LoginSocialMediaBtn extends StatelessWidget {
           color: color,
           child: InkWell(
             splashColor: Colors.white12,
-            onTap: (){},
+            onTap: onPress,
             child: Center(
               child: Icon(icon,color: Colors.white, size: 24,),
             ),

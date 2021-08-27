@@ -1,4 +1,3 @@
-
 import 'package:connectivity/connectivity.dart';
 import 'package:covid_19/common/my_header_widget.dart';
 import 'package:covid_19/controllers/user_controller.dart';
@@ -12,22 +11,50 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
-
 import 'components/input_text_field.dart';
 import 'components/label_text.dart';
 import 'components/login_social_media.dart';
 
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
-class LoginScreen extends StatelessWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController email = TextEditingController();
   final TextEditingController pass = TextEditingController();
   final UserController userController = Get.put(UserController());
+  final controller = ScrollController();
+  double offset = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller.addListener(onScroll);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    controller.dispose();
+    super.dispose();
+  }
+
+  void onScroll() {
+    setState(() {
+      offset = (controller.hasClients) ? controller.offset : 0;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       //backgroundColor: Color(0xff3f51b5),
       body: SingleChildScrollView(
+        controller: controller,
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -35,7 +62,7 @@ class LoginScreen extends StatelessWidget {
               image: "assets/images/gbimage.png",
               textTop: "              Login",
               textBottom: "",
-              offset: 0,
+              offset: offset,
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24),
@@ -47,6 +74,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   InputTextField(
                     controller: email,
+                    textInputType: TextInputType.emailAddress,
                     hintText: "exemplo@email.com",
                     obscureText: false,
                   ),
@@ -75,67 +103,61 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  Obx((){
-                    return                   Align(
+                  Obx(() {
+                    return Align(
                       alignment: Alignment.center,
-                      child: !userController.loading.value ? Container(
-                        height: 46,
-                        width: 160,
-                        child: RaisedButton(
-                          onPressed: () async {
+                      child: !userController.loading.value
+                          ? Container(
+                              height: 46,
+                              width: 160,
+                              child: RaisedButton(
+                                onPressed: () async {
+                                  var connectivityResult = await (Connectivity()
+                                      .checkConnectivity());
 
-                            var connectivityResult =
-                            await (Connectivity().checkConnectivity());
+                                  if (connectivityResult ==
+                                      ConnectivityResult.none) {
+                                    Get.snackbar("Conexão",
+                                        "Sem conexão com a internet");
+                                  } else {
+                                    final String response = await userController
+                                        .loginIn(email.text, pass.text);
+                                    if (response == "Usuario Logado!") {
+                                      Get.offNamed(Routes.BASE);
+                                    } else {
+                                      // Get.snackbar(
+                                      //   "Falha ao Entrar",
+                                      //   "$response",
+                                      // );
+                                      final snackBar = SnackBar(
+                                        content: Text('$response'),
+                                        backgroundColor: Colors.red,
+                                      );
+                                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    }
+                                  }
 
-                            if (connectivityResult == ConnectivityResult.none) {
-                              Get.snackbar(
-                                  "Conexão", "Sem conexão com a internet");
-                            } else {
-                              final String response = await userController
-                                  .loginIn(email.text, pass.text);
-                              if (response == "Usuario Logado!") {
-                                Get.offNamed(Routes.BASE);
-                              } else {
-                                // Get.snackbar(
-                                //   "Falha ao Entrar",
-                                //   "$response",
-                                // );
-                                final snackBar = SnackBar(
-                                  content: Text('$response'),
-                                  backgroundColor: Colors.red,
-                                  // action: SnackBarAction(
-                                  //   label: 'Undo',
-                                  //   onPressed: () {
-                                  //     // Some code to undo the change.
-                                  //   },
-                                  // ),
-                                );
-
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBar);
-                              }
-                            }
-
-                            // final response2 = await  dio.post(
-                            //   "https://ec2-18-231-166-223.sa-east-1.compute.amazonaws.com:8443/login/",
-                            //   data: {
-                            //     "email" : "jack@user.com",
-                            //     "password" : "123456",
-                            //   }
-                            // );
-                            // print("aqui ${response2.data}");
-                          },
-                          child: Text(
-                            "ENTRAR",
-                            style: TextStyle(fontSize: 16),
-                          ),
-                          color: Color(0xff303f9f),
-                          textColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
-                      ) : CircularProgressIndicator(),
+                                  // final response2 = await  dio.post(
+                                  //   "https://ec2-18-231-166-223.sa-east-1.compute.amazonaws.com:8443/login/",
+                                  //   data: {
+                                  //     "email" : "jack@user.com",
+                                  //     "password" : "123456",
+                                  //   }
+                                  // );
+                                  // print("aqui ${response2.data}");
+                                },
+                                child: Text(
+                                  "ENTRAR",
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                color: Color(0xff303f9f),
+                                textColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                            )
+                          : CircularProgressIndicator(),
                     );
                   }),
                   SizedBox(
@@ -162,11 +184,23 @@ class LoginScreen extends StatelessWidget {
                       LoginSocialMediaBtn(
                         icon: FontAwesomeIcons.facebookF,
                         color: facebookColor,
+                        onPress: (){
+                          final snackBar = SnackBar(
+                            content: Text('Em manutenção'),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
                       ),
                       SizedBox(
                         width: 16,
                       ),
                       LoginSocialMediaBtn(
+                        onPress: (){
+                          final snackBar = SnackBar(
+                            content: Text('Em manutenção'),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        },
                         icon: FontAwesomeIcons.google,
                         color: googleColor,
                       ),
@@ -174,6 +208,12 @@ class LoginScreen extends StatelessWidget {
                         width: 16,
                       ),
                       LoginSocialMediaBtn(
+                        onPress: (){
+                          final snackBar = SnackBar(
+                            content: Text('Em manutenção'),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        },
                         icon: FontAwesomeIcons.twitter,
                         color: twitterColor,
                       ),
@@ -183,7 +223,7 @@ class LoginScreen extends StatelessWidget {
                     height: 18,
                   ),
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       Get.toNamed(Routes.SINGUP);
                     },
                     child: Container(
