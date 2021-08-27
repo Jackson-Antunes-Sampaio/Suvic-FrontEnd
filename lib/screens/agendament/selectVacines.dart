@@ -34,11 +34,9 @@ class _SelectVacineState extends State<SelectVacine> {
   String? _dropdownValue;
   bool docilio = false;
   final markers = Set<Marker>();
-  final _formKey = GlobalKey<FormState>();
 
-  TextEditingController vaccine = TextEditingController();
-  TextEditingController data = TextEditingController();
-  TextEditingController time = TextEditingController();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -529,30 +527,6 @@ class _SelectVacineState extends State<SelectVacine> {
                                                                     Icons.add)),
                                                         label: Text('Agendar'),
                                                       ),
-
-                                                      onPressed: () {
-                                                         return schedule();
-                                                      },
-                                                      icon: Obx(() =>
-                                                          AgendamentController
-                                                                  .to
-                                                                  .loading
-                                                                  .value
-                                                              ? Container(
-                                                                  width: 15,
-                                                                  height: 15,
-                                                                  child:
-                                                                      CircularProgressIndicator(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    strokeWidth:
-                                                                        2,
-                                                                  ),
-                                                                )
-                                                              : Icon(
-                                                                  Icons.add)),
-                                                      label: Text('Agendar'),
-
                                                     ),
                                                   ),
                                                 ],
@@ -725,15 +699,4 @@ class _SelectVacineState extends State<SelectVacine> {
     );
   }
 
-  schedule() {
-    if (_formKey.currentState!.validate()) {
-      AgendamentController.to.insert(AgendamentModel(
-        vaccine: vaccine.text,
-        data: data.text,
-        time: _dropdownValue,
-        idClinica: widget.clinic,
-      ));
-      _formKey.currentState!.reset();
-    }
-  }
 }
