@@ -15,16 +15,46 @@ import 'components/input_text_field.dart';
 import 'components/label_text.dart';
 import 'components/login_social_media.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController email = TextEditingController();
   final TextEditingController pass = TextEditingController();
   final UserController userController = Get.put(UserController());
+  final controller = ScrollController();
+  double offset = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller.addListener(onScroll);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    controller.dispose();
+    super.dispose();
+  }
+
+  void onScroll() {
+    setState(() {
+      offset = (controller.hasClients) ? controller.offset : 0;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       //backgroundColor: Color(0xff3f51b5),
       body: SingleChildScrollView(
+        controller: controller,
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -32,7 +62,7 @@ class LoginScreen extends StatelessWidget {
               image: "assets/images/gbimage.png",
               textTop: "              Login",
               textBottom: "",
-              offset: 0,
+              offset: offset,
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24),
@@ -102,16 +132,8 @@ class LoginScreen extends StatelessWidget {
                                       final snackBar = SnackBar(
                                         content: Text('$response'),
                                         backgroundColor: Colors.red,
-                                        // action: SnackBarAction(
-                                        //   label: 'Undo',
-                                        //   onPressed: () {
-                                        //     // Some code to undo the change.
-                                        //   },
-                                        // ),
                                       );
-
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(snackBar);
+                                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                     }
                                   }
 
@@ -162,11 +184,23 @@ class LoginScreen extends StatelessWidget {
                       LoginSocialMediaBtn(
                         icon: FontAwesomeIcons.facebookF,
                         color: facebookColor,
+                        onPress: (){
+                          final snackBar = SnackBar(
+                            content: Text('Em manutenção'),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
                       ),
                       SizedBox(
                         width: 16,
                       ),
                       LoginSocialMediaBtn(
+                        onPress: (){
+                          final snackBar = SnackBar(
+                            content: Text('Em manutenção'),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        },
                         icon: FontAwesomeIcons.google,
                         color: googleColor,
                       ),
@@ -174,6 +208,12 @@ class LoginScreen extends StatelessWidget {
                         width: 16,
                       ),
                       LoginSocialMediaBtn(
+                        onPress: (){
+                          final snackBar = SnackBar(
+                            content: Text('Em manutenção'),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        },
                         icon: FontAwesomeIcons.twitter,
                         color: twitterColor,
                       ),
