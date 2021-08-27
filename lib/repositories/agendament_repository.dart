@@ -3,7 +3,9 @@ import 'package:covid_19/models/agendament_model.dart';
 import 'package:covid_19/utils/constants.dart';
 import 'package:covid_19/utils/dio/custom_dio.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class AgendamentRepository {
@@ -30,33 +32,36 @@ class AgendamentRepository {
       Dio? dio = CustomDio().instance;
 
       final storage = FlutterSecureStorage();
-      final token = await storage.read(key: "cookie");
+      final token = await storage.read(key: "token");
       dio!.options.headers["Cookie"] = token;
 
-      final response = await dio.post(API_URL + service, data: {
-        'start': agendamentModel.data! + ' ' + agendamentModel.time! + ':00',
-        'end': agendamentModel.data! +
+      await dio.post(API_URL + service, data: {
+        'start': (agendamentModel.data ?? '') +
+            ' ' +
+            (agendamentModel.time ?? '') +
+            ':00',
+        'end': (agendamentModel.data ?? '') +
             ' ' +
             DateFormat('HH:mm:ss').format(DateTime.now()),
         'title': agendamentModel.vaccine,
-        'clinic': ClinicController.to.clinic.value.id!,
+        'clinic': agendamentModel.idClinica,
       });
 
-      print({
-        'start': agendamentModel.data! + ' ' + agendamentModel.time! + ':00',
-        'end': agendamentModel.data! +
-            ' ' +
-            DateFormat('HH:mm:ss').format(DateTime.now()),
-        'title': agendamentModel.vaccine,
-        'clinic': ClinicController.to.clinic.value.id!,
-      });
-
-      if (response.statusCode == 200) {
-        print('OK');
-      } else {
-        print('Error');
-      }
+      Get.snackbar(
+        'Sucesso',
+        'O seu agendamento foi efectuado!',
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+      );
     } catch (e) {
+      Get.snackbar(
+        'Erro',
+        'não possível realizar o agendamento!',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+      );
       print(e);
       print('Error Insert');
     }

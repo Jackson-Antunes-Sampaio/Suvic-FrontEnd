@@ -29,8 +29,6 @@ class AgendamentController extends GetxController {
     loading.value = true;
     await repository.insert(agendament);
     loading.value = false;
-    Get.snackbar('Sucesso', 'O seu agendamento foi efectuado com sucesso',
-        snackPosition: SnackPosition.BOTTOM);
     agendaments.add(agendament);
   }
 }

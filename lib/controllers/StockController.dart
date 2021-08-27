@@ -92,7 +92,7 @@ class StockController extends GetxController {
   }
 
   getVaccinesInStockByClinic(String idClinic) async {
-    loading = true;
+    // loading = true;
 
     var getvaccinesStock = await repository.getStockVaccineByIdClinic(idClinic);
     vaccineInStock.clear();
@@ -147,7 +147,7 @@ class StockController extends GetxController {
   getFourMoreVaccines() {
     vaccineInChart.clear();
     var vacineS = vaccineInStock;
-    if (vacineS.isNotEmpty) {
+    if (vacineS.isNotEmpty && vacineS.length > 4) {
       vacineS.sort((a, b) => b.quantidade.compareTo(a.quantidade));
 
       //clear older vaccines

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 
-class StockRepository {
+class ScheduledRepository {
   getVaccines() async {
     try {
       Dio? dio = CustomDio().instance;
@@ -31,7 +31,7 @@ class StockRepository {
     }
   }
 
-  getStockVaccine() async {
+  getAllScheduled() async {
     try {
       Dio? dio = CustomDio().instance;
       final storage = FlutterSecureStorage();
@@ -39,8 +39,8 @@ class StockRepository {
 
       dio!.options.headers["Cookie"] = token;
       // print('Token: ' + token.toString());
-      final response = await dio.get(API_URL + 'clinics/storage/list');
-      // print("Resposta-> ${response.data}");
+      final response = await dio.get(API_URL + 'clinics/schedule/list');
+      print("Resposta-> ${response.data}");
 
       return response.data;
     } catch (e) {
@@ -84,14 +84,14 @@ class StockRepository {
 
       dio!.options.headers["Cookie"] = token;
       // print('Token: ' + token.toString());
-      final response = await dio.get(API_URL + 'clinics/storage/list');
-      // final response = await dio.post(
-      //   API_URL + 'clinics/vaccines',
-      //   data: {
-      //     "clinic": int.parse(idClinic),
-      //   },
-      // );
-      print("Resposta ID $idClinic Aqui-> ${response.data}");
+      // final response = await dio.get(API_URL + 'clinics/storage/list');
+      final response = await dio.post(
+        API_URL + 'clinics/vaccines',
+        data: {
+          "clinic": int.parse(idClinic),
+        },
+      );
+      // print("Resposta Aqui-> ${response.data}");
 
       return response.data;
     } catch (e) {

@@ -3,6 +3,7 @@ import 'package:covid_19/controllers/StockController.dart';
 import 'package:covid_19/controllers/agendament_controller.dart';
 import 'package:covid_19/controllers/clinicController.dart';
 import 'package:covid_19/models/Clinic_model.dart';
+import 'package:covid_19/models/agendament_model.dart';
 import 'package:covid_19/models/stock_vacine_model.dart';
 import 'package:covid_19/screens/agendament/autocomplete/aVaccinesAgend.dart';
 import 'package:covid_19/screens/agendament/autocomplete/data/getTime.dart';
@@ -28,6 +29,12 @@ class _SelectVacineState extends State<SelectVacine> {
   String? _dropdownValue;
   bool docilio = false;
   final markers = Set<Marker>();
+  final _formKey = GlobalKey<FormState>();
+
+  TextEditingController vaccine = TextEditingController();
+  TextEditingController data = TextEditingController();
+  TextEditingController time = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +94,7 @@ class _SelectVacineState extends State<SelectVacine> {
                               : showCardBtnClose(clinic, controller),
                       Container(
                         width: double.maxFinite,
-                        height: 469,
+                        height: 499,
                         child: GetBuilder<StockController>(
                             init: StockController(idClinic: widget.clinic),
                             builder: (controllerStock) {
@@ -148,6 +155,7 @@ class _SelectVacineState extends State<SelectVacine> {
                                                             vaccines[index]
                                                                 .dataValidade,
                                                         quantidade: 1,
+                                                        reserved: 1,
                                                         price: price,
                                                       ),
                                                     ),
@@ -155,284 +163,93 @@ class _SelectVacineState extends State<SelectVacine> {
                                                 );
                                               },
                                             )
-                                          : Column(
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                    left: 10,
-                                                    top: 20,
-                                                    right: 10,
-                                                    bottom: 10,
-                                                  ),
-                                                  child: TextFormField(
-                                                    enabled: false,
-                                                    initialValue: vaccinesInCart
-                                                        .first.name,
-                                                    decoration: InputDecoration(
-                                                      isDense: true,
-
-                                                      // icon: Image.asset(
-                                                      //   'assets/images/iconVacine.png',
-                                                      //   width: 35,
-                                                      //   height: 35,
-                                                      // ),
-                                                      // prefix: ,
-                                                      //enabledBorder: InputBorder.none,
-                                                      disabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            const BorderRadius
-                                                                .all(
-                                                          const Radius.circular(
-                                                              10.0),
-                                                        ),
-                                                        borderSide: BorderSide(
-                                                          color: Colors.grey,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.only(
+                                          : Form(
+                                              key: _formKey,
+                                              child: Column(
+                                                children: [
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
                                                       left: 10,
+                                                      top: 20,
                                                       right: 10,
-                                                      bottom: 10),
-                                                  // child: autoCompleteTime(),
-                                                  // child: autocompleTime(),
-                                                  child: TextFormField(
-                                                    inputFormatters: [maskDate],
-                                                    decoration: InputDecoration(
-                                                      isDense: true,
-                                                      prefixIcon: Icon(
-                                                          Icons.calendar_today),
-                                                      labelText: 'Data',
-                                                      hintText: 'Data',
-                                                      //enabledBorder: InputBorder.none,
-                                                      border:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            const BorderRadius
-                                                                .all(
-                                                          const Radius.circular(
-                                                              10.0),
-                                                        ),
-                                                      ),
+                                                      bottom: 10,
                                                     ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                    left: 10,
-                                                    right: 10,
-                                                    bottom: 10,
-                                                  ),
-                                                  child:
-                                                      DropdownButtonSelectTimer(),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: 10,
-                                                      right: 10,
-                                                      bottom: 10),
-                                                  child: Container(
-                                                    child: Card(
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8),
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text(
-                                                                'Usar Cartão Cadastrado'),
-                                                            Checkbox(
-                                                                value: true,
-                                                                onChanged:
-                                                                    (value) {})
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: 10,
-                                                      right: 10,
-                                                      bottom: 10),
-                                                  child: Container(
-                                                    child: GestureDetector(
-                                                      onTap: () =>
-                                                          Get.defaultDialog(
-                                                        radius: 5,
-                                                        title:
-                                                            'Endereço do Usuario',
-                                                        content: Container(
-                                                          width: 350,
-                                                          child: Column(
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        2.0),
-                                                                child:
-                                                                    TextFormField(
-                                                                  decoration:
-                                                                      InputDecoration(
-                                                                    contentPadding: EdgeInsets.only(
-                                                                        top: 0,
-                                                                        bottom:
-                                                                            0,
-                                                                        left: 4,
-                                                                        right:
-                                                                            4),
-                                                                    labelText:
-                                                                        'CEP',
-                                                                    //enabledBorder: InputBorder.none,
-                                                                    border:
-                                                                        OutlineInputBorder(
-                                                                      borderRadius:
-                                                                          const BorderRadius
-                                                                              .all(
-                                                                        const Radius.circular(
-                                                                            10.0),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        2.0),
-                                                                child:
-                                                                    TextFormField(
-                                                                  decoration:
-                                                                      InputDecoration(
-                                                                    contentPadding: EdgeInsets.only(
-                                                                        top: 0,
-                                                                        bottom:
-                                                                            0,
-                                                                        left: 4,
-                                                                        right:
-                                                                            4),
-                                                                    labelText:
-                                                                        'Número',
-                                                                    //enabledBorder: InputBorder.none,
-                                                                    border:
-                                                                        OutlineInputBorder(
-                                                                      borderRadius:
-                                                                          const BorderRadius
-                                                                              .all(
-                                                                        const Radius.circular(
-                                                                            10.0),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  keyboardType:
-                                                                      TextInputType
-                                                                          .number,
-                                                                ),
-                                                              ),
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        2.0),
-                                                                child:
-                                                                    TextFormField(
-                                                                  decoration:
-                                                                      InputDecoration(
-                                                                    contentPadding: EdgeInsets.only(
-                                                                        top: 0,
-                                                                        bottom:
-                                                                            0,
-                                                                        left: 4,
-                                                                        right:
-                                                                            4),
-                                                                    labelText:
-                                                                        'Complemento',
-                                                                    //enabledBorder: InputBorder.none,
-                                                                    border:
-                                                                        OutlineInputBorder(
-                                                                      borderRadius:
-                                                                          const BorderRadius
-                                                                              .all(
-                                                                        const Radius.circular(
-                                                                            10.0),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                children: [
-                                                                  ElevatedButton
-                                                                      .icon(
-                                                                    style:
-                                                                        ButtonStyle(
-                                                                      backgroundColor:
-                                                                          MaterialStateProperty
-                                                                              .all(
-                                                                        Color(
-                                                                            0xff303f9f),
-                                                                      ),
-                                                                      shape: MaterialStateProperty
-                                                                          .all(
-                                                                        RoundedRectangleBorder(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(30.0),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    onPressed:
-                                                                        () => Get
-                                                                            .back(),
-                                                                    icon: Icon(Icons
-                                                                        .cancel),
-                                                                    label: Text(
-                                                                        'Cancelar'),
-                                                                  ),
-                                                                  ElevatedButton
-                                                                      .icon(
-                                                                    style:
-                                                                        ButtonStyle(
-                                                                      backgroundColor:
-                                                                          MaterialStateProperty
-                                                                              .all(
-                                                                        Color(
-                                                                            0xff303f9f),
-                                                                      ),
-                                                                      shape: MaterialStateProperty
-                                                                          .all(
-                                                                        RoundedRectangleBorder(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(30.0),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    onPressed:
-                                                                        () {},
-                                                                    icon: Icon(
-                                                                        Icons
-                                                                            .done),
-                                                                    label: Text(
-                                                                        'Adicionar'),
-                                                                  ),
-                                                                ],
-                                                              )
-                                                            ],
+                                                    child: TextFormField(
+                                                      controller: vaccine
+                                                        ..text = vaccinesInCart
+                                                            .first.name,
+                                                      enabled: false,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        isDense: true,
+                                                        disabledBorder:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              const BorderRadius
+                                                                  .all(
+                                                            const Radius
+                                                                .circular(10.0),
+                                                          ),
+                                                          borderSide:
+                                                              BorderSide(
+                                                            color: Colors.grey,
                                                           ),
                                                         ),
                                                       ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 10,
+                                                        right: 10,
+                                                        bottom: 10),
+                                                    child: TextFormField(
+                                                      controller: data,
+                                                      inputFormatters: [
+                                                        maskDate
+                                                      ],
+                                                      validator: (value) {
+                                                        if ((value ?? '')
+                                                            .isEmpty) {
+                                                          return 'Selecione uma data';
+                                                        }
+                                                        // return '';
+                                                      },
+                                                      decoration:
+                                                          InputDecoration(
+                                                        isDense: true,
+                                                        prefixIcon: Icon(Icons
+                                                            .calendar_today),
+                                                        labelText: 'Data',
+                                                        hintText: 'Data',
+                                                        //enabledBorder: InputBorder.none,
+                                                        border:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              const BorderRadius
+                                                                  .all(
+                                                            const Radius
+                                                                .circular(10.0),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                      left: 10,
+                                                      right: 10,
+                                                      bottom: 10,
+                                                    ),
+                                                    child:
+                                                        dropdownButtonSelectTimer(),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 10,
+                                                        right: 10,
+                                                        bottom: 10),
+                                                    child: Container(
                                                       child: Card(
                                                         child: Padding(
                                                           padding:
@@ -444,71 +261,273 @@ class _SelectVacineState extends State<SelectVacine> {
                                                                     .spaceBetween,
                                                             children: [
                                                               Text(
-                                                                  'Atendimento ao domicílio'),
+                                                                  'Usar Cartão Cadastrado'),
                                                               Checkbox(
-                                                                value: docilio,
-                                                                onChanged:
-                                                                    (value) {},
-                                                              )
+                                                                  value: true,
+                                                                  onChanged:
+                                                                      (value) {})
                                                             ],
                                                           ),
                                                         ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: 10,
-                                                      top: 5,
-                                                      right: 10,
-                                                      bottom: 10),
-                                                  child: Container(
-                                                    width: double.maxFinite,
-                                                    child: ElevatedButton.icon(
-                                                      style: ButtonStyle(
-                                                        backgroundColor:
-                                                            MaterialStateProperty
-                                                                .all(
-                                                          Color(0xff303f9f),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 10,
+                                                        right: 10,
+                                                        bottom: 10),
+                                                    child: Container(
+                                                      child: GestureDetector(
+                                                        onTap: () =>
+                                                            Get.defaultDialog(
+                                                          radius: 5,
+                                                          title:
+                                                              'Endereço do Usuario',
+                                                          content: Container(
+                                                            width: 350,
+                                                            child: Column(
+                                                              children: [
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .all(
+                                                                          2.0),
+                                                                  child:
+                                                                      TextFormField(
+                                                                    decoration:
+                                                                        InputDecoration(
+                                                                      contentPadding: EdgeInsets.only(
+                                                                          top:
+                                                                              0,
+                                                                          bottom:
+                                                                              0,
+                                                                          left:
+                                                                              4,
+                                                                          right:
+                                                                              4),
+                                                                      labelText:
+                                                                          'CEP',
+                                                                      //enabledBorder: InputBorder.none,
+                                                                      border:
+                                                                          OutlineInputBorder(
+                                                                        borderRadius:
+                                                                            const BorderRadius.all(
+                                                                          const Radius.circular(
+                                                                              10.0),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .all(
+                                                                          2.0),
+                                                                  child:
+                                                                      TextFormField(
+                                                                    decoration:
+                                                                        InputDecoration(
+                                                                      contentPadding: EdgeInsets.only(
+                                                                          top:
+                                                                              0,
+                                                                          bottom:
+                                                                              0,
+                                                                          left:
+                                                                              4,
+                                                                          right:
+                                                                              4),
+                                                                      labelText:
+                                                                          'Número',
+                                                                      //enabledBorder: InputBorder.none,
+                                                                      border:
+                                                                          OutlineInputBorder(
+                                                                        borderRadius:
+                                                                            const BorderRadius.all(
+                                                                          const Radius.circular(
+                                                                              10.0),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    keyboardType:
+                                                                        TextInputType
+                                                                            .number,
+                                                                  ),
+                                                                ),
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .all(
+                                                                          2.0),
+                                                                  child:
+                                                                      TextFormField(
+                                                                    decoration:
+                                                                        InputDecoration(
+                                                                      contentPadding: EdgeInsets.only(
+                                                                          top:
+                                                                              0,
+                                                                          bottom:
+                                                                              0,
+                                                                          left:
+                                                                              4,
+                                                                          right:
+                                                                              4),
+                                                                      labelText:
+                                                                          'Complemento',
+                                                                      //enabledBorder: InputBorder.none,
+                                                                      border:
+                                                                          OutlineInputBorder(
+                                                                        borderRadius:
+                                                                            const BorderRadius.all(
+                                                                          const Radius.circular(
+                                                                              10.0),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    ElevatedButton
+                                                                        .icon(
+                                                                      style:
+                                                                          ButtonStyle(
+                                                                        backgroundColor:
+                                                                            MaterialStateProperty.all(
+                                                                          Color(
+                                                                              0xff303f9f),
+                                                                        ),
+                                                                        shape: MaterialStateProperty
+                                                                            .all(
+                                                                          RoundedRectangleBorder(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(30.0),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      onPressed:
+                                                                          () =>
+                                                                              Get.back(),
+                                                                      icon: Icon(
+                                                                          Icons
+                                                                              .cancel),
+                                                                      label: Text(
+                                                                          'Cancelar'),
+                                                                    ),
+                                                                    ElevatedButton
+                                                                        .icon(
+                                                                      style:
+                                                                          ButtonStyle(
+                                                                        backgroundColor:
+                                                                            MaterialStateProperty.all(
+                                                                          Color(
+                                                                              0xff303f9f),
+                                                                        ),
+                                                                        shape: MaterialStateProperty
+                                                                            .all(
+                                                                          RoundedRectangleBorder(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(30.0),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      onPressed:
+                                                                          () {},
+                                                                      icon: Icon(
+                                                                          Icons
+                                                                              .done),
+                                                                      label: Text(
+                                                                          'Adicionar'),
+                                                                    ),
+                                                                  ],
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ),
                                                         ),
-                                                        shape:
-                                                            MaterialStateProperty
-                                                                .all(
-                                                          RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        30.0),
+                                                        child: Card(
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Text(
+                                                                    'Atendimento ao domicílio'),
+                                                                Checkbox(
+                                                                  value:
+                                                                      docilio,
+                                                                  onChanged:
+                                                                      (value) {},
+                                                                )
+                                                              ],
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
-                                                      onPressed: () {
-                                                        // return schedule();
-                                                      },
-                                                      icon: Obx(() =>
-                                                          AgendamentController
-                                                                  .to
-                                                                  .loading
-                                                                  .value
-                                                              ? Container(
-                                                                  width: 15,
-                                                                  height: 15,
-                                                                  child:
-                                                                      CircularProgressIndicator(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    strokeWidth:
-                                                                        2,
-                                                                  ),
-                                                                )
-                                                              : Icon(
-                                                                  Icons.add)),
-                                                      label: Text('Agendar'),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 10,
+                                                        top: 5,
+                                                        right: 10,
+                                                        bottom: 10),
+                                                    child: Container(
+                                                      width: double.maxFinite,
+                                                      child:
+                                                          ElevatedButton.icon(
+                                                        style: ButtonStyle(
+                                                          backgroundColor:
+                                                              MaterialStateProperty
+                                                                  .all(
+                                                            Color(0xff303f9f),
+                                                          ),
+                                                          shape:
+                                                              MaterialStateProperty
+                                                                  .all(
+                                                            RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          30.0),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        onPressed: () {
+                                                          return schedule();
+                                                        },
+                                                        icon: Obx(() =>
+                                                            AgendamentController
+                                                                    .to
+                                                                    .loading
+                                                                    .value
+                                                                ? Container(
+                                                                    width: 15,
+                                                                    height: 15,
+                                                                    child:
+                                                                        CircularProgressIndicator(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      strokeWidth:
+                                                                          2,
+                                                                    ),
+                                                                  )
+                                                                : Icon(
+                                                                    Icons.add)),
+                                                        label: Text('Agendar'),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             );
                             }),
                       ),
@@ -520,7 +539,7 @@ class _SelectVacineState extends State<SelectVacine> {
     );
   }
 
-  DropdownButtonFormField<String> DropdownButtonSelectTimer() {
+  DropdownButtonFormField<String> dropdownButtonSelectTimer() {
     return DropdownButtonFormField<String>(
       value: _dropdownValue,
       decoration: InputDecoration(
@@ -664,7 +683,18 @@ class _SelectVacineState extends State<SelectVacine> {
           )),
         ),
       ),
-      //bottomNavigationBar: BottomNavigationBarNew(),
     );
+  }
+
+  schedule() {
+    if (_formKey.currentState!.validate()) {
+      AgendamentController.to.insert(AgendamentModel(
+        vaccine: vaccine.text,
+        data: data.text,
+        time: _dropdownValue,
+        idClinica: widget.clinic,
+      ));
+      _formKey.currentState!.reset();
+    }
   }
 }

@@ -98,6 +98,8 @@ class _StockState extends State<Stock> {
                         .firstWhere(
                             (element) => element.vacine == vacines[index].name)
                         .price;
+                  } else {
+                    price = 0;
                   }
                   return Slidable(
                     actionPane: SlidableDrawerActionPane(),
@@ -314,6 +316,7 @@ class _StockState extends State<Stock> {
             lote: lote.text,
             dataValidade: datavalidade.text,
             quantidade: int.parse(quantidade.text),
+            reserved: 0,
           ),
         );
         controller.insertPrice(
