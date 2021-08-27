@@ -6,6 +6,7 @@ import 'package:covid_19/controllers/credit_card_controller.dart';
 import 'package:covid_19/controllers/stock_vacine_controller.dart';
 import 'package:covid_19/models/page_manager.dart';
 import 'package:covid_19/screens/agendament/agendam.dart';
+import 'package:covid_19/screens/agendament/agendament.dart';
 import 'package:covid_19/screens/credit_card/credit_card_screen.dart';
 import 'package:covid_19/screens/home/home_screen_new.dart';
 import 'package:covid_19/screens/info/info_screen.dart';
@@ -25,10 +26,11 @@ class BaseScreen extends StatefulWidget {
 }
 
 class _BaseScreenState extends State<BaseScreen> {
-
   final PageManager pageManager = Get.put(PageManager());
-  final CreditCardController creditCardController = Get.put(CreditCardController());
-  final StockVacineController stockVacineController = Get.put(StockVacineController());
+  final CreditCardController creditCardController =
+      Get.put(CreditCardController());
+  final StockVacineController stockVacineController =
+      Get.put(StockVacineController());
 
   @override
   void initState() {
@@ -54,9 +56,10 @@ class _BaseScreenState extends State<BaseScreen> {
         provisional: false,
         sound: true,
       );
-      print('Permissão concedida pelo usuário: ${settings.authorizationStatus}');
+      print(
+          'Permissão concedida pelo usuário: ${settings.authorizationStatus}');
     }
-    messaging.getToken().then((value){
+    messaging.getToken().then((value) {
       print("token: $value");
     });
     // APLICATIVO ABERTO
@@ -66,10 +69,10 @@ class _BaseScreenState extends State<BaseScreen> {
           message.notification!.title,
           message.notification!.body,
         );
-        print('Message also contained a notification: ${message.notification!.body}');
+        print(
+            'Message also contained a notification: ${message.notification!.body}');
       }
     });
-
   }
 
   void showNotification(String? title, String? message) {
@@ -89,7 +92,6 @@ class _BaseScreenState extends State<BaseScreen> {
     ).show(context);
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,7 +105,7 @@ class _BaseScreenState extends State<BaseScreen> {
           HomeScreenNew(),
           VaccineCardScreen(),
           //InfoScreen(),
-          Agendam(),
+          Agendament(),
           MenuScreen(),
           //CreditCardScreen(),
           // Scaffold(
