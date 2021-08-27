@@ -84,13 +84,13 @@ class StockRepository {
 
       dio!.options.headers["Cookie"] = token;
       // print('Token: ' + token.toString());
-      final response = await dio.get(API_URL + 'clinics/storage/list');
-      // final response = await dio.post(
-      //   API_URL + 'clinics/vaccines',
-      //   data: {
-      //     "clinic": int.parse(idClinic),
-      //   },
-      // );
+      // final response = await dio.get(API_URL + 'clinics/storage/list');
+      final response = await dio.post(
+        API_URL + 'clinics/vaccines',
+        data: {
+          "clinic": int.parse(idClinic),
+        },
+      );
       print("Resposta ID $idClinic Aqui-> ${response.data}");
 
       return response.data;
