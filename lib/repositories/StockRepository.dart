@@ -91,7 +91,7 @@ class StockRepository {
           "clinic": int.parse(idClinic),
         },
       );
-      print("Resposta ID $idClinic Aqui-> ${response.data}");
+      // print("Resposta ID $idClinic Aqui-> ${response.data}");
 
       return response.data;
     } catch (e) {
