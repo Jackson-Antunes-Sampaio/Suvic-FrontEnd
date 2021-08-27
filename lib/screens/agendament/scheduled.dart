@@ -19,6 +19,7 @@ import 'package:covid_19/controllers/StockController.dart';
 import 'package:covid_19/controllers/user_controller.dart';
 import 'package:covid_19/models/priceVacine.dart';
 import 'package:covid_19/models/stock_vacine_model.dart';
+import 'package:covid_19/repositories/ScheduledRepository.dart';
 import 'package:covid_19/screens/agendament/graphics/pie_chart.dart';
 import 'package:covid_19/screens/stock/autocomplete/textFormField.dart';
 import 'package:covid_19/screens/stock/graphics/pie_chart.dart';
@@ -27,7 +28,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class Scheduled extends StatefulWidget {
   const Scheduled({Key? key}) : super(key: key);
@@ -48,6 +48,9 @@ class _ScheduledState extends State<Scheduled> {
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration.zero, () async {
+      await ScheduledRepository().getAllScheduled();
+    });
     return Scaffold(
       body: DefaultTabController(
         length: 3,
