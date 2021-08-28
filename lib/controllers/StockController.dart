@@ -100,22 +100,16 @@ class StockController extends GetxController {
     if (getvaccinesStock.isNotEmpty) {
       // print(getvaccinesStock);
       getvaccinesStock.forEach((vaccine) {
-        var name;
-        if (vaccine['vaccineName'] == null) {
-          name = '';
-        } else {
-          name = vaccine['vaccineName'];
-        }
+          var name;
+          name = vaccine;
+
 
         vaccineInStock.add(
           StockVacineModel(
             name: name,
-            // name: 'Teste',
-            lote: vaccine['batch'] == null ? '' : vaccine['batch'],
-            dataValidade: vaccine['expirationdate'] == null
-                ? ''
-                : vaccine['expirationdate'],
-            quantidade: vaccine['count'],
+            lote: "",
+            dataValidade: "",
+            quantidade: 0
           ),
         );
       });

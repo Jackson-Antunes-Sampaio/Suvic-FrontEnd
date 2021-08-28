@@ -12,6 +12,7 @@ import 'package:covid_19/screens/login/login_screen.dart';
 import 'package:covid_19/screens/login/singup_screen.dart';
 import 'package:covid_19/screens/not_connect/not_connect_screen.dart';
 import 'package:covid_19/screens/notify_covid/notify_covid_screen.dart';
+import 'package:covid_19/screens/profile/profile_screen.dart';
 import 'package:covid_19/screens/register_applicator/registration_users_screen.dart';
 import 'package:covid_19/screens/splash/splash_screen.dart';
 import 'package:covid_19/screens/stock/dashboard.dart';
@@ -94,6 +95,10 @@ class AppPage {
     GetPage(
       name: Routes.AGENDAM,
       page: () => Agendament(),
+    ),
+    GetPage(
+      name: Routes.PROFILE,
+      page: () => ProfileScreen(),
     ),
   ];
 }

@@ -125,10 +125,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                     if (response == "Usuario Logado!") {
                                       Get.offNamed(Routes.BASE);
                                     } else {
-                                      // Get.snackbar(
-                                      //   "Falha ao Entrar",
-                                      //   "$response",
-                                      // );
                                       final snackBar = SnackBar(
                                         content: Text('$response'),
                                         backgroundColor: Colors.red,
@@ -136,15 +132,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                     }
                                   }
-
-                                  // final response2 = await  dio.post(
-                                  //   "https://ec2-18-231-166-223.sa-east-1.compute.amazonaws.com:8443/login/",
-                                  //   data: {
-                                  //     "email" : "jack@user.com",
-                                  //     "password" : "123456",
-                                  //   }
-                                  // );
-                                  // print("aqui ${response2.data}");
                                 },
                                 child: Text(
                                   "ENTRAR",

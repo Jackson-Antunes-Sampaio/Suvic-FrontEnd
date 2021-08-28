@@ -78,33 +78,33 @@ class _VaccineCardScreenState extends State<VaccineCardScreen> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(right: 10),
-                  child: Container(
-                    height: 45,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.grey)),
-                    child: FlatButton(
-                      onPressed: () {
-                        scaffoldKey.currentState?.showSnackBar(
-                          SnackBar(content: Text("Em Manutenção"))
-                        );
-                      },
-                      child: Row(
-                        children: [
-                          Text(
-                            "2 Dependentes",
-                            style: TextStyle(fontSize: 11),
-                          ),
-                          Icon(Icons.arrow_drop_down)
-                        ],
-                      ),
-                      textColor: Colors.blue[700],
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: EdgeInsets.only(right: 10),
+                //   child: Container(
+                //     height: 45,
+                //     decoration: BoxDecoration(
+                //         color: Colors.white,
+                //         borderRadius: BorderRadius.circular(10),
+                //         border: Border.all(color: Colors.grey)),
+                //     child: FlatButton(
+                //       onPressed: () {
+                //         scaffoldKey.currentState?.showSnackBar(
+                //           SnackBar(content: Text("Em Manutenção"))
+                //         );
+                //       },
+                //       child: Row(
+                //         children: [
+                //           Text(
+                //             "2 Dependentes",
+                //             style: TextStyle(fontSize: 11),
+                //           ),
+                //           Icon(Icons.arrow_drop_down)
+                //         ],
+                //       ),
+                //       textColor: Colors.blue[700],
+                //     ),
+                //   ),
+                // ),
               ],
             ),
             Obx(() {

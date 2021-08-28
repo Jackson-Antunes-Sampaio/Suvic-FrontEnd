@@ -5,7 +5,7 @@ import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 
 class TextFieldCustom extends StatelessWidget {
   TextFieldCustom(
-      {this.iconData, this.labelText, this.hintText, this.textInputType, this.validator, this.controller, this.textInputFormatter, this.onChanged});
+      {this.iconData, this.labelText, this.hintText, this.textInputType, this.validator, this.controller, this.textInputFormatter, this.onChanged, this.initialValue});
 
   final IconData? iconData;
   final String? labelText;
@@ -15,10 +15,12 @@ class TextFieldCustom extends StatelessWidget {
   final TextEditingController? controller;
   final List<TextInputFormatter>? textInputFormatter;
   final Function(String)? onChanged;
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+              initialValue: initialValue,
               controller: controller,
               validator: validator,
               keyboardType: textInputType,
@@ -26,7 +28,7 @@ class TextFieldCustom extends StatelessWidget {
               inputFormatters: textInputFormatter ?? [],
               decoration: InputDecoration(
                 isDense: true,
-                prefixIcon: IconButtonCustom(
+                prefixIcon: iconData == null ? null : IconButtonCustom(
                   iconData: iconData,
                   color: Colors.grey,
                   size: 35,

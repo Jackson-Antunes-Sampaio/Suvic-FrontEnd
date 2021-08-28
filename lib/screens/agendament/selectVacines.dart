@@ -1,3 +1,4 @@
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:covid_19/common/botton_navigation_bar/bottom_navigation_bar_new.dart';
 import 'package:covid_19/controllers/StockController.dart';
 import 'package:covid_19/controllers/agendament_controller.dart';
@@ -9,6 +10,7 @@ import 'package:covid_19/screens/agendament/autocomplete/aVaccinesAgend.dart';
 import 'package:covid_19/screens/agendament/autocomplete/data/getTime.dart';
 import 'package:covid_19/utils/styles/style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -40,11 +42,13 @@ class _SelectVacineState extends State<SelectVacine> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: SingleChildScrollView(
         child: widget.clinic.isEmpty
             ? Center(child: Text('Selecione uma clinica'))
-            : GetBuilder<ClinicController>(
+            :
+        GetBuilder<ClinicController>(
                 init: ClinicController(idClinic: widget.clinic),
                 builder: (controller) {
                   //Get clinic selected
@@ -209,7 +213,9 @@ class _SelectVacineState extends State<SelectVacine> {
                                                     child: TextFormField(
                                                       controller: data,
                                                       inputFormatters: [
-                                                        maskDate
+                                                        //maskDate
+                                                        FilteringTextInputFormatter.digitsOnly,
+                                                        DataInputFormatter()
                                                       ],
                                                       validator: (value) {
                                                         if ((value ?? '')
@@ -690,6 +696,7 @@ class _SelectVacineState extends State<SelectVacine> {
   }
 
   schedule() {
+    print("${_dropdownValue}");
     if (_formKey.currentState!.validate()) {
       AgendamentController.to.insert(AgendamentModel(
         vaccine: vaccine.text,

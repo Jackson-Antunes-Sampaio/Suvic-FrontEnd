@@ -21,21 +21,11 @@ class MenuScreen extends StatelessWidget {
             email: '${userController.user?.civilName ?? '-'}',
             offset: 0,
           ),
-          InkWell(
-            onTap: () async {
-              await userController.logout();
-              Get.offAllNamed(Routes.LOGIN);
-            },
-            child: Padding(
-              padding: EdgeInsets.only(right: 20),
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  "Sair",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
+          TextButton(
+              onPressed: (){
+                Get.toNamed(Routes.PROFILE);
+              },
+              child: Text("Editar perfil"),
           ),
           Padding(
             padding: EdgeInsets.only(top: 20, left: 10, right: 10),
@@ -124,6 +114,18 @@ class MenuScreen extends StatelessWidget {
                     },
                   ),
                 ) : Container(),
+                Card(
+                  elevation: 4,
+                  child: ListTile(
+                    leading: Icon(Icons.logout),
+                    title: Text('Sair'),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: () async{
+                      await userController.logout();
+                      Get.offAllNamed(Routes.LOGIN);
+                    },
+                  ),
+                )
               ],
             ),
           )

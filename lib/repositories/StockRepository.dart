@@ -92,7 +92,7 @@ class StockRepository {
         },
       );
       // print("Resposta ID $idClinic Aqui-> ${response.data}");
-
+      print(response.data);
       return response.data;
     } catch (e) {
       Get.snackbar(
