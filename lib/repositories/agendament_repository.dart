@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 
 class AgendamentRepository {
   final String service = 'clinics/schedule';
-  Future<List<AgendamentModel>> getAll() async {
+  Future<List<AgendementModel>> getAll() async {
     try {
       Dio dio = Dio();
       final response = await dio.get(API_URL + service);
@@ -27,7 +27,7 @@ class AgendamentRepository {
     }
   }
 
-  insert(AgendamentModel agendamentModel) async {
+  insert(AgendementModel agendamentModel) async {
     try {
       Dio? dio = CustomDio().instance;
 
@@ -36,15 +36,9 @@ class AgendamentRepository {
       dio!.options.headers["Cookie"] = token;
 
       await dio.post(API_URL + service, data: {
-        'start': (agendamentModel.data ?? '') +
-            ' ' +
-            (agendamentModel.time ?? '') +
-            ':00',
-        'end': (agendamentModel.data ?? '') +
-            ' ' +
-            DateFormat('HH:mm:ss').format(DateTime.now()),
+        'slot': agendamentModel.slot,
         'title': agendamentModel.vaccine,
-        'clinic': agendamentModel.idClinica,
+        'clinic': agendamentModel.clinicId,
       });
 
       Get.snackbar(

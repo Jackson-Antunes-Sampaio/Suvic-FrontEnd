@@ -25,7 +25,7 @@ class AgendamentController extends GetxController {
     }
   }
 
-  insert(AgendamentModel agendament) async {
+  insert(AgendementModel agendament) async {
     loading.value = true;
     await repository.insert(agendament);
     loading.value = false;

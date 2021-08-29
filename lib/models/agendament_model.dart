@@ -1,36 +1,28 @@
-class AgendamentModel {
-  final int? id;
-  final String? idClinica;
-  final String? vaccine;
-  final String? data;
-  final String? time;
-  final String? cardRegistered;
+class AgendementModel {
+  int? clinicId;
+  String? vaccine;
+  int? slot;
+  bool? houseCall;
+  String? date;
 
-  AgendamentModel({
-    this.id,
-    this.idClinica,
-    this.vaccine,
-    this.data,
-    this.time,
-    this.cardRegistered,
-  });
+  AgendementModel(
+      {this.clinicId, this.vaccine, this.slot, this.houseCall, this.date});
 
-  factory AgendamentModel.fromJson(Map<String, dynamic> json) =>
-      AgendamentModel(
-        id: json['id'],
-        idClinica: json['idClinica'],
-        vaccine: json['idVaccine'],
-        data: json['data'],
-        time: json['time'],
-        cardRegistered: json['cardRegistered'],
-      );
+  AgendementModel.fromJson(Map<String, dynamic> json) {
+    clinicId = json['clinicId'];
+    vaccine = json['vaccine'];
+    slot = json['slot'];
+    houseCall = json['houseCall'];
+    date = json['date'];
+  }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "idClinica": idClinica,
-        "idVaccine": vaccine,
-        "data": data,
-        "time": time,
-        "cardRegistered": cardRegistered,
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['clinicId'] = this.clinicId;
+    data['vaccine'] = this.vaccine;
+    data['slot'] = this.slot;
+    data['houseCall'] = this.houseCall;
+    data['date'] = this.date;
+    return data;
+  }
 }

@@ -74,7 +74,7 @@ class _StockState extends State<Stock> {
               }),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBarNew(),
+      //bottomNavigationBar: BottomNavigationBarNew(),
     );
   }
 
