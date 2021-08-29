@@ -95,31 +95,37 @@ class UserRepository {
     }
   }
 
-  Future<String> putUser(Map<String, dynamic> map) async {
+  Future<bool> putUser(Map<String, dynamic> map) async {
     print(map);
     try {
       Dio? dio = CustomDio().instance;
-      final response = await dio?.put(
+
+      final storage = FlutterSecureStorage();
+      final token = await storage.read(key: "token");
+      if(token == null){
+        return Future.error("error");
+      }
+      print(token);
+      dio!.options.headers["Cookie"] = token;
+
+      final response = await dio.put(
           API_URL + "users",
           data: map
       );
-
-      if (response?.statusCode == 200) {
-        print(response?.data);
-        if(response?.data["error"] != null){
-          return response?.data["error"];
-        }else if(response?.data["name"] == "SequelizeUniqueConstraintError"){
-          return "CFF já cadastrado";
+      print(response.data);
+      if (response.statusCode == 200) {
+        if(response.data["error"] != null){
+          return false;
         }else{
-          return "Usuario criado com sucesso.";
+          return true;
         }
 
       } else {
-        return "Erro";
+        return false;
       }
     } catch (e) {
 
-      return "Erro";
+      return false;
     }
   }
 

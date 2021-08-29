@@ -3,6 +3,8 @@ import 'package:covid_19/common/icon_button_custom.dart';
 import 'package:covid_19/common/text_fiel_custom.dart';
 import 'package:covid_19/controllers/perfil_controller.dart';
 import 'package:covid_19/controllers/user_controller.dart';
+import 'package:covid_19/models/user_model.dart';
+import 'package:covid_19/screens/menu/components/address_user.dart';
 import 'package:covid_19/screens/profile/components/header.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +31,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController rgController = TextEditingController();
   final TextEditingController cpfController = TextEditingController();
   final TextEditingController birthdateController = TextEditingController();
-  final TextEditingController sexController = TextEditingController();
-  final TextEditingController healthProfessionalController = TextEditingController();
+  String? sexController;
+  String? healthProfessional;
   final TextEditingController bloodTypeController = TextEditingController();
 
 
@@ -41,11 +43,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     perfilController.statePerfil.value = StatePerfil.IDL;
     nameController.text = userController.user?.civilName ?? '';
     emailController.text = userController.user?.email ?? '';
-    rgController.text = userController.user?.rg.toString() ?? '';
+    rgController.text = userController.user?.rg == null ? '' : '${userController.user?.rg}';
     cpfController.text = userController.user?.cpf ?? '';
     birthdateController.text = userController.user!.birthdate == null ? '' : DateFormat("dd/MM/yyyy").format(DateTime.parse(userController.user!.birthdate!));
-    sexController.text = userController.user?.sex ?? '';
-    healthProfessionalController.text = userController.user!.healthProfessional! ? 'Sim'  : 'Não';
+    sexController = userController.user?.sex == "NS" ? "Não especificado" : userController.user?.sex ?? 'Não especificado';
+    healthProfessional = userController.user!.healthProfessional! ? 'Sim'  : 'Não';
     bloodTypeController.text = userController.user?.bloodType ?? '';
   }
 
@@ -54,6 +56,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Perfil"),
+        actions: [
+          Obx((){
+            if(perfilController.statePerfil.value == StatePerfil.ADDRESS){
+              return IconButtonCustom(
+                onTap: (){
+                  perfilController.statePerfil.value = StatePerfil.IDL;
+                },
+                iconData: Icons.close,
+              );
+            }else{
+              return Container();
+            }
+          }),
+          Container(width: 10,)
+        ],
       ),
       body: Obx((){
         switch(perfilController.statePerfil.value){
@@ -65,12 +82,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   children: [
                     Header(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text("Alterar senha"),
-                        Icon(Icons.keyboard_arrow_right)
-                      ],
+                    InkWell(
+                      onTap: (){
+                        final snackBar = SnackBar(
+                          content: Text('Em manutenção'),
+                          backgroundColor: Colors.red,
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text("Alterar senha"),
+                          Icon(Icons.keyboard_arrow_right)
+                        ],
+                      ),
                     ),
                     SizedBox(height: 10,),
                     TextFieldCustom(
@@ -88,7 +114,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     SizedBox(height: 10,),
                     TextFieldCustom(
                       controller: emailController,
-
+                      enabled: false,
                       hintText: "Email",
                       labelText: "Email",
                       validator: (value){
@@ -104,14 +130,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       controller: rgController,
                       hintText: "RG",
                       labelText: "RG",
+                      textInputType: TextInputType.number,
                       textInputFormatter: [
+                        FilteringTextInputFormatter.digitsOnly,
                         MaskTextInputFormatter(mask: "##.###.###-#")
                       ],
                       validator: (value){
-                        if(value?.length == 12 || value?.length == 0){
+                        if(value!.isEmpty){
                           return null;
                         }else{
-                          return 'Campo inválido';
+                          String newValue = value.replaceAll(".", "").replaceAll("-", "").replaceAll(" ", "");
+                          if(newValue.length == 9){
+                            return null;
+                          }else{
+                            return 'Campo inválido';
+                          }
                         }
                       },
                     ),
@@ -126,10 +159,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         CpfInputFormatter(),
                       ],
                       validator: (value){
-                        if(value?.length == 14){
-                          return null;
-                        }else{
+                        if(value!.isEmpty){
                           return 'Campo inválido';
+                        }else{
+                          String newValue = value.replaceAll(".", "").replaceAll("-", "").replaceAll(" ", "");
+                          if(newValue.length == 11){
+                            return null;
+                          }else{
+                            return 'Campo inválido';
+                          }
                         }
                       },
                     ),
@@ -152,66 +190,86 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       },
                     ),
                     SizedBox(height: 10,),
-                    TextFieldCustom(
-                      controller: sexController,
-                      textInputType: TextInputType.number,
-                      hintText: "Genero",
-                      labelText: "Genero",
-                      textInputFormatter: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        DataInputFormatter(),
+                    Row(
+                      children: [
+                        Text("Gênero: "),
+                        SizedBox(width: 10,),
+                        DropdownButton<String>(
+                          value: sexController,
+                          elevation: 16,
+                          //style: const TextStyle(color: Colors.deepPurple),
+                          underline: Container(
+                            height: 1,
+                            color: Colors.transparent,
+                          ),
+                          onChanged: (newValue) {
+                            setState(() {
+                              sexController = newValue;
+                            });
+                          },
+                          items: ["M", "F", "Não especificado"]
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value.toString()),
+                            );
+                          }).toList(),
+                        ),
                       ],
-                      validator: (value){
-                        if(value?.length == 10){
-                          return null;
-                        }else{
-                          return 'Campo inválido';
-                        }
-                      },
                     ),
                     SizedBox(height: 10,),
-                    TextFieldCustom(
-                      controller: healthProfessionalController,
-                      textInputType: TextInputType.number,
-                      hintText: "Profissional da saúde",
-                      labelText: "Profissional da saúde",
-                      textInputFormatter: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        DataInputFormatter(),
+                    SizedBox(height: 10,),
+                    Row(
+                      children: [
+                        Text("Profissional da saúde: "),
+                        SizedBox(width: 10,),
+                        DropdownButton<String>(
+                          value: healthProfessional,
+                          elevation: 16,
+                          //style: const TextStyle(color: Colors.deepPurple),
+                          underline: Container(
+                            height: 1,
+                            color: Colors.transparent,
+                          ),
+                          onChanged: (newValue) {
+                            setState(() {
+                              healthProfessional = newValue;
+                            });
+                          },
+                          items: ["Sim", "Não"]
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value.toString()),
+                            );
+                          }).toList(),
+                        ),
                       ],
-                      validator: (value){
-                        if(value?.length == 10){
-                          return null;
-                        }else{
-                          return 'Campo inválido';
-                        }
-                      },
                     ),
                     SizedBox(height: 10,),
                     TextFieldCustom(
                       controller: bloodTypeController,
-                      textInputType: TextInputType.number,
                       hintText: "Tipo sanguineo",
                       labelText: "Tipo sanguineo",
-                      textInputFormatter: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        DataInputFormatter(),
-                      ],
+                      textInputFormatter: [],
                       validator: (value){
-                        if(value?.length == 10){
-                          return null;
-                        }else{
-                          return 'Campo inválido';
-                        }
+                        return null;
                       },
                     ),
                     SizedBox(height: 10,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text("Alterar Endereço"),
-                        Icon(Icons.keyboard_arrow_right)
-                      ],
+                    InkWell(
+                      onTap: (){
+                        perfilController.statePerfil.value = StatePerfil.ADDRESS;
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          userController.user?.addressStreetName != null
+                             ? Text("Alterar Endereço")
+                              : Text("Inserir Endereço"),
+                          Icon(Icons.keyboard_arrow_right)
+                        ],
+                      ),
                     ),
                     SizedBox(height: 60,),
                   ],
@@ -224,16 +282,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: CircularProgressIndicator(),
             );
             break;
+          case StatePerfil.ADDRESS:
+            return AddressUser(
+              user: userController.user!,
+            );
         }
       }
       ),
       floatingActionButton: Obx((){
-        if(perfilController.statePerfil.value == StatePerfil.LOADING){
+        if(perfilController.statePerfil.value == StatePerfil.LOADING || perfilController.statePerfil.value == StatePerfil.ADDRESS){
           return Container();
         }else{
           return FloatingActionButton.extended(
               backgroundColor: Theme.of(context).primaryColor,
-              onPressed: (){},
+              onPressed: ()async{
+                UserModel? userModelFirst = userController.user;
+                if(formKey.currentState!.validate()){
+                  userController.user?.civilName = nameController.text;
+                  userController.user?.email = emailController.text;
+                  int rg = int.parse(rgController.text.replaceAll(".", "").replaceAll("-", ""));
+                  userController.user?.rg = rg;
+                  String cpf = cpfController.text.replaceAll(".", "").replaceAll("-", "").replaceAll(" ", "");
+                  userController.user?.cpf = cpf;
+                  List listData = birthdateController.text.split("/");
+                  userController.user?.birthdate = "${listData.last}-${listData[1]}-${listData.first}";
+                  userController.user?.sex = sexController == "Não especificado" ? "NS" : sexController;
+                  userController.user?.healthProfessional = healthProfessional == "Sim" ? true : false;
+                  userController.user?.bloodType = bloodTypeController.text;
+                  perfilController.putUser(userController.user!).then((value){
+                    if(value){
+                      final snackBar = SnackBar(
+                        content: Text('Dados Atualizados'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }else{
+                      userController.user = userModelFirst;
+                      final snackBar = SnackBar(
+                        content: Text('Erro ao salvar dados'),
+                        backgroundColor: Colors.red,
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
+                  });
+                }else{
+                  final snackBar = SnackBar(
+                    content: Text('Verifique Campos inválidos'),
+                    backgroundColor: Colors.red,
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+
+              },
               label: Row(
                 children: [
                   Icon(Icons.save),
