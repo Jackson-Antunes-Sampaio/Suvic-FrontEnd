@@ -95,6 +95,34 @@ class UserRepository {
     }
   }
 
+  Future<String> putUser(Map<String, dynamic> map) async {
+    print(map);
+    try {
+      Dio? dio = CustomDio().instance;
+      final response = await dio?.put(
+          API_URL + "users",
+          data: map
+      );
+
+      if (response?.statusCode == 200) {
+        print(response?.data);
+        if(response?.data["error"] != null){
+          return response?.data["error"];
+        }else if(response?.data["name"] == "SequelizeUniqueConstraintError"){
+          return "CFF já cadastrado";
+        }else{
+          return "Usuario criado com sucesso.";
+        }
+
+      } else {
+        return "Erro";
+      }
+    } catch (e) {
+
+      return "Erro";
+    }
+  }
+
 
 
 }

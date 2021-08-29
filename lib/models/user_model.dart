@@ -74,7 +74,7 @@ class UserModel {
     sUScard = json['SUScard'];
     birthdate = json['birthdate'];
     sex = json['sex'];
-    healthProfessional = json['healthProfessional'];
+    healthProfessional = json['healthProfessional'] ?? false;
     addressStreetName = json['address_streetName'];
     addressNumber = json['address_number'];
     addressComplement = json['address_complement'];
