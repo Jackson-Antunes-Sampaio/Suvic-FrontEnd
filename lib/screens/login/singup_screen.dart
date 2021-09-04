@@ -141,13 +141,14 @@ class _SingUpState extends State<SingUp> {
                         print("foi ${status}");
                         scaffoldKey.currentState?.showSnackBar(SnackBar(
                             content: Text("${userController.message}")));
-                        //Get.back();
+                        await Future.delayed(Duration(seconds: 2));
                         nameController.text = "";
                       emailController.text= "";
                       cpfController.text= "";
                       passController.text= "";
                       confirmPassController.text= "";
                       birthdateController.text= "";
+                        Get.back();
 
                       } else {
                         print("não foi${status}");
