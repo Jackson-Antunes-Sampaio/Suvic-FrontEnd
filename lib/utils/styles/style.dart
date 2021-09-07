@@ -15,6 +15,21 @@ Color facebookColor = Color(0xFF416BC1);
 Color googleColor = Color(0xFFCF4333);
 Color twitterColor = Color(0xFF08A0E9);
 
+//Material Color
+Map<int, Color> colorKPrimaryColor = {
+  50: Color.fromRGBO(51, 130, 204, .1),
+  100: Color.fromRGBO(51, 130, 204, .2),
+  200: Color.fromRGBO(51, 130, 204, .3),
+  300: Color.fromRGBO(51, 130, 204, .4),
+  400: Color.fromRGBO(51, 130, 204, .5),
+  500: Color.fromRGBO(51, 130, 204, .6),
+  600: Color.fromRGBO(51, 130, 204, .7),
+  700: Color.fromRGBO(51, 130, 204, .8),
+  800: Color.fromRGBO(51, 130, 204, .9),
+  900: Color.fromRGBO(51, 130, 204, 1),
+};
+
+MaterialColor mtrKPrimaryColor = MaterialColor(0xFF3382CC, colorKPrimaryColor);
 
 // Text Style
 const kHeadingTextStyle = TextStyle(
@@ -50,5 +65,3 @@ var raisedDecoration = BoxDecoration(
         spreadRadius: 0.0,
       ),
     ]);
-
-

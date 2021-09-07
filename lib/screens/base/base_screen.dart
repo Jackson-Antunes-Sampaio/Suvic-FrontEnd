@@ -6,7 +6,7 @@ import 'package:covid_19/controllers/credit_card_controller.dart';
 import 'package:covid_19/controllers/stock_vacine_controller.dart';
 import 'package:covid_19/models/page_manager.dart';
 import 'package:covid_19/screens/agendament/agendam.dart';
-import 'package:covid_19/screens/agendament/agendament.dart';
+import 'package:covid_19/screens/agendament/scheduling.dart';
 import 'package:covid_19/screens/credit_card/credit_card_screen.dart';
 import 'package:covid_19/screens/home/home_screen_new.dart';
 import 'package:covid_19/screens/info/info_screen.dart';

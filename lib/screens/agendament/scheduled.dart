@@ -294,14 +294,15 @@ class _ScheduledState extends State<Scheduled> {
             lote: lote.text,
             dataValidade: datavalidade.text,
             quantidade: int.parse(quantidade.text),
-          ),
-        );
-        controller.insertPrice(
-          PriceVacine(
-            vacine: vaccine.text,
             price: int.parse(valor.text),
           ),
         );
+        // controller.insertPrice(
+        //   PriceVacine(
+        //     vacine: vaccine.text,
+        //     price: int.parse(valor.text),
+        //   ),
+        // );
       } else {
         Get.snackbar(
           'Erro no Formulario',

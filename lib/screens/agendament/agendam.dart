@@ -1,6 +1,9 @@
 import 'package:covid_19/controllers/agendamentController.dart';
+import 'package:covid_19/controllers/clinicController.dart';
+import 'package:covid_19/screens/agendament/schedule.dart';
 import 'package:covid_19/utils/styles/style.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class DuaAgendament extends StatefulWidget {
@@ -38,7 +41,49 @@ class _DuaAgendamentState extends State<DuaAgendament> {
 
   Widget listClinics() {
     return Center(
-      child: Text('miro'),
+      child: Column(
+        children: [
+          Expanded(
+            child: Container(
+              width: double.maxFinite,
+              height: double.maxFinite,
+              child: GetBuilder<ClinicController>(
+                init: ClinicController(),
+                builder: (controller) {
+                  var clinics = controller.clinics;
+                  return controller.loading
+                      ? Center(
+                          child: Container(
+                            width: 50,
+                            height: 50,
+                            child: CircularProgressIndicator(),
+                          ),
+                        )
+                      : ListView.builder(
+                          itemCount: controller.clinics.length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              child: ListTile(
+                                onTap: () => Get.to(
+                                  Schedule(
+                                    clinic: clinics[index].id.toString(),
+                                  ),
+                                ),
+                                leading:
+                                    FaIcon(FontAwesomeIcons.hospitalSymbol),
+                                title: Text(clinics[index].name ?? ''),
+                                subtitle: Text(clinics[index].address ?? ''),
+                              ),
+                            );
+                          },
+                        );
+                },
+              ),
+            ),
+          )
+        ],
+      ),
+
     );
   }
 

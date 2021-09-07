@@ -1,4 +1,3 @@
-import 'package:covid_19/controllers/clinicController.dart';
 import 'package:covid_19/controllers/user_controller.dart';
 import 'package:get/get.dart';
 

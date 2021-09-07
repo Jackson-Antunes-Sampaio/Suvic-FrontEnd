@@ -1,5 +1,5 @@
 import 'package:covid_19/screens/agendament/agendam.dart';
-import 'package:covid_19/screens/agendament/agendament.dart';
+import 'package:covid_19/screens/agendament/scheduling.dart';
 import 'package:covid_19/screens/apply_vaccine/apply_vaccine_screen.dart';
 import 'package:covid_19/screens/base/base_screen.dart';
 import 'package:covid_19/screens/credit_card/credit_card_screen.dart';

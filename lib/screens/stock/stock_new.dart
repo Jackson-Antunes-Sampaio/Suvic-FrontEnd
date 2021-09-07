@@ -182,7 +182,7 @@ class _StockState extends State<Stock> {
   }
 
   Widget addProductStock(StockController controller) {
-    var maskDate = new MaskTextInputFormatter(mask: '##-##-####');
+    var maskDate = new MaskTextInputFormatter(mask: '##/##/####');
 
     return SingleChildScrollView(
       child: Container(
@@ -279,7 +279,7 @@ class _StockState extends State<Stock> {
                     // ButtonCustom(onPressed: () {}, title: "Adicionar"),
                     Container(
                       width: double.maxFinite,
-                      child: ElevatedButton(
+                      child: ElevatedButton.icon(
                         onPressed: () {
                           addVacineInStock(controller);
                         },
@@ -293,7 +293,16 @@ class _StockState extends State<Stock> {
                             ),
                           ),
                         ),
-                        child: Text('Adicionar'),
+                        icon: controller.loadingSubmit
+                            ? Container(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              )
+                            : Icon(Icons.done),
+                        label: Text('Adicionar'),
                       ),
                     )
                   ],
@@ -317,14 +326,15 @@ class _StockState extends State<Stock> {
             dataValidade: datavalidade.text,
             quantidade: int.parse(quantidade.text),
             reserved: 0,
-          ),
-        );
-        controller.insertPrice(
-          PriceVacine(
-            vacine: vaccine.text,
             price: int.parse(valor.text),
           ),
         );
+        // controller.insertPrice(
+        //   PriceVacine(
+        //     vacine: vaccine.text,
+        //     price: int.parse(valor.text),
+        //   ),
+        // );
       } else {
         Get.snackbar(
           'Erro no Formulario',

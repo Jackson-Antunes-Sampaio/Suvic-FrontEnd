@@ -1,18 +1,22 @@
-class TimeSlots {
-  int? clinicId;
-  String? date;
+class TimeSlotsModel {
+  int? slot;
+  double? time;
+  // dynamic time;
+  int? amount;
 
-  TimeSlots({this.clinicId, this.date});
+  TimeSlotsModel({this.slot, this.time, this.amount});
 
-  TimeSlots.fromJson(Map<String, dynamic> json) {
-    clinicId = json['clinicId'];
-    date = json['date'];
+  TimeSlotsModel.fromJson(Map<String, dynamic> json) {
+    slot = json['slot'];
+    time = json['time'];
+    amount = json['amount'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['clinicId'] = this.clinicId;
-    data['date'] = this.date;
+    data['slot'] = this.slot;
+    data['time'] = this.time;
+    data['amount'] = this.amount;
     return data;
   }
 }

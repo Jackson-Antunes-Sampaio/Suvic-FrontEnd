@@ -4,8 +4,6 @@ import 'package:covid_19/models/user_model.dart';
 import 'package:covid_19/repositories/StockRepository.dart';
 import 'package:covid_19/repositories/clinicRepository.dart';
 import 'package:covid_19/repositories/user_repository.dart';
-import 'package:covid_19/utils/styles/style.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ClinicController extends GetxController {
@@ -18,13 +16,12 @@ class ClinicController extends GetxController {
   //Clinic Repository
   var clinicRepository = ClinicRepository();
   var clinicAdress = ''.obs;
-  var clinic = ClinicModel().obs;
+  var clinic = ClinicModel();
   List<ClinicModel> clinics = [];
   //Get Instance
   static ClinicController get to => Get.find();
   //vacine selected
   List<StockVacineModel> vaccineInStock = [];
-  List<StockVacineModel> vacineSelected = [];
   //seach
   bool seachStatus = false;
 
@@ -39,16 +36,6 @@ class ClinicController extends GetxController {
     //   print('Entro');
     //   getVaccinesInStock();
     // }
-  }
-
-  addVacineInCart(StockVacineModel vacine) {
-    vacineSelected.add(vacine);
-    update();
-  }
-
-  removeVacineInCart(StockVacineModel vacine) {
-    vacineSelected.remove(vacine);
-    update();
   }
 
   changeSeachStatus() {
@@ -92,27 +79,20 @@ class ClinicController extends GetxController {
   // }
 
   getAllClinics() async {
+    loading = true;
+    //get id Clinic
+    var cli = idClinic ?? '';
     var clinicsList = await clinicRepository.getAllClinis();
-
+    clinics.clear();
     clinicsList!.forEach((element) {
-      clinics.add(element);
+      if (cli == element.id.toString()) {
+        clinic = element;
+        clinics.add(element);
+      } else {
+        clinics.add(element);
+      }
     });
+    loading = false;
     update();
   }
-
-  // getClinicAdress() async {
-  //   try {
-  //     userOn.value = await userRepository.loginGetDate();
-  //     var clinics = await clinicRepository.getClinicById(userOn.value.clinicId);
-  //     clinic.value = clinics!;
-  //   } catch (e) {
-  //     Get.snackbar(
-  //       'Erro',
-  //       e.toString(),
-  //       backgroundColor: kPrimaryColor,
-  //       colorText: Colors.white,
-  //       snackPosition: SnackPosition.BOTTOM,
-  //     );
-  //   }
-  // }
 }

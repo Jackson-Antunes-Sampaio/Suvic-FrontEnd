@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:covid_19/repositories/clinicRepository.dart';
-import 'package:covid_19/screens/agendament/selectVacines.dart';
+import 'package:covid_19/screens/agendament/schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -81,38 +81,6 @@ class AgentamentController extends GetxController {
       print('latitude:' + element.latitude.toString());
       print('longitude:' + element.longitude.toString());
     });
-    // final clinics = [
-    //   {
-    //     'id': '2',
-    //     'name': 'Clinica Gira SOl',
-    //     'icon': 'assets/images/clinic60.png',
-    //     'position': {'latitude': -23.569030, 'longitude': -46.684490}
-    //   },
-    //   {
-    //     'id': '3',
-    //     'name': 'Clinica SOl do Brasil',
-    //     'icon': 'assets/images/sus60.png',
-    //     'position': {'latitude': -23.557411, 'longitude': -46.690906}
-    //   },
-    //   {
-    //     'id': '4',
-    //     'name': 'Clinica da Suvic',
-    //     'icon': 'assets/images/clinic60.png',
-    //     'position': {'latitude': -23.560479, 'longitude': -46.680606}
-    //   },
-    //   {
-    //     'id': '5',
-    //     'name': 'Clinica center Suvic',
-    //     'icon': 'assets/images/sus60.png',
-    //     'position': {'latitude': -23.562996, 'longitude': -46.695927}
-    //   },
-    //   {
-    //     'id': '6',
-    //     'name': 'Clinica Eduardo',
-    //     'icon': 'assets/images/clinic60.png',
-    //     'position': {'latitude': -23.572599, 'longitude': -46.692536}
-    //   }
-    // ];
 
     clinics.forEach((clinic) => addMarker(clinic));
   }
@@ -136,7 +104,7 @@ class AgentamentController extends GetxController {
   }
 
   showDetails(clinic) {
-    Get.to(SelectVacine(clinic: clinic['id']));
+    Get.to(Schedule(clinic: clinic['id']));
     // Get.bottomSheet(
     //   ClinicDetails(
     //     nome: clinic['name'],
