@@ -38,7 +38,7 @@ class _DuaAgendamentState extends State<DuaAgendament> {
 
   Widget listClinics() {
     return Center(
-      child: Text('data'),
+      child: Text('miro'),
     );
   }
 
