@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:covid_19/models/priceVacine.dart';
 import 'package:covid_19/models/stock_vacine_model.dart';
 import 'package:covid_19/utils/constants.dart';
@@ -6,6 +8,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class StockRepository {
   getVaccines() async {
@@ -24,7 +27,7 @@ class StockRepository {
     } catch (e) {
       Get.snackbar(
         'Erro',
-        'Não possível obter os nomes das vaccinas',
+        'Não possível obter as vaccinas',
         backgroundColor: Colors.red,
       );
       return Future.error("error");
@@ -46,7 +49,7 @@ class StockRepository {
     } catch (e) {
       Get.snackbar(
         'Erro',
-        'Não possível obter as vaccinas em stock, $e',
+        'Não possível obter as vaccinas em stock',
         backgroundColor: Colors.red,
         snackPosition: SnackPosition.BOTTOM,
       );
@@ -97,7 +100,7 @@ class StockRepository {
     } catch (e) {
       Get.snackbar(
         'Erro',
-        'Não possível obter as vaccinas em stock, $e',
+        'Não possível obter as vaccinas em stock.',
         backgroundColor: Colors.red,
         snackPosition: SnackPosition.BOTTOM,
       );
@@ -114,15 +117,37 @@ class StockRepository {
       final token = await storage.read(key: "token");
       dio!.options.headers["Cookie"] = token;
 
+      var inputFormat = DateFormat('dd/MM/yyyy');
+      var date1 = inputFormat.parse(stockvacine.dataValidade);
+
+      var outputFormat = DateFormat('yyyy-MM-dd');
+      var date = outputFormat.format(date1); // 2019-08-18
+
       final response = await dio.post(API_URL + 'clinics/storage', data: {
         'batch': stockvacine.lote.toString(),
-        'expirationdate': stockvacine.dataValidade,
+        'expirationDate': date,
         'count': stockvacine.quantidade,
         'reserved': 0,
         'vaccine': stockvacine.name
       });
 
-      if (response.statusCode == 200) {
+      print({
+        'batch': stockvacine.lote.toString(),
+        'expirationDate': date,
+        'count': stockvacine.quantidade,
+        'reserved': 0,
+        'vaccine': stockvacine.name
+      });
+
+      var mensager = response.data;
+
+      if (mensager['message'] == 'Success') {
+        await insertPrice(
+          PriceVacine(
+            vacine: stockvacine.name,
+            price: stockvacine.price ?? 0,
+          ),
+        );
         Get.snackbar(
           'Sucesso',
           'nova vacina adicionada ao esqoque!',
@@ -133,11 +158,10 @@ class StockRepository {
       } else {
         Get.snackbar(
           'Erro',
-          'oucorreu um erro interno code: ${response.statusCode}',
+          'Valide o formulario',
           backgroundColor: Colors.red,
           snackPosition: SnackPosition.BOTTOM,
         );
-        print('Error code ${response.statusCode}');
       }
     } catch (e) {
       Get.snackbar(
@@ -164,14 +188,14 @@ class StockRepository {
         'vaccine': vacine.vacine,
       });
 
-      if (response.statusCode != 200) {
+      if (response.data['message'] != 'Success') {
         Get.snackbar(
           'Erro',
-          'oucorreu um erro interno code: ${response.statusCode}',
+          'oucorreu um erro interno relacionado com preço}',
           backgroundColor: Colors.red,
           snackPosition: SnackPosition.BOTTOM,
         );
-        print('Error code ${response.statusCode}');
+        print('Error code ${response.data}');
       }
     } catch (e) {
       Get.snackbar(

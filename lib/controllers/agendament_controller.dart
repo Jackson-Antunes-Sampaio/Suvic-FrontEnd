@@ -25,10 +25,12 @@ class AgendamentController extends GetxController {
     }
   }
 
-  insert(AgendementModel agendament) async {
+  Future<int> insert(AgendementModel agendament) async {
     loading.value = true;
-    await repository.insert(agendament);
+    var res = await repository.insert(agendament);
     loading.value = false;
     agendaments.add(agendament);
+    update();
+    return res;
   }
 }

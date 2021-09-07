@@ -25,14 +25,7 @@ Widget autocompleVaccinesAgendaments(
           Icons.search,
           color: Colors.white,
         ),
-        suffixIcon: IconButton(
-          onPressed: () => controller.changeSeachStatus(),
-          icon: Icon(
-            Icons.close,
-            color: Colors.white,
-            size: 18,
-          ),
-        ),
+
         suffixStyle: TextStyle(
           color: Colors.white,
         ),
@@ -109,7 +102,7 @@ Widget autocompleVaccinesAgendaments(
       } else {
         price = 0;
       }
-      controller.addVacineInCart(
+      StockController.to.addVacineInCart(
         StockVacineModel(
           name: suggestion['name'],
           lote: suggestion['lote'],

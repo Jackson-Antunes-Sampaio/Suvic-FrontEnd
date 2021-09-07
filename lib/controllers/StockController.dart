@@ -9,14 +9,22 @@ class StockController extends GetxController {
   List<String> vaccines = [];
   List<StockVacineModel> vaccineInStock = [];
   List<StockVacineModel> vaccineInChart = [];
+  List<StockVacineModel> vacineSelected = [];
+
   List<PriceVacine> priceVaccine = [];
 
   bool loading = false;
+  bool loadingSubmit = false;
+
   String? idClinic;
+
+  //Get Instance
+  static StockController get to => Get.find();
 
   StockController({this.idClinic}) {
     var id = idClinic ?? '';
     if (id.isNotEmpty) {
+      getPriceVaccines();
       getVaccinesInStockByClinic(idClinic!);
     } else {
       init();
@@ -27,6 +35,17 @@ class StockController extends GetxController {
     getVaccinesInStock();
     getVaccines();
     getPriceVaccines();
+  }
+
+  addVacineInCart(StockVacineModel vacine) {
+    vacineSelected.clear();
+    vacineSelected.add(vacine);
+    update();
+  }
+
+  removeVacineInCart(StockVacineModel vacine) {
+    vacineSelected.remove(vacine);
+    update();
   }
 
   getVaccines() async {
@@ -87,40 +106,52 @@ class StockController extends GetxController {
       });
       getFourMoreVaccines();
       loading = false;
-      update();
+    } else {
+      loading = false;
     }
+    update();
   }
 
   getVaccinesInStockByClinic(String idClinic) async {
     // loading = true;
 
     var getvaccinesStock = await repository.getStockVaccineByIdClinic(idClinic);
-    vaccineInStock.clear();
 
     if (getvaccinesStock.isNotEmpty) {
       // print(getvaccinesStock);
+      vaccineInStock.clear();
+
       getvaccinesStock.forEach((vaccine) {
-          var name;
-          name = vaccine;
+        var name;
+        name = vaccine;
 
-
-        vaccineInStock.add(
-          StockVacineModel(
-            name: name,
-            lote: "",
-            dataValidade: "",
-            quantidade: 0
-          ),
-        );
+        if ((vaccineInStock.where((element) => element.name == name)).length ==
+            0) {
+          vaccineInStock.add(
+            StockVacineModel(
+              name: name,
+              lote: "",
+              dataValidade: "",
+              quantidade: 0,
+            ),
+          );
+        }
       });
       loading = false;
       update();
     }
   }
 
-  insert(StockVacineModel vaccine) {
-    repository.insert(vaccine);
+  insert(StockVacineModel vaccine) async {
+    loading = true;
+    await repository.insert(vaccine);
     vaccineInStock.add(vaccine);
+    //insert price
+    priceVaccine.add(PriceVacine(
+      vacine: vaccine.name,
+      price: vaccine.price ?? 0,
+    ));
+    loading = false;
     getFourMoreVaccines();
     update();
   }
@@ -132,11 +163,11 @@ class StockController extends GetxController {
     update();
   }
 
-  insertPrice(PriceVacine price) {
-    repository.insertPrice(price);
-    priceVaccine.add(price);
-    update();
-  }
+  // insertPrice(PriceVacine price) {
+  //   repository.insertPrice(price);
+  //   priceVaccine.add(price);
+  //   update();
+  // }
 
   getFourMoreVaccines() {
     vaccineInChart.clear();

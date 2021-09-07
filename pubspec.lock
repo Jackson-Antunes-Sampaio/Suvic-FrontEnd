@@ -7,7 +7,7 @@ packages:
       name: another_flushbar
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.10.20"
+    version: "1.10.24"
   archive:
     dependency: transitive
     description:
@@ -113,6 +113,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
+  cool_stepper_reloaded:
+    dependency: "direct main"
+    description:
+      name: cool_stepper_reloaded
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.2.5"
   credit_card_type_detector:
     dependency: "direct main"
     description:
@@ -300,6 +307,11 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.2"
+  flutter_localizations:
+    dependency: "direct main"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_plugin_android_lifecycle:
     dependency: "direct main"
     description:

@@ -13,7 +13,6 @@ class ClinicRepository {
       Dio? dio = CustomDio().instance;
       final storage = FlutterSecureStorage();
       final token = await storage.read(key: "token");
-      print('Tokenn:' + token.toString());
       dio!.options.headers["Cookie"] = token;
       // final response = await dio.get(API_URL + 'clinics');
       final response = await dio.post(
