@@ -6,6 +6,7 @@ import 'package:covid_19/controllers/user_controller.dart';
 import 'package:covid_19/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:get/get.dart';
 
 
@@ -55,6 +56,23 @@ class _AddressUserState extends State<AddressUser> {
                 controller: zipCodeController,
                 hintText: 'CEP',
                 labelText: 'CEP',
+                onChanged: (value)async{
+                  if(value.length == 10){
+                    perfilController.getAddress(value.replaceAll(".", "").replaceAll("-", "")).then((value){
+                      if(value != null){
+                        print("value: ${value}");
+                        streetController.text = value["street"];
+                        cityController.text = value["subAdministrativeArea"];
+                        neighborhoodController.text = value["subLocality"];
+                        stateController.text = perfilController.mapState[value["administrativeArea"]]!;
+                      }else{
+
+                      }
+                    });
+                  }else{
+
+                  }
+                },
                 validator: (value) {
                   if (value!.isEmpty) {
                     return null;

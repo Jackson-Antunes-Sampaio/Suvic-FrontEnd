@@ -4,7 +4,7 @@ import 'package:covid_19/common/text_fiel_custom.dart';
 import 'package:covid_19/controllers/perfil_controller.dart';
 import 'package:covid_19/controllers/user_controller.dart';
 import 'package:covid_19/models/user_model.dart';
-import 'package:covid_19/screens/menu/components/address_user.dart';
+import 'package:covid_19/screens/profile/components/address_user.dart';
 import 'package:covid_19/screens/profile/components/header.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +33,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController birthdateController = TextEditingController();
   String? sexController;
   String? healthProfessional;
-  final TextEditingController bloodTypeController = TextEditingController();
+  String? bloodTypeController;
 
 
   @override
@@ -48,7 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     birthdateController.text = userController.user!.birthdate == null ? '' : DateFormat("dd/MM/yyyy").format(DateTime.parse(userController.user!.birthdate!));
     sexController = userController.user?.sex == "NS" ? "Não especificado" : userController.user?.sex ?? 'Não especificado';
     healthProfessional = userController.user!.healthProfessional! ? 'Sim'  : 'Não';
-    bloodTypeController.text = userController.user?.bloodType ?? '';
+    bloodTypeController = userController.user?.bloodType;
   }
 
   @override
@@ -132,7 +132,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       labelText: "RG",
                       textInputType: TextInputType.number,
                       textInputFormatter: [
-                        FilteringTextInputFormatter.digitsOnly,
+                        //FilteringTextInputFormatter.digitsOnly,
                         MaskTextInputFormatter(mask: "##.###.###-#")
                       ],
                       validator: (value){
@@ -192,7 +192,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     SizedBox(height: 10,),
                     Row(
                       children: [
-                        Text("Gênero: "),
+                        Text("Sexo: "),
                         SizedBox(width: 10,),
                         DropdownButton<String>(
                           value: sexController,
@@ -211,7 +211,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
-                              child: Text(value.toString()),
+                              child: Text(value == "M" ? "Masculino" : value == "F" ? "Feminino" : value),
                             );
                           }).toList(),
                         ),
@@ -247,15 +247,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                     ),
                     SizedBox(height: 10,),
-                    TextFieldCustom(
-                      controller: bloodTypeController,
-                      hintText: "Tipo sanguineo",
-                      labelText: "Tipo sanguineo",
-                      textInputFormatter: [],
-                      validator: (value){
-                        return null;
-                      },
+                    Row(
+                      children: [
+                        Text("Tipo sanguineo: "),
+                        SizedBox(width: 10,),
+                        DropdownButton<String>(
+                          value: bloodTypeController,
+                          elevation: 16,
+                          underline: Container(
+                            height: 1,
+                            color: Colors.transparent,
+                          ),
+                          onChanged: (newValue) {
+                            setState(() {
+                              bloodTypeController = newValue;
+                            });
+                          },
+                          items: perfilController.listbloodType
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value.toString()),
+                            );
+                          }).toList(),
+                        )
+                      ],
                     ),
+                    // TextFieldCustom(
+                    //   controller: bloodTypeController,
+                    //   hintText: "Tipo sanguineo",
+                    //   labelText: "Tipo sanguineo",
+                    //   textInputFormatter: [],
+                    //   validator: (value){
+                    //     return null;
+                    //   },
+                    // ),
                     SizedBox(height: 10,),
                     InkWell(
                       onTap: (){
@@ -271,7 +297,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 60,),
+                    SizedBox(height: 80,),
                   ],
                 ),
               ),
@@ -308,7 +334,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   userController.user?.birthdate = "${listData.last}-${listData[1]}-${listData.first}";
                   userController.user?.sex = sexController == "Não especificado" ? "NS" : sexController;
                   userController.user?.healthProfessional = healthProfessional == "Sim" ? true : false;
-                  userController.user?.bloodType = bloodTypeController.text;
+                  userController.user?.bloodType = bloodTypeController;
                   perfilController.putUser(userController.user!).then((value){
                     if(value){
                       final snackBar = SnackBar(

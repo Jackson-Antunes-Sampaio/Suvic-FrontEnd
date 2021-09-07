@@ -93,7 +93,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        final snackBar = SnackBar(
+                          content: Text('Em manutenção'),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      },
                       child: Text(
                         'Esqueceu sua Senha?',
                         style: TextStyle(color: Colors.blue[900]),
