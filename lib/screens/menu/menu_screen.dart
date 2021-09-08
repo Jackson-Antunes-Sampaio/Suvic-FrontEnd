@@ -79,17 +79,17 @@ class MenuScreen extends StatelessWidget {
                     },
                   ),
                 ) : Container(),
-                Card(
-                  elevation: 4,
-                  child: ListTile(
-                    leading: Icon(Icons.credit_card_outlined),
-                    title: Text('Adicionar cartão de crédito'),
-                    trailing: Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                      Get.toNamed(Routes.PRODUCTCARD);
-                    },
-                  ),
-                ),
+                // Card(
+                //   elevation: 4,
+                //   child: ListTile(
+                //     leading: Icon(Icons.credit_card_outlined),
+                //     title: Text('Adicionar cartão de crédito'),
+                //     trailing: Icon(Icons.arrow_forward_ios),
+                //     onTap: () {
+                //       Get.toNamed(Routes.PRODUCTCARD);
+                //     },
+                //   ),
+                // ),
                 userController.user?.permissionLevel == "Applicator" || userController.user?.permissionLevel == "Admin" || userController.user?.permissionLevel == "Superadmin"
                 ? Card(
                   elevation: 4,
