@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:covid_19/models/priceVacine.dart';
 import 'package:covid_19/models/stock_vacine_model.dart';
 import 'package:covid_19/utils/constants.dart';
@@ -57,6 +55,28 @@ class StockRepository {
     }
   }
 
+  getPiceByClinic(int idClinic) async {
+    try {
+      Dio? dio = CustomDio().instance;
+      final storage = FlutterSecureStorage();
+      final token = await storage.read(key: "token");
+
+      dio!.options.headers["Cookie"] = token;
+      // print('Token: ' + token.toString());
+      final response = await dio.post(
+        API_URL + 'clinics/price/search',
+        data: {
+          "clinic": idClinic,
+        },
+      );
+
+      return response.data;
+    } catch (e) {
+      print(e);
+      return [];
+    }
+  }
+
   getPriceVaccine() async {
     try {
       Dio? dio = CustomDio().instance;
@@ -79,24 +99,42 @@ class StockRepository {
     }
   }
 
-  getStockVaccineByIdClinic(String idClinic) async {
+  Future<List<StockVacineModel>> getStockVaccineByIdClinic(
+      String idClinic) async {
     try {
       Dio? dio = CustomDio().instance;
       final storage = FlutterSecureStorage();
       final token = await storage.read(key: "token");
 
       dio!.options.headers["Cookie"] = token;
-      // print('Token: ' + token.toString());
-      // final response = await dio.get(API_URL + 'clinics/storage/list');
       final response = await dio.post(
-        API_URL + 'clinics/vaccines',
+        API_URL + 'clinics/price/search',
         data: {
-          "clinic": int.parse(idClinic),
+          "clinic": idClinic,
         },
       );
-      // print("Resposta ID $idClinic Aqui-> ${response.data}");
-      print(response.data);
-      return response.data;
+      // final response = await dio.post(
+      //   API_URL + 'clinics/vaccines',
+      //   data: {
+      //     "clinic": int.parse(idClinic),
+      //   },
+      // );
+
+      List<StockVacineModel> vacines = [];
+
+      response.data.forEach((vaccine) async {
+        vacines.add(
+          StockVacineModel(
+            name: vaccine['vaccineName'] ?? '',
+            lote: '',
+            dataValidade: '',
+            quantidade: 0,
+            price: vaccine['value'] ?? 0,
+          ),
+        );
+      });
+
+      return vacines;
     } catch (e) {
       Get.snackbar(
         'Erro',
@@ -104,7 +142,8 @@ class StockRepository {
         backgroundColor: Colors.red,
         snackPosition: SnackPosition.BOTTOM,
       );
-      return Future.error("error");
+      List<StockVacineModel> vacines = [];
+      return vacines;
     }
   }
 
@@ -124,14 +163,6 @@ class StockRepository {
       var date = outputFormat.format(date1); // 2019-08-18
 
       final response = await dio.post(API_URL + 'clinics/storage', data: {
-        'batch': stockvacine.lote.toString(),
-        'expirationDate': date,
-        'count': stockvacine.quantidade,
-        'reserved': 0,
-        'vaccine': stockvacine.name
-      });
-
-      print({
         'batch': stockvacine.lote.toString(),
         'expirationDate': date,
         'count': stockvacine.quantidade,

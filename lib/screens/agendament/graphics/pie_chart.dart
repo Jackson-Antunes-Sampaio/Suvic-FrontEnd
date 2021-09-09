@@ -1,3 +1,4 @@
+import 'package:covid_19/models/scheduledModel.dart';
 import 'package:covid_19/models/stock_vacine_model.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -5,15 +6,15 @@ import 'package:flutter/gestures.dart';
 import 'indicator.dart';
 
 class PieChartScheduled extends StatefulWidget {
-  PieChartScheduled({required this.vaccines});
-  final List<StockVacineModel> vaccines;
+  PieChartScheduled({required this.scheduleds});
+  final List<ScheduledModel> scheduleds;
   @override
-  State<StatefulWidget> createState() => PieChart2State(vaccines: vaccines);
+  State<StatefulWidget> createState() => PieChart2State(scheduleds: scheduleds);
 }
 
 class PieChart2State extends State {
-  PieChart2State({required this.vaccines});
-  final List<StockVacineModel> vaccines;
+  PieChart2State({required this.scheduleds});
+  final List<ScheduledModel> scheduleds;
   int touchedIndex = -1;
 
   @override
@@ -68,7 +69,7 @@ class PieChart2State extends State {
               children: <Widget>[
                 Indicator(
                   color: Colors.green,
-                  // text: vaccines[0].name,
+                  // text: scheduleds[0].name,
                   text: 'Agendamentos Concluídos',
                   isSquare: true,
                 ),
@@ -77,7 +78,7 @@ class PieChart2State extends State {
                 ),
                 Indicator(
                   color: Colors.orange,
-                  // text: vaccines[1].name,
+                  // text: scheduleds[1].name,
                   text: 'Agendamentos Pendentes',
                   isSquare: true,
                 ),
@@ -93,13 +94,15 @@ class PieChart2State extends State {
   }
 
   List<PieChartSectionData> showingSections() {
-    int totalqty = vaccines[0].quantidade +
-        vaccines[1].quantidade +
-        vaccines[2].quantidade +
-        vaccines[3].quantidade;
+    var complete =
+        (scheduleds.where((element) => element.status == 'complete')).length;
+    var incomplet =
+        (scheduleds.where((element) => element.status != 'complete')).length;
 
-    var total1 = ((vaccines[0].quantidade / totalqty) * 100).toStringAsFixed(2);
-    var total2 = ((vaccines[1].quantidade / totalqty) * 100).toStringAsFixed(2);
+    int totalqty = complete + incomplet;
+
+    var total1 = ((complete / totalqty) * 100).toStringAsFixed(2);
+    var total2 = ((incomplet / totalqty) * 100).toStringAsFixed(2);
 
     // print('tota:' + total1);
     return List.generate(2, (i) {

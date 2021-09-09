@@ -1,13 +1,11 @@
-
 import 'package:covid_19/models/pagarme_model.dart';
 import 'package:covid_19/repositories/credit_card_repository.dart';
 import 'package:get/get.dart';
 
+enum StateCreditCard { LOADING, FORMCARD, FORMDATA, SUCCESS, FAIL }
+enum StateProductCard { LOADING, IDL, SUCCESS, FAIL }
 
-enum StateCreditCard {LOADING, FORMCARD, FORMDATA, SUCCESS, FAIL}
-enum StateProductCard {LOADING, IDL, SUCCESS, FAIL}
-class CreditCardController extends GetxController{
-
+class CreditCardController extends GetxController {
   Rx<StateCreditCard> stateCreditCard = StateCreditCard.FORMCARD.obs;
   Rx<StateProductCard> stateProductCard = StateProductCard.IDL.obs;
   RxBool cardSave = false.obs;
@@ -27,21 +25,19 @@ class CreditCardController extends GetxController{
   RxString newCardHoldername = ''.obs;
   RxString newCvvCode = ''.obs;
 
-
   bool showBackView = false;
   RxBool selected = true.obs;
 
-
-  Future<void> transactionsPagarme()async{
+  Future<bool> transactionsPagarme() async {
     stateProductCard.value = StateProductCard.LOADING;
-    try{
+    try {
       await creditCardRepository.postTransactionsPagarme(pagarMeModel.toJson());
-      stateProductCard.value = StateProductCard.SUCCESS;
-    }catch(e){
-
-      stateProductCard.value = StateProductCard.FAIL;
-      print("ERRO");
+      stateProductCard.value = StateProductCard.IDL;
+      return true;
+    } catch (e) {
+      stateProductCard.value = StateProductCard.IDL;
+      // stateProductCard.value = StateProductCard.FAIL;
+      return false;
     }
-
   }
 }

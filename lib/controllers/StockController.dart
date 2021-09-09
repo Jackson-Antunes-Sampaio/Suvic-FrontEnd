@@ -24,7 +24,6 @@ class StockController extends GetxController {
   StockController({this.idClinic}) {
     var id = idClinic ?? '';
     if (id.isNotEmpty) {
-      getPriceVaccines();
       getVaccinesInStockByClinic(idClinic!);
     } else {
       init();
@@ -71,8 +70,8 @@ class StockController extends GetxController {
           ),
         );
       });
-      update();
     }
+    update();
   }
 
   getVaccinesInStock() async {
@@ -101,6 +100,7 @@ class StockController extends GetxController {
                 ? ''
                 : vaccine['expirationdate'],
             quantidade: vaccine['count'],
+            price: 0,
           ),
         );
       });
@@ -113,8 +113,7 @@ class StockController extends GetxController {
   }
 
   getVaccinesInStockByClinic(String idClinic) async {
-    // loading = true;
-
+    loading = true;
     var getvaccinesStock = await repository.getStockVaccineByIdClinic(idClinic);
 
     if (getvaccinesStock.isNotEmpty) {
@@ -122,8 +121,7 @@ class StockController extends GetxController {
       vaccineInStock.clear();
 
       getvaccinesStock.forEach((vaccine) {
-        var name;
-        name = vaccine;
+        var name = vaccine.name;
 
         if ((vaccineInStock.where((element) => element.name == name)).length ==
             0) {
@@ -133,6 +131,7 @@ class StockController extends GetxController {
               lote: "",
               dataValidade: "",
               quantidade: 0,
+              price: vaccine.price,
             ),
           );
         }

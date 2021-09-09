@@ -6,6 +6,7 @@ import 'package:covid_19/controllers/agendament_controller.dart';
 import 'package:covid_19/controllers/clinicController.dart';
 import 'package:covid_19/controllers/credit_card_controller.dart';
 import 'package:covid_19/controllers/time_slot.dart';
+import 'package:covid_19/models/Clinic_model.dart';
 import 'package:covid_19/models/agendament_model.dart';
 import 'package:covid_19/models/stock_vacine_model.dart';
 import 'package:covid_19/models/time_slot.dart';
@@ -23,7 +24,7 @@ import 'package:get/get.dart';
 import 'elements/cardInfoClinic.dart';
 
 class Schedule extends StatefulWidget {
-  final String clinic;
+  final ClinicModel clinic;
   Schedule({Key? key, required this.clinic}) : super(key: key);
 
   @override
@@ -31,7 +32,7 @@ class Schedule extends StatefulWidget {
 }
 
 class _ScheduleState extends State<Schedule> {
-  // String? selectedRole = 'Escrever';
+  String? selectedRole = 'Escrever';
   //schedule
   final AgendamentController agendamentController =
       Get.put(AgendamentController());
@@ -47,6 +48,8 @@ class _ScheduleState extends State<Schedule> {
   int? _dropdownValueSeleted;
 
   bool docilio = false;
+  bool payLocal = false;
+
   final markers = Set<Marker>();
 
   //producCard
@@ -69,107 +72,96 @@ class _ScheduleState extends State<Schedule> {
   Widget build(BuildContext context) {
     // ignore: unused_local_variable
     final StockController stockController =
-        Get.put(StockController(idClinic: widget.clinic));
+        Get.put(StockController(idClinic: widget.clinic.id.toString()));
     final steps = [
       CoolStep(
-          content: Container(
-            width: double.maxFinite,
-            height: 500,
-            child: GetBuilder<StockController>(
-              init: StockController(idClinic: widget.clinic),
-              builder: (controllerStock) {
-                var vaccines = controllerStock.vaccineInStock;
-                var prices = controllerStock.priceVaccine;
-                return controllerStock.loading
-                    ? Center(
-                        child: Container(
-                          child: CircularProgressIndicator(
-                            color: kPrimaryColor,
+          content: GetBuilder<StockController>(
+            init: StockController(idClinic: widget.clinic.id.toString()),
+            builder: (controllerStock) {
+              var vaccines = controllerStock.vaccineInStock;
+              var device = MediaQuery.of(context);
+              var heights = (device.size.height.round()) * 0.53;
+
+              return Container(
+                  width: double.maxFinite,
+                  height: heights,
+                  child: controllerStock.loading
+                      ? Center(
+                          child: Container(
+                            child: CircularProgressIndicator(
+                              color: kPrimaryColor,
+                            ),
                           ),
-                        ),
-                      )
-                    : vaccines.length == 0
-                        ? Center(
-                            child: Text('Sem vacina em estoque!'),
-                          )
-                        : ListView.builder(
-                            padding: EdgeInsets.only(top: 0),
-                            itemCount: vaccines.length,
-                            itemBuilder: (context, index) {
-                              var price = 0;
-
-                              if ((prices.where((element) =>
-                                      element.vacine ==
-                                      vaccines[index].name)).length !=
-                                  0) {
-                                price = prices
-                                    .firstWhere((element) =>
-                                        element.vacine == vaccines[index].name)
-                                    .price;
-                              } else {
-                                price = 0;
-                              }
-
-                              return (controllerStock.vacineSelected.where(
-                                        (element) =>
-                                            element.name ==
-                                                vaccines[index].name &&
-                                            element.lote ==
-                                                vaccines[index].lote,
-                                      )).length >
-                                      0
-                                  ? Card(
-                                      child: ListTile(
-                                        selected: true,
-                                        leading: Image.asset(
-                                          'assets/images/iconVacine.png',
-                                          width: 30,
-                                          height: 30,
-                                        ),
-                                        title: Text(vaccines[index].name),
-                                        trailing: Text(oCcy.format(price)),
-                                        onTap: () =>
-                                            controllerStock.addVacineInCart(
-                                          StockVacineModel(
-                                            name: vaccines[index].name,
-                                            lote: vaccines[index].lote,
-                                            dataValidade:
-                                                vaccines[index].dataValidade,
-                                            quantidade: 1,
-                                            reserved: 1,
-                                            price: price,
+                        )
+                      : vaccines.length == 0
+                          ? Center(
+                              child: Text('nenhuma vacina disponível'),
+                            )
+                          : ListView.builder(
+                              padding: EdgeInsets.only(top: 0),
+                              itemCount: vaccines.length,
+                              itemBuilder: (context, index) {
+                                return (controllerStock.vacineSelected.where(
+                                          (element) =>
+                                              element.name ==
+                                                  vaccines[index].name &&
+                                              element.lote ==
+                                                  vaccines[index].lote,
+                                        )).length >
+                                        0
+                                    ? Card(
+                                        child: ListTile(
+                                          selected: true,
+                                          leading: Image.asset(
+                                            'assets/images/iconVacine.png',
+                                            width: 30,
+                                            height: 30,
+                                          ),
+                                          title: Text(vaccines[index].name),
+                                          trailing: Text(oCcy
+                                              .format(vaccines[index].price)),
+                                          onTap: () =>
+                                              controllerStock.addVacineInCart(
+                                            StockVacineModel(
+                                              name: vaccines[index].name,
+                                              lote: vaccines[index].lote,
+                                              dataValidade:
+                                                  vaccines[index].dataValidade,
+                                              quantidade: 1,
+                                              reserved: 1,
+                                              price: vaccines[index].price,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    )
-                                  : Card(
-                                      child: ListTile(
-                                        selected: false,
-                                        leading: Image.asset(
-                                          'assets/images/iconVacine.png',
-                                          width: 30,
-                                          height: 30,
-                                        ),
-                                        title: Text(vaccines[index].name),
-                                        trailing: Text(oCcy.format(price)),
-                                        onTap: () =>
-                                            controllerStock.addVacineInCart(
-                                          StockVacineModel(
-                                            name: vaccines[index].name,
-                                            lote: vaccines[index].lote,
-                                            dataValidade:
-                                                vaccines[index].dataValidade,
-                                            quantidade: 1,
-                                            reserved: 1,
-                                            price: price,
+                                      )
+                                    : Card(
+                                        child: ListTile(
+                                          selected: false,
+                                          leading: Image.asset(
+                                            'assets/images/iconVacine.png',
+                                            width: 30,
+                                            height: 30,
+                                          ),
+                                          title: Text(vaccines[index].name),
+                                          trailing: Text(oCcy
+                                              .format(vaccines[index].price)),
+                                          onTap: () =>
+                                              controllerStock.addVacineInCart(
+                                            StockVacineModel(
+                                              name: vaccines[index].name,
+                                              lote: vaccines[index].lote,
+                                              dataValidade:
+                                                  vaccines[index].dataValidade,
+                                              quantidade: 1,
+                                              reserved: 1,
+                                              price: vaccines[index].price,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    );
-                            },
-                          );
-              },
-            ),
+                                      );
+                              },
+                            ));
+            },
           ),
           validation: () {
             if (StockController.to.vacineSelected.length == 0) {
@@ -214,7 +206,8 @@ class _ScheduleState extends State<Schedule> {
                 }),
               ),
               GetBuilder<TimeSlotController>(
-                  init: TimeSlotController(idClinic: widget.clinic),
+                  init:
+                      TimeSlotController(idClinic: widget.clinic.id.toString()),
                   builder: (controllerSlot) {
                     return controllerSlot.loading
                         ? Center(
@@ -313,8 +306,7 @@ class _ScheduleState extends State<Schedule> {
                             children: [
                               TextFormField(
                                 controller: clinicsController
-                                  ..text = ClinicController.to.clinic.name
-                                      .toString(),
+                                  ..text = widget.clinic.name.toString(),
                                 enabled: false,
                                 decoration: InputDecoration(
                                   labelText: 'Nome da Clinica',
@@ -388,57 +380,98 @@ class _ScheduleState extends State<Schedule> {
                               SizedBox(
                                 height: 10,
                               ),
-                              Obx(() {
-                                return Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    creditCardController.pagarMeModel.value
-                                                .cardNumber ==
-                                            null
-                                        ? FlatButton(
-                                            color: Colors.blueAccent,
-                                            textColor: Colors.white,
-                                            onPressed: () {
-                                              Get.toNamed(Routes.CREDITCARDS2);
-                                            },
-                                            child: Text(
-                                              "Adicionar Cartão",
-                                            ),
-                                          )
-                                        : Expanded(
-                                            child: Container(
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: 10, horizontal: 10),
-                                              decoration: BoxDecoration(
-                                                  color: kPrimaryColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          15)),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    "N° Cartão: *******${creditCardController.pagarMeModel.value.cardNumber?.substring(16 - 4)}",
-                                                    style: TextStyle(
-                                                        fontSize: 20,
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                              Card(
+                                margin: EdgeInsets.all(0),
+                                child: CheckboxListTile(
+                                    title: Text('Pagar no Local'),
+                                    value: payLocal,
+                                    onChanged: (value) {
+                                      if (payLocal) {
+                                        setState(() {
+                                          payLocal = false;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          payLocal = true;
+                                        });
+                                      }
+                                    }),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              payLocal
+                                  ? Text('')
+                                  : Obx(() {
+                                      return Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          creditCardController.pagarMeModel
+                                                      .value.cardNumber ==
+                                                  null
+                                              ? ElevatedButton.icon(
+                                                  style: ButtonStyle(
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all(
+                                                      kPrimaryColor,
+                                                    ),
+                                                    shape: MaterialStateProperty
+                                                        .all(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(30.0),
+                                                      ),
+                                                    ),
                                                   ),
-                                                  IconButtonCustom(
-                                                    onTap: () {},
-                                                    iconData: Icons.edit,
-                                                    color: Colors.white,
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                  ],
-                                );
-                              }),
+                                                  onPressed: () {
+                                                    Get.toNamed(
+                                                        Routes.CREDITCARDS2);
+                                                  },
+                                                  icon: Icon(Icons.payment),
+                                                  label:
+                                                      Text('Adicionar Cartão'),
+                                                )
+                                              : Expanded(
+                                                  child: Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 10,
+                                                            horizontal: 10),
+                                                    decoration: BoxDecoration(
+                                                        color: kPrimaryColor,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15)),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          "N° Cartão: *******${creditCardController.pagarMeModel.value.cardNumber?.substring(16 - 4)}",
+                                                          style: TextStyle(
+                                                              fontSize: 20,
+                                                              color:
+                                                                  Colors.white,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        IconButtonCustom(
+                                                          onTap: () {},
+                                                          iconData: Icons.edit,
+                                                          color: Colors.white,
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                        ],
+                                      );
+                                    }),
                             ],
                           ),
                         ),
@@ -486,12 +519,19 @@ class _ScheduleState extends State<Schedule> {
           }
         }),
         validation: () {
-          if (!_keyForm.currentState!.validate()) {
-            return 'Preencha o formulário corretamente';
-          } else {
-            if (creditCardController.pagarMeModel.value.cardNumber == null) {
-              return 'Adicione um Cartão de Credito';
+          if (!load) {
+            if (!_keyForm.currentState!.validate()) {
+              return 'Preencha o formulário corretamente';
+            } else {
+              if (!payLocal) {
+                if (creditCardController.pagarMeModel.value.cardNumber ==
+                    null) {
+                  return 'Adicione um Cartão de Credito';
+                }
+              }
             }
+          } else {
+            return 'Aguarde...';
           }
           return null;
         },
@@ -499,81 +539,214 @@ class _ScheduleState extends State<Schedule> {
     ];
 
     void _onFinish() async {
-      // PAGAR-ME
-      creditCardController.pagarMeModel.value.items![0]!.quantity = 1;
-      creditCardController.pagarMeModel.value.items![0]!.id = "1";
-      creditCardController.pagarMeModel.value.amount =
-          int.parse(valueController.text) * 100;
-      creditCardController.pagarMeModel.value.items![0]!.unitPrice =
-          int.parse(valueController.text) * 100;
-      creditCardController.pagarMeModel.value.items![0]!.title =
-          productController.text;
-      creditCardController.pagarMeModel.value.items![0]!.tangible = true;
-      creditCardController.transactionsPagarme();
+      if (!payLocal) {
+        // PAGAR-ME
+        creditCardController.pagarMeModel.value.items![0]!.quantity = 1;
+        creditCardController.pagarMeModel.value.items![0]!.id = "1";
+        creditCardController.pagarMeModel.value.amount =
+            int.parse(valueController.text) * 100;
+        creditCardController.pagarMeModel.value.items![0]!.unitPrice =
+            int.parse(valueController.text) * 100;
+        creditCardController.pagarMeModel.value.items![0]!.title =
+            productController.text;
+        creditCardController.pagarMeModel.value.items![0]!.tangible = true;
+        final flush = Flushbar(
+          message: 'Agendamento concluído com sucesso!',
+          flushbarStyle: FlushbarStyle.FLOATING,
+          margin: EdgeInsets.all(8.0),
+          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+          icon: Icon(
+            Icons.check_circle_outline_outlined,
+            size: 28.0,
+            color: Colors.green,
+          ),
+          duration: Duration(seconds: 2),
+          leftBarIndicatorColor: Colors.green,
+        );
 
-      final flush = Flushbar(
-        message: 'Agendamento concluído com sucesso!',
-        flushbarStyle: FlushbarStyle.FLOATING,
-        margin: EdgeInsets.all(8.0),
-        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-        icon: Icon(
-          Icons.check_circle_outline_outlined,
-          size: 28.0,
-          color: Colors.green,
-        ),
-        duration: Duration(seconds: 2),
-        leftBarIndicatorColor: Colors.green,
-      );
+        setState(() {
+          load = true;
+        });
 
-      setState(() {
-        load = true;
-      });
+        var res = await AgendamentController.to.insert(AgendementModel(
+          vaccine: vaccine.text,
+          date: data.text,
+          slot: _dropdownValueSeleted,
+          clinicId: widget.clinic.id!,
+        ));
 
-      var res = await AgendamentController.to.insert(AgendementModel(
-        vaccine: vaccine.text,
-        date: data.text,
-        slot: _dropdownValueSeleted,
-        clinicId: int.parse(widget.clinic),
-      ));
+        setState(() {
+          load = false;
+        });
 
-      setState(() {
-        load = false;
-      });
-
-      if (res == 0) {
-        flush.show(context);
+        if (res == 0) {
+          creditCardController.transactionsPagarme().then((value) async {
+            if (value) {
+              // ignore: unused_local_variable
+              var done = await AgendamentController.to.donePaid(AgendementModel(
+                vaccine: vaccine.text,
+                date: data.text,
+                slot: _dropdownValueSeleted,
+                clinicId: widget.clinic.id!,
+              ));
+              if (done == 0) {
+                flush.show(context);
+                Future.delayed(Duration(seconds: 3), () {
+                  Get.offAllNamed(Routes.BASE);
+                });
+              } else {
+                switch (res) {
+                  case 1:
+                    Flushbar(
+                      message: 'Já tens um agendamento marcado para este dia',
+                      flushbarStyle: FlushbarStyle.FLOATING,
+                      margin: EdgeInsets.all(8.0),
+                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                      icon: Icon(
+                        Icons.info_outline_rounded,
+                        size: 28.0,
+                        color: Colors.orange,
+                      ),
+                      duration: Duration(seconds: 3),
+                      leftBarIndicatorColor: Colors.orange,
+                    ).show(context);
+                    break;
+                  default:
+                    Flushbar(
+                      message: 'Ocorreu um erro interno',
+                      flushbarStyle: FlushbarStyle.FLOATING,
+                      margin: EdgeInsets.all(8.0),
+                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                      icon: Icon(
+                        Icons.cancel_outlined,
+                        //             Icons.info_outline_rounded,
+                        size: 28.0,
+                        color: Colors.red,
+                      ),
+                      duration: Duration(seconds: 3),
+                      leftBarIndicatorColor: Colors.red,
+                    ).show(context);
+                }
+              }
+            } else {
+              Flushbar(
+                message: 'Não possível processar o pgamento',
+                flushbarStyle: FlushbarStyle.FLOATING,
+                margin: EdgeInsets.all(8.0),
+                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                icon: Icon(
+                  Icons.info_outline_rounded,
+                  size: 28.0,
+                  color: Colors.red,
+                ),
+                duration: Duration(seconds: 3),
+                leftBarIndicatorColor: Colors.red,
+              ).show(context);
+            }
+          });
+        } else {
+          switch (res) {
+            case 1:
+              Flushbar(
+                message: 'Já tens um agendamento marcado para este dia',
+                flushbarStyle: FlushbarStyle.FLOATING,
+                margin: EdgeInsets.all(8.0),
+                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                icon: Icon(
+                  Icons.info_outline_rounded,
+                  size: 28.0,
+                  color: Colors.orange,
+                ),
+                duration: Duration(seconds: 3),
+                leftBarIndicatorColor: Colors.orange,
+              ).show(context);
+              break;
+            default:
+              Flushbar(
+                message: 'Ocorreu um erro interno',
+                flushbarStyle: FlushbarStyle.FLOATING,
+                margin: EdgeInsets.all(8.0),
+                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                icon: Icon(
+                  Icons.cancel_outlined,
+                  //             Icons.info_outline_rounded,
+                  size: 28.0,
+                  color: Colors.red,
+                ),
+                duration: Duration(seconds: 3),
+                leftBarIndicatorColor: Colors.red,
+              ).show(context);
+          }
+        }
       } else {
-        switch (res) {
-          case 1:
-            Flushbar(
-              message: 'Já tens um agendamento marcado para este dia',
-              flushbarStyle: FlushbarStyle.FLOATING,
-              margin: EdgeInsets.all(8.0),
-              borderRadius: BorderRadius.all(Radius.circular(8.0)),
-              icon: Icon(
-                Icons.info_outline_rounded,
-                size: 28.0,
-                color: Colors.orange,
-              ),
-              duration: Duration(seconds: 3),
-              leftBarIndicatorColor: Colors.orange,
-            ).show(context);
-            break;
-          default:
-            Flushbar(
-              message: 'Ocorreu um erro interno',
-              flushbarStyle: FlushbarStyle.FLOATING,
-              margin: EdgeInsets.all(8.0),
-              borderRadius: BorderRadius.all(Radius.circular(8.0)),
-              icon: Icon(
-                Icons.cancel_outlined,
-                //             Icons.info_outline_rounded,
-                size: 28.0,
-                color: Colors.red,
-              ),
-              duration: Duration(seconds: 3),
-              leftBarIndicatorColor: Colors.red,
-            ).show(context);
+        // ignore: unused_local_variable
+        final flush = Flushbar(
+          message: 'Agendamento concluído com sucesso!',
+          flushbarStyle: FlushbarStyle.FLOATING,
+          margin: EdgeInsets.all(8.0),
+          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+          icon: Icon(
+            Icons.check_circle_outline_outlined,
+            size: 28.0,
+            color: Colors.green,
+          ),
+          duration: Duration(seconds: 2),
+          leftBarIndicatorColor: Colors.green,
+        );
+
+        setState(() {
+          load = true;
+        });
+
+        var res = await AgendamentController.to.insert(AgendementModel(
+          vaccine: vaccine.text,
+          date: data.text,
+          slot: _dropdownValueSeleted,
+          clinicId: widget.clinic.id!,
+        ));
+
+        setState(() {
+          load = false;
+        });
+
+        if (res == 0) {
+          Future.delayed(Duration(seconds: 3), () {
+            Get.offAllNamed(Routes.BASE);
+          });
+          flush.show(context);
+        } else {
+          switch (res) {
+            case 1:
+              Flushbar(
+                message: 'Já tens um agendamento marcado para este dia',
+                flushbarStyle: FlushbarStyle.FLOATING,
+                margin: EdgeInsets.all(8.0),
+                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                icon: Icon(
+                  Icons.info_outline_rounded,
+                  size: 28.0,
+                  color: Colors.orange,
+                ),
+                duration: Duration(seconds: 3),
+                leftBarIndicatorColor: Colors.orange,
+              ).show(context);
+              break;
+            default:
+              Flushbar(
+                message: 'Ocorreu um erro interno',
+                flushbarStyle: FlushbarStyle.FLOATING,
+                margin: EdgeInsets.all(8.0),
+                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                icon: Icon(
+                  Icons.cancel_outlined,
+                  //             Icons.info_outline_rounded,
+                  size: 28.0,
+                  color: Colors.red,
+                ),
+                duration: Duration(seconds: 3),
+                leftBarIndicatorColor: Colors.red,
+              ).show(context);
+          }
         }
       }
     }
@@ -641,104 +814,99 @@ class _ScheduleState extends State<Schedule> {
     );
 
     return Scaffold(
-      body: widget.clinic.isEmpty
-          ? Center(child: Text('Selecione uma clinica'))
-          : SafeArea(
-              child: GetBuilder<ClinicController>(
-                  init: ClinicController(idClinic: widget.clinic),
-                  builder: (controller) {
-                    //clinic selected by id
-                    var clinic = controller.clinic;
-                    //Get all vacine in stock
-                    var vaccinesInCart = StockController.to.vacineSelected;
-                    //data GEOLOCATION
-                    var latitude = clinic.latitude ?? 0.0;
-                    var longitude = clinic.longitude ?? 0.0;
-                    return controller.loading
-                        ? Center(
+      body: SafeArea(
+        child: GetBuilder<ClinicController>(
+            init: ClinicController(idClinic: widget.clinic.id.toString()),
+            builder: (controller) {
+              //clinic selected by id
+              var clinic = widget.clinic;
+              //Get all vacine in stock
+              var vaccinesInCart = StockController.to.vacineSelected;
+              //data GEOLOCATION
+              var latitude = clinic.latitude;
+              var longitude = clinic.longitude;
+
+              return controller.loading
+                  ? Center(
+                      child: Container(
+                        width: 70,
+                        height: 70,
+                        child: CircularProgressIndicator(
+                          color: kPrimaryColor,
+                        ),
+                      ),
+                    )
+                  : Container(
+                      child: Column(
+                        children: [
+                          Expanded(
+                            flex: 1,
                             child: Container(
-                              width: 70,
-                              height: 70,
-                              child: CircularProgressIndicator(
-                                color: kPrimaryColor,
-                              ),
-                            ),
-                          )
-                        : Container(
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    child: Column(
-                                      children: [
-                                        Expanded(
-                                          child: Container(
-                                            width: double.maxFinite,
-                                            child: GoogleMap(
-                                              mapType: MapType.terrain,
-                                              zoomControlsEnabled: false,
-                                              initialCameraPosition:
-                                                  CameraPosition(
-                                                target: LatLng(
-                                                  latitude,
-                                                  longitude,
-                                                ),
-                                                zoom: 26,
-                                              ),
-                                              onMapCreated: (GoogleMapController
-                                                  gmc) async {
-                                                markers.add(
-                                                  Marker(
-                                                    markerId: MarkerId(
-                                                        clinic.id.toString()),
-                                                    position: LatLng(
-                                                        latitude, longitude),
-                                                    infoWindow: InfoWindow(
-                                                        title: clinic.name),
-                                                    icon: await BitmapDescriptor
-                                                        .fromAssetImage(
-                                                      ImageConfiguration(),
-                                                      'assets/images/hospital128px.png',
-                                                    ),
-                                                  ),
-                                                );
-                                                setState(() {});
-                                              },
-                                              myLocationEnabled: true,
-                                              mapToolbarEnabled: false,
-                                              markers: markers,
-                                            ),
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      width: double.maxFinite,
+                                      child: GoogleMap(
+                                        mapType: MapType.terrain,
+                                        zoomControlsEnabled: false,
+                                        initialCameraPosition: CameraPosition(
+                                          target: LatLng(
+                                            latitude,
+                                            longitude,
                                           ),
+                                          zoom: 26,
                                         ),
-                                        controller.seachStatus
-                                            ? GetBuilder<StockController>(
-                                                builder: (cst) {
-                                                return cst
-                                                        .vacineSelected.isEmpty
-                                                    ? seachCard(
-                                                        context, controller)
-                                                    : showCompanyNameCard(
-                                                        clinic, controller);
-                                              })
-                                            : showCompanyNameCard(
-                                                clinic, controller)
-                                      ],
+                                        onMapCreated:
+                                            (GoogleMapController gmc) async {
+                                          markers.add(
+                                            Marker(
+                                              markerId: MarkerId(
+                                                  clinic.id.toString()),
+                                              position:
+                                                  LatLng(latitude, longitude),
+                                              infoWindow: InfoWindow(
+                                                  title: clinic.name),
+                                              icon: await BitmapDescriptor
+                                                  .fromAssetImage(
+                                                ImageConfiguration(),
+                                                'assets/images/hospital128px.png',
+                                              ),
+                                            ),
+                                          );
+                                          setState(() {});
+                                        },
+                                        myLocationEnabled: false,
+                                        mapToolbarEnabled: false,
+                                        markers: markers,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: stepper,
-                                  ),
-                                ),
-                              ],
+                                  controller.seachStatus
+                                      ? GetBuilder<StockController>(
+                                          builder: (cst) {
+                                          return cst.vacineSelected.isEmpty
+                                              ? seachCard(context, controller)
+                                              : showCompanyNameCard(
+                                                  clinic, controller);
+                                        })
+                                      : showCompanyNameCard(clinic, controller)
+                                ],
+                              ),
                             ),
-                          );
-                  }),
-            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: stepper,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+            }),
+      ),
     );
   }
 
@@ -798,12 +966,40 @@ class _ScheduleState extends State<Schedule> {
     );
   }
 
-  // Future<int> schedule() async {
-  //   return AgendamentController.to.insert(AgendementModel(
-  //     vaccine: vaccine.text,
-  //     date: data.text,
-  //     slot: _dropdownValueSeleted,
-  //     clinicId: int.parse(widget.clinic),
-  //   ));
-  // }
+  Widget _buildSelector({
+    BuildContext? context,
+    required String name,
+  }) {
+    final isActive = name == selectedRole;
+
+    return Expanded(
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 200),
+        curve: Curves.easeInOut,
+        decoration: BoxDecoration(
+          color: isActive ? Theme.of(context!).primaryColor : null,
+          border: Border.all(
+            width: 0,
+          ),
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: RadioListTile(
+          value: name,
+          activeColor: Colors.white,
+          groupValue: selectedRole,
+          onChanged: (String? v) {
+            setState(() {
+              selectedRole = v;
+            });
+          },
+          title: Text(
+            name,
+            style: TextStyle(
+              color: isActive ? Colors.white : null,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }

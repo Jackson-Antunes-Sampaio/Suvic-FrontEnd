@@ -31,7 +31,7 @@ class SlotTimesRepository {
       final response = await dio.post(
         API_URL + 'clinics/schedule/slots',
         data: {
-          "clinicId": int.parse(idClinic),
+          "clinic": int.parse(idClinic),
           "date": date,
         },
       );
