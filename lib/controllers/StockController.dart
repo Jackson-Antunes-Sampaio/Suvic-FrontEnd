@@ -63,6 +63,7 @@ class StockController extends GetxController {
     var getPricesVaccines = await repository.getPriceVaccine();
 
     if (getPricesVaccines.isNotEmpty) {
+
       getPricesVaccines.forEach((priceVaccines) {
         priceVaccine.add(
           PriceVacine(
