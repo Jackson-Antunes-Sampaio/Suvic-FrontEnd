@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:covid_19/models/Clinic_model.dart';
 import 'package:covid_19/repositories/clinicRepository.dart';
 import 'package:covid_19/screens/agendament/schedule.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +14,8 @@ class AgentamentController extends GetxController {
   final raio = 0.0.obs;
 
   // late StreamSubscription<Position> positionStream;
-  // LatLng _position = LatLng(-23.571505, -46.689104);
-  LatLng _position = LatLng(-30.0557, -51.1988);
+  LatLng _position = LatLng(-23.571505, -46.689104);
+  // LatLng _position = LatLng(-30.0557, -51.1988);
   late GoogleMapController _mapsController;
   final markers = Set<Marker>();
 
@@ -54,7 +55,7 @@ class AgentamentController extends GetxController {
 
   onMapCreated(GoogleMapController gmc) async {
     _mapsController = gmc;
-    // getPosicao();
+    getPosicao();
     loadClinics();
     // var style = await rootBundle.loadString('assets/map/light.json');
     // _mapsController.setMapStyle(style);
@@ -65,37 +66,37 @@ class AgentamentController extends GetxController {
   loadClinics() async {
     var clinicsList = await clinicsRepository.getAllClinis();
 
-    var clinics = [];
+    // var clinics = [];
 
-    clinicsList!.forEach((element) {
-      clinics.add({
-        'id': element.id.toString(),
-        'name': element.name.toString(),
-        'icon': 'assets/images/hospital128px.png',
-        'position': {
-          'latitude': element.latitude,
-          'longitude': element.longitude
-        }
-      });
+    // clinicsList!.forEach((element) {
+    //   clinics.add({
+    //     'id': element.id.toString(),
+    //     'name': element.name.toString(),
+    //     'icon': 'assets/images/hospital128px.png',
+    //     'position': {
+    //       'latitude': element.latitude ?? 0.0,
+    //       'longitude': element.longitude ?? 0.0
+    //     }
+    //   });
 
-      print('latitude:' + element.latitude.toString());
-      print('longitude:' + element.longitude.toString());
-    });
+    //   print('latitude:' + element.latitude.toString());
+    //   print('longitude:' + element.longitude.toString());
+    // });
 
-    clinics.forEach((clinic) => addMarker(clinic));
+    clinicsList!.forEach((clinic) => addMarker(clinic));
   }
 
-  addMarker(clinic) async {
-    var point = clinic['position'];
+  addMarker(ClinicModel clinic) async {
+    // var point = clinic['position'];
 
     markers.add(
       Marker(
-        markerId: MarkerId(clinic['id']),
-        position: LatLng(point['latitude'], point['longitude']),
-        infoWindow: InfoWindow(title: clinic['name']),
+        markerId: MarkerId(clinic.id.toString()),
+        position: LatLng(clinic.latitude, clinic.longitude),
+        infoWindow: InfoWindow(title: clinic.name),
         icon: await BitmapDescriptor.fromAssetImage(
           ImageConfiguration(),
-          clinic['icon'],
+          'assets/images/hospital128px.png',
         ),
         onTap: () => showDetails(clinic),
       ),
@@ -103,8 +104,8 @@ class AgentamentController extends GetxController {
     update();
   }
 
-  showDetails(clinic) {
-    Get.to(Schedule(clinic: clinic['id']));
+  showDetails(ClinicModel clinic) {
+    Get.to(Schedule(clinic: clinic));
     // Get.bottomSheet(
     //   ClinicDetails(
     //     nome: clinic['name'],

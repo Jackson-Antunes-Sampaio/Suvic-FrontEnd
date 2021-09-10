@@ -1,28 +1,9 @@
-// import 'package:flutter/material.dart';
-
-// class Scheduled extends StatefulWidget {
-//   const Scheduled({Key? key}) : super(key: key);
-
-//   @override
-//   _ScheduledState createState() => _ScheduledState();
-// }
-
-// class _ScheduledState extends State<Scheduled> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold();
-//   }
-// }
-
-import 'package:covid_19/common/botton_navigation_bar/bottom_navigation_bar_new.dart';
+import 'package:covid_19/controllers/ScheduledController.dart';
 import 'package:covid_19/controllers/StockController.dart';
 import 'package:covid_19/controllers/user_controller.dart';
-import 'package:covid_19/models/priceVacine.dart';
 import 'package:covid_19/models/stock_vacine_model.dart';
 import 'package:covid_19/repositories/ScheduledRepository.dart';
 import 'package:covid_19/screens/agendament/graphics/pie_chart.dart';
-import 'package:covid_19/screens/stock/autocomplete/textFormField.dart';
-import 'package:covid_19/screens/stock/graphics/pie_chart.dart';
 import 'package:covid_19/utils/styles/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -48,9 +29,6 @@ class _ScheduledState extends State<Scheduled> {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration.zero, () async {
-      await ScheduledRepository().getAllScheduled();
-    });
     return Scaffold(
       body: DefaultTabController(
         length: 3,
@@ -66,8 +44,8 @@ class _ScheduledState extends State<Scheduled> {
               Tab(child: Text('Pendentes'), icon: Icon(Icons.schedule)),
             ]),
           ),
-          body: GetBuilder<StockController>(
-              init: StockController(),
+          body: GetBuilder<ScheduledController>(
+              init: ScheduledController(),
               builder: (controller) {
                 return controller.loading
                     ? Center(
@@ -93,30 +71,46 @@ class _ScheduledState extends State<Scheduled> {
               }),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBarNew(),
     );
   }
 
-  Widget agendamentDone(StockController controller) {
-    var vacines = controller.vaccineInStock;
-    var prices = controller.priceVaccine;
+  Widget agendamentDone(ScheduledController controller) {
+    var scheduleds = controller.scheduleds
+        .where((element) => element.status == 'complete')
+        .toList();
     var price = 0;
     final oCcy = NumberFormat("R\$ #,##0.00", "en_US");
 
-    return vacines.length == 0
+    return scheduleds.length == 0
         ? Center(child: Text('Sem agendamentos concluídos'))
         : Padding(
             padding: const EdgeInsets.all(10.0),
             child: ListView.builder(
-                itemCount: vacines.length,
+                itemCount: scheduleds.length,
                 itemBuilder: (context, index) {
-                  if ((prices.where((element) =>
-                          element.vacine == vacines[index].name)).length !=
-                      0) {
-                    price = prices
-                        .firstWhere(
-                            (element) => element.vacine == vacines[index].name)
-                        .price;
+                  var time = (scheduleds[index].time ?? 0.0).toString();
+                  String? status;
+                  switch (scheduleds[index].status) {
+                    case 'scheduled':
+                      status = 'Agendado';
+                      break;
+                    case 'late':
+                      status = 'Atrasado';
+                      break;
+                    case 'complete':
+                      status = 'Concluído';
+                      break;
+                    case 'scheduledPaid':
+                      status = 'Agendado pago';
+                      break;
+                    case 'latePaid':
+                      status = 'Atrasado pago';
+                      break;
+                    case 'canceledPaid':
+                      status = 'Cancelado pago';
+                      break;
+                    default:
+                      status = 'Desconhecido';
                   }
                   return Slidable(
                     actionPane: SlidableDrawerActionPane(),
@@ -129,95 +123,152 @@ class _ScheduledState extends State<Scheduled> {
                             Icons.medication,
                             color: kPrimaryColor,
                           ),
-                          title: Text(vacines[index].name),
+                          title: Text(scheduleds[index].user?.civilName ?? ''),
                           subtitle: Text(
-                            'Quantidade(${vacines[index].quantidade})',
+                            scheduleds[index].date ?? '',
                           ),
                           children: [
                             ListTile(
-                              leading: Icon(Icons.add_box),
-                              title: Text('Lote'),
-                              subtitle: Text(vacines[index].lote),
+                              leading: Icon(Icons.inventory),
+                              title: Text('Slot'),
+                              subtitle: Text(scheduleds[index].slot.toString()),
                             ),
                             ListTile(
-                              leading: Icon(Icons.calendar_today),
-                              title: Text('Data de Validade'),
-                              subtitle: Text(vacines[index].dataValidade),
+                              leading: Icon(Icons.timer),
+                              title: Text('Horário'),
+                              subtitle: Text(time),
                             ),
                             ListTile(
-                              leading: Icon(Icons.schedule),
-                              title: Text('Reservadas'),
+                              leading: Icon(Icons.military_tech),
+                              title: Text('Estatus'),
+                              subtitle: Text(status),
+                            ),
+                            ListTile(
+                              leading: Icon(Icons.badge),
+                              title: Text('CPF'),
+                              subtitle: Text(scheduleds[index].user?.cpf ?? ''),
+                            ),
+                            ListTile(
+                              leading: Icon(Icons.date_range),
+                              title: Text('Data de nascimento'),
                               subtitle:
-                                  Text(vacines[index].reserved.toString()),
+                                  Text(scheduleds[index].user?.birthdate ?? ''),
                             ),
                             ListTile(
-                              leading: Icon(Icons.attach_money),
-                              title: Text('Valor'),
-                              subtitle: Text(oCcy.format(price)),
+                              leading:
+                                  (scheduleds[index].user?.sex ?? '') == 'M'
+                                      ? Icon(Icons.male)
+                                      : Icon(Icons.female),
+                              title: Text('Sexo'),
+                              subtitle: Text(
+                                  (scheduleds[index].user?.sex ?? '') == 'M'
+                                      ? 'Masculino'
+                                      : 'Femenino'),
                             ),
+                            ListTile(
+                              leading: Icon(Icons.date_range),
+                              title: Text('E-mail'),
+                              subtitle:
+                                  Text(scheduleds[index].user?.email ?? ''),
+                            ),
+                            // ListTile(
+                            //   leading: Icon(Icons.calendar_today),
+                            //   title: Text('Data de Validade'),
+                            //   subtitle: Text(vacines[index].dataValidade),
+                            // ),
+                            // ListTile(
+                            //   leading: Icon(Icons.schedule),
+                            //   title: Text('Reservadas'),
+                            //   subtitle:
+                            //       Text(vacines[index].reserved.toString()),
+                            // ),
+                            // ListTile(
+                            //   leading: Icon(Icons.attach_money),
+                            //   title: Text('Valor'),
+                            //   subtitle: Text(oCcy.format(price)),
+                            // ),
                           ],
                         ),
                       ),
                     ),
                     actions: <Widget>[
-                      IconSlideAction(
-                        color: Colors.blue,
-                        icon: Icons.add,
-                        onTap: () => _add(vacines[index]),
-                      ),
-                      IconSlideAction(
-                        color: Colors.indigo,
-                        icon: Icons.remove,
-                        onTap: () => _remove(vacines[index]),
-                      ),
+                      // IconSlideAction(
+                      //   color: Colors.blue,
+                      //   icon: Icons.add,
+                      //   onTap: () => _add(vacines[index]),
+                      // ),
+                      // IconSlideAction(
+                      //   color: Colors.indigo,
+                      //   icon: Icons.remove,
+                      //   onTap: () => _remove(vacines[index]),
+                      // ),
                     ],
                     secondaryActions: <Widget>[
-                      IconSlideAction(
-                        color: Colors.red,
-                        icon: Icons.delete,
-                        onTap: () => controller.delete(vacines[index]),
-                      ),
+                      // IconSlideAction(
+                      //   color: Colors.red,
+                      //   icon: Icons.delete,
+                      //   onTap: () => controller.delete(vacines[index]),
+                      // ),
                     ],
                   );
                 }),
           );
   }
 
-  Widget dashbaordTabPage(StockController controller) {
-    return controller.vaccineInChart.length == 4
-        ? Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              width: double.maxFinite,
-              height: 600,
-              child: PieChartScheduled(vaccines: controller.vaccineInChart),
-            ),
-          )
-        : Center(
-            child: Text('Stock de Vacinas'),
-          );
+  Widget dashbaordTabPage(ScheduledController controller) {
+    return
+        // controller.vaccineInChart.length == 4
+        //     ?
+        Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        width: double.maxFinite,
+        height: 600,
+        child: PieChartScheduled(scheduleds: controller.scheduleds),
+      ),
+    );
+    // : Center(
+    //     child: Text('Stock de Vacinas'),
+    //   );
   }
 
-  Widget agendamentPendent(StockController controller) {
-    var vacines = controller.vaccineInStock;
-    var prices = controller.priceVaccine;
+  Widget agendamentPendent(ScheduledController controller) {
+    var scheduleds = controller.scheduleds
+        .where((element) => element.status != 'complete')
+        .toList();
     var price = 0;
     final oCcy = NumberFormat("R\$ #,##0.00", "en_US");
 
-    return vacines.length == 0
-        ? Center(child: Text('Sem vacina em Stock'))
+    return scheduleds.length == 0
+        ? Center(child: Text('Sem agendamentos concluídos'))
         : Padding(
             padding: const EdgeInsets.all(10.0),
             child: ListView.builder(
-                itemCount: vacines.length,
+                itemCount: scheduleds.length,
                 itemBuilder: (context, index) {
-                  if ((prices.where((element) =>
-                          element.vacine == vacines[index].name)).length !=
-                      0) {
-                    price = prices
-                        .firstWhere(
-                            (element) => element.vacine == vacines[index].name)
-                        .price;
+                  var time = (scheduleds[index].time ?? 0.0).toString();
+                  String? status;
+                  switch (scheduleds[index].status) {
+                    case 'scheduled':
+                      status = 'Agendado';
+                      break;
+                    case 'late':
+                      status = 'Atrasado';
+                      break;
+                    case 'complete':
+                      status = 'Concluído';
+                      break;
+                    case 'scheduledPaid':
+                      status = 'Agendado pago';
+                      break;
+                    case 'latePaid':
+                      status = 'Atrasado pago';
+                      break;
+                    case 'canceledPaid':
+                      status = 'Cancelado pago';
+                      break;
+                    default:
+                      status = 'Desconhecido';
                   }
                   return Slidable(
                     actionPane: SlidableDrawerActionPane(),
@@ -230,54 +281,92 @@ class _ScheduledState extends State<Scheduled> {
                             Icons.medication,
                             color: kPrimaryColor,
                           ),
-                          title: Text(vacines[index].name),
+                          title: Text(scheduleds[index].user?.civilName ?? ''),
                           subtitle: Text(
-                            'Quantidade(${vacines[index].quantidade})',
+                            scheduleds[index].date ?? '',
                           ),
                           children: [
                             ListTile(
-                              leading: Icon(Icons.add_box),
-                              title: Text('Lote'),
-                              subtitle: Text(vacines[index].lote),
+                              leading: Icon(Icons.inventory),
+                              title: Text('Slot'),
+                              subtitle: Text(scheduleds[index].slot.toString()),
                             ),
                             ListTile(
-                              leading: Icon(Icons.calendar_today),
-                              title: Text('Data de Validade'),
-                              subtitle: Text(vacines[index].dataValidade),
+                              leading: Icon(Icons.timer),
+                              title: Text('Horário'),
+                              subtitle: Text(time),
                             ),
                             ListTile(
-                              leading: Icon(Icons.schedule),
-                              title: Text('Reservadas'),
+                              leading: Icon(Icons.military_tech),
+                              title: Text('Estatus'),
+                              subtitle: Text(status),
+                            ),
+                            ListTile(
+                              leading: Icon(Icons.badge),
+                              title: Text('CPF'),
+                              subtitle: Text(scheduleds[index].user?.cpf ?? ''),
+                            ),
+                            ListTile(
+                              leading: Icon(Icons.date_range),
+                              title: Text('Data de nascimento'),
                               subtitle:
-                                  Text(vacines[index].reserved.toString()),
+                                  Text(scheduleds[index].user?.birthdate ?? ''),
                             ),
                             ListTile(
-                              leading: Icon(Icons.attach_money),
-                              title: Text('Valor'),
-                              subtitle: Text(oCcy.format(price)),
+                              leading:
+                                  (scheduleds[index].user?.sex ?? '') == 'M'
+                                      ? Icon(Icons.male)
+                                      : Icon(Icons.female),
+                              title: Text('Sexo'),
+                              subtitle: Text(
+                                  (scheduleds[index].user?.sex ?? '') == 'M'
+                                      ? 'Masculino'
+                                      : 'Femenino'),
                             ),
+                            ListTile(
+                              leading: Icon(Icons.date_range),
+                              title: Text('E-mail'),
+                              subtitle:
+                                  Text(scheduleds[index].user?.email ?? ''),
+                            ),
+                            // ListTile(
+                            //   leading: Icon(Icons.calendar_today),
+                            //   title: Text('Data de Validade'),
+                            //   subtitle: Text(vacines[index].dataValidade),
+                            // ),
+                            // ListTile(
+                            //   leading: Icon(Icons.schedule),
+                            //   title: Text('Reservadas'),
+                            //   subtitle:
+                            //       Text(vacines[index].reserved.toString()),
+                            // ),
+                            // ListTile(
+                            //   leading: Icon(Icons.attach_money),
+                            //   title: Text('Valor'),
+                            //   subtitle: Text(oCcy.format(price)),
+                            // ),
                           ],
                         ),
                       ),
                     ),
                     actions: <Widget>[
-                      IconSlideAction(
-                        color: Colors.blue,
-                        icon: Icons.add,
-                        onTap: () => _add(vacines[index]),
-                      ),
-                      IconSlideAction(
-                        color: Colors.indigo,
-                        icon: Icons.remove,
-                        onTap: () => _remove(vacines[index]),
-                      ),
+                      // IconSlideAction(
+                      //   color: Colors.blue,
+                      //   icon: Icons.add,
+                      //   onTap: () => _add(vacines[index]),
+                      // ),
+                      // IconSlideAction(
+                      //   color: Colors.indigo,
+                      //   icon: Icons.remove,
+                      //   onTap: () => _remove(vacines[index]),
+                      // ),
                     ],
                     secondaryActions: <Widget>[
-                      IconSlideAction(
-                        color: Colors.red,
-                        icon: Icons.delete,
-                        onTap: () => controller.delete(vacines[index]),
-                      ),
+                      // IconSlideAction(
+                      //   color: Colors.red,
+                      //   icon: Icons.delete,
+                      //   onTap: () => controller.delete(vacines[index]),
+                      // ),
                     ],
                   );
                 }),

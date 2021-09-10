@@ -87,6 +87,8 @@ class ClinicController extends GetxController {
     clinicsList!.forEach((element) {
       if (cli == element.id.toString()) {
         clinic = element;
+        print('Nome:' + clinic.name.toString());
+
         clinics.add(element);
       } else {
         clinics.add(element);

@@ -33,4 +33,13 @@ class AgendamentController extends GetxController {
     update();
     return res;
   }
+
+  Future<int> donePaid(AgendementModel agendament) async {
+    loading.value = true;
+    var res = await repository.donePaid(agendament);
+    loading.value = false;
+    agendaments.add(agendament);
+    update();
+    return res;
+  }
 }

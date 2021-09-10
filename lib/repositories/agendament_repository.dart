@@ -42,7 +42,7 @@ class AgendamentRepository {
       var date = outputFormat.format(date1);
 
       var res = await dio.post(API_URL + service, data: {
-        "clinicId": agendamentModel.clinicId!,
+        "clinic": agendamentModel.clinicId!,
         "date": date,
         "slot": agendamentModel.slot,
         "vaccine": agendamentModel.vaccine,
@@ -59,8 +59,6 @@ class AgendamentRepository {
         return 0;
       }
 
-      print(res.data);
-
       // Get.snackbar(
       //   'Sucesso',
       //   'O seu agendamento foi efectuado!',
@@ -76,6 +74,46 @@ class AgendamentRepository {
       //   colorText: Colors.white,
       //   snackPosition: SnackPosition.BOTTOM,
       // );
+      print(e);
+      print('Error Insert');
+      return 111;
+    }
+  }
+
+  Future<int> donePaid(AgendementModel agendamentModel) async {
+    try {
+      Dio? dio = CustomDio().instance;
+
+      final storage = FlutterSecureStorage();
+      final token = await storage.read(key: "token");
+      dio!.options.headers["Cookie"] = token;
+
+      var inputFormat = DateFormat('dd/MM/yyyy');
+      var date1 = inputFormat.parse(agendamentModel.date!);
+
+      var outputFormat = DateFormat('yyyy-MM-dd');
+      var date = outputFormat.format(date1);
+
+      var res = await dio.post(API_URL + 'clinics/schedule/status/paid', data: {
+        "clinic": agendamentModel.clinicId!,
+        "date": date,
+        "slot": agendamentModel.slot,
+        "vaccine": agendamentModel.vaccine,
+        "houseCall": false,
+      });
+
+      //mensager
+      var mesagerError = ['&', 'User already has vaccine appointment on day'];
+
+      print(res.data);
+
+      if (res.data['message'] != 'Success') {
+        return mesagerError
+            .indexWhere((element) => element == res.data['error']);
+      } else {
+        return 0;
+      }
+    } catch (e) {
       print(e);
       print('Error Insert');
       return 111;

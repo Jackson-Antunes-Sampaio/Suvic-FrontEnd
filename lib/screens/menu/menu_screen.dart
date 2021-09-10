@@ -1,6 +1,5 @@
 import 'package:covid_19/controllers/user_controller.dart';
 import 'package:covid_19/routes/app_page.dart';
-import 'package:covid_19/screens/agendament/agendam.dart';
 import 'package:covid_19/screens/agendament/scheduled.dart';
 
 import 'package:covid_19/screens/menu/components/header_menu.dart';
@@ -22,27 +21,28 @@ class MenuScreen extends StatelessWidget {
             offset: 0,
           ),
           TextButton(
-              onPressed: (){
-                Get.toNamed(Routes.PROFILE);
-              },
-              child: Text("Editar perfil"),
+            onPressed: () {
+              Get.toNamed(Routes.PROFILE);
+            },
+            child: Text("Editar perfil"),
           ),
           Padding(
             padding: EdgeInsets.only(top: 20, left: 10, right: 10),
             child: Column(
               children: [
                 userController.user?.permissionLevel == "Superadmin"
-                ? Card(
-                  elevation: 4,
-                  child: ListTile(
-                    leading: Icon(Icons.person_add_alt_1),
-                    title: Text('Cadastrar Aplicador'),
-                    trailing: Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                      Get.toNamed(Routes.REGISTRATIONUSERS);
-                    },
-                  ),
-                ) : Container(),
+                    ? Card(
+                        elevation: 4,
+                        child: ListTile(
+                          leading: Icon(Icons.person_add_alt_1),
+                          title: Text('Cadastrar Aplicador'),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                          onTap: () {
+                            Get.toNamed(Routes.REGISTRATIONUSERS);
+                          },
+                        ),
+                      )
+                    : Container(),
                 // Card(
                 //   elevation: 4,
                 //   child: ListTile(
@@ -120,7 +120,7 @@ class MenuScreen extends StatelessWidget {
                     leading: Icon(Icons.logout),
                     title: Text('Sair'),
                     trailing: Icon(Icons.arrow_forward_ios),
-                    onTap: () async{
+                    onTap: () async {
                       await userController.logout();
                       Get.offAllNamed(Routes.LOGIN);
                     },

@@ -53,8 +53,8 @@ class TimeSlotController extends GetxController {
       context: context,
       initialEntryMode: DatePickerEntryMode.calendar,
       initialDate: DateTime.now(),
-      firstDate: DateTime.now().subtract(Duration(days: 30)),
-      lastDate: DateTime.now().add(Duration(days: 30)),
+      firstDate: DateTime.now().subtract(Duration(days: 0)),
+      lastDate: DateTime.now().add(Duration(days: 90)),
       helpText: 'Selecione a Data',
       builder: (BuildContext context, Widget? child) {
         return Theme(
