@@ -37,7 +37,7 @@ class VaccineRepository {
       final response = await dio.post(API_URL + "clinics/schedule/user", data: {
         "cpf" : "$cpf"
       });
-
+      print(response.data);
       return (response.data as List).map<ScheduleModel>((e) {
         return ScheduleModel.fromJson(e);
       }).toList();
@@ -63,11 +63,45 @@ class VaccineRepository {
         "doseNumber" : dose,
         "manufacturer" : manufacturer
       };
-      print("date: ${date}");
       final response = await dio.post(API_URL + "users/vaccinecard", data: map);
-      print(response);
+      print("${response.data}");
 
-      return response.data["message"];
+      if(response.data["message"] != null){
+        return response.data["message"];
+      }else{
+        return "Error";
+      }
+    } catch (e) {
+      print(e);
+      return Future.error("error");
+    }
+  }
+
+  Future<String> postApplyVaccineComplete(String cpf, String date, String vaccine, String slot, bool? houseCall) async {
+    try {
+
+      Dio? dio = CustomDio().instance;
+      final storage = FlutterSecureStorage();
+      final token = await storage.read(key: "token");
+      dio!.options.headers["Cookie"] = token;
+
+      Map<String, dynamic> map = {
+        "cpf" : cpf,
+        "slot" : slot,
+        "vaccine" : vaccine,
+        "houseCall" : houseCall,
+        "date" : date,
+      };
+      print("date: ${date}");
+      final response = await dio.post(API_URL + "clinics/schedule/status/complete", data: map);
+      print("${response.data}");
+
+      if(response.data["message"] != null){
+        return response.data["message"];
+      }else{
+        return "Error";
+      }
+
     } catch (e) {
       print(e);
       return Future.error("error");

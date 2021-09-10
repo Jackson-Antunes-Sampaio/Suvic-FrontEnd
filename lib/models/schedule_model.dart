@@ -12,6 +12,7 @@ class ScheduleModel {
   User? user;
   Clinic? clinic;
   Vaccine? vaccine;
+  String? status;
 
   ScheduleModel(
       {this.id,
@@ -25,7 +26,7 @@ class ScheduleModel {
         this.vaccineName,
         this.user,
         this.clinic,
-        this.vaccine, this.cpf});
+        this.vaccine, this.cpf, this.status});
 
   ScheduleModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -38,6 +39,7 @@ class ScheduleModel {
     cpf = json['cpf'];
     clinicId = json['clinicId'];
     vaccineName = json['vaccineName'];
+    status = json['status'];
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
     clinic =
     json['clinic'] != null ? new Clinic.fromJson(json['clinic']) : null;
@@ -57,6 +59,7 @@ class ScheduleModel {
     data['cpf'] = this.cpf;
     data['clinicId'] = this.clinicId;
     data['vaccineName'] = this.vaccineName;
+    data['status'] = this.status;
     if (this.user != null) {
       data['user'] = this.user?.toJson();
     }
@@ -71,7 +74,7 @@ class ScheduleModel {
 
   @override
   String toString() {
-    return 'ScheduleModel{id: $id, slot: $slot, date: $date, houseCall: $houseCall, createdAt: $createdAt, updatedAt: $updatedAt, userId: $userId, cpf: $cpf, clinicId: $clinicId, vaccineName: $vaccineName, user: $user, clinic: $clinic, vaccine: $vaccine}';
+    return 'ScheduleModel{id: $id, slot: $slot, date: $date, houseCall: $houseCall, createdAt: $createdAt, updatedAt: $updatedAt, userId: $userId, cpf: $cpf, clinicId: $clinicId, vaccineName: $vaccineName, user: $user, clinic: $clinic, vaccine: $vaccine, status: $status}';
   }
 }
 
