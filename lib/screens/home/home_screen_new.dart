@@ -14,12 +14,9 @@ class HomeScreenNew extends StatefulWidget {
 }
 
 class _HomeScreenNewState extends State<HomeScreenNew> {
-
   final controller = ScrollController();
   final PageManager pageManager = Get.find();
   double offset = 0;
-
-
 
   @override
   void initState() {
@@ -34,7 +31,6 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
     controller.dispose();
     super.dispose();
   }
-
 
   void onScroll() {
     setState(() {
@@ -71,20 +67,20 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                   CarouselCustom(
                     carouselModel: [
                       CarouselModel(
-                          image: "assets/images/suvic.png",
-                          onTap: (){
-                            Get.toNamed(Routes.SUVIC);
-                          },
+                        image: "assets/images/suvic.png",
+                        onTap: () {
+                          Get.toNamed(Routes.SUVIC);
+                        },
                       ),
                       CarouselModel(
-                        image: "assets/images/carteirinha-vacinacao-960x540.jpg",
+                        image:
+                            "assets/images/carteirinha-vacinacao-960x540.jpg",
                         title: "Acesse sua carteirinha",
-                        onTap: (){
+                        onTap: () {
                           pageManager.indexNavigation.value = 1;
                           pageManager.pageController.jumpToPage(1);
                         },
-                      )
-
+                      ),
                     ],
                   ),
                   // SizedBox(height: 100,),
@@ -100,7 +96,16 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                   //     "assets/images/undraw_Map_dark_re_36sy.png"
                   //   ],
                   // ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  Center(
+                    child: FloatingActionButton.extended(
+                        onPressed: () {
+                          Get.toNamed(Routes.OLDVACCINECARD);
+                        },
+                        label: Text("Seu Comprovante de Vacinação Covid-19")),
+                  )
                 ],
               ),
             ),

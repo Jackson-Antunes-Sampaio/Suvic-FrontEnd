@@ -54,31 +54,38 @@ class MenuScreen extends StatelessWidget {
                 //     },
                 //   ),
                 // ),
-                userController.user?.permissionLevel == "Applicator" || userController.user?.permissionLevel == "Oversser" || userController.user?.permissionLevel == "Admin" || userController.user?.permissionLevel == "Superadmin"
-                ? Card(
-                  elevation: 4,
-                  child: ListTile(
-                    leading: Icon(Icons.schedule),
-                    title: Text('Agendados'),
-                    trailing: Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                      Get.to(DuaAgendament());
-                    },
-                  ),
-                ) : Container(),
-                userController.user?.permissionLevel == "Oversser" || userController.user?.permissionLevel == "Admin" || userController.user?.permissionLevel == "Superadmin"
-                ? Card(
-                  elevation: 4,
-                  child: ListTile(
-                    leading: Icon(Icons.qr_code),
-                    title: Text('Estoque'),
-                    trailing: Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                      // Get.toNamed(Routes.StockVacina);
-                      Get.to(Stock());
-                    },
-                  ),
-                ) : Container(),
+                userController.user?.permissionLevel == "Applicator" ||
+                        userController.user?.permissionLevel == "Oversser" ||
+                        userController.user?.permissionLevel == "Admin" ||
+                        userController.user?.permissionLevel == "Superadmin"
+                    ? Card(
+                        elevation: 4,
+                        child: ListTile(
+                          leading: Icon(Icons.schedule),
+                          title: Text('Agendados'),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                          onTap: () {
+                            Get.to(Scheduled());
+                          },
+                        ),
+                      )
+                    : Container(),
+                userController.user?.permissionLevel == "Oversser" ||
+                        userController.user?.permissionLevel == "Admin" ||
+                        userController.user?.permissionLevel == "Superadmin"
+                    ? Card(
+                        elevation: 4,
+                        child: ListTile(
+                          leading: Icon(Icons.qr_code),
+                          title: Text('Estoque'),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                          onTap: () {
+                            // Get.toNamed(Routes.StockVacina);
+                            Get.to(Stock());
+                          },
+                        ),
+                      )
+                    : Container(),
                 // Card(
                 //   elevation: 4,
                 //   child: ListTile(
@@ -90,30 +97,37 @@ class MenuScreen extends StatelessWidget {
                 //     },
                 //   ),
                 // ),
-                userController.user?.permissionLevel == "Applicator" || userController.user?.permissionLevel == "Admin" || userController.user?.permissionLevel == "Superadmin"
-                ? Card(
-                  elevation: 4,
-                  child: ListTile(
-                    leading: Icon(Icons.article_outlined),
-                    title: Text('Aplicar vacina'),
-                    trailing: Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                      Get.toNamed(Routes.APPLYVACCINE);
-                    },
-                  ),
-                ) : Container(),
-                userController.user?.permissionLevel == "Applicator" || userController.user?.permissionLevel == "Admin" || userController.user?.permissionLevel == "Superadmin" || userController.user?.permissionLevel == "Overseer"
-                ? Card(
-                  elevation: 4,
-                  child: ListTile(
-                    leading: Icon(Icons.history),
-                    title: Text('Historico de vacinas aplicadas'),
-                    trailing: Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                      Get.toNamed(Routes.HISTORICVACCINE);
-                    },
-                  ),
-                ) : Container(),
+                userController.user?.permissionLevel == "Applicator" ||
+                        userController.user?.permissionLevel == "Admin" ||
+                        userController.user?.permissionLevel == "Superadmin"
+                    ? Card(
+                        elevation: 4,
+                        child: ListTile(
+                          leading: Icon(Icons.article_outlined),
+                          title: Text('Aplicar vacina'),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                          onTap: () {
+                            Get.toNamed(Routes.APPLYVACCINE);
+                          },
+                        ),
+                      )
+                    : Container(),
+                userController.user?.permissionLevel == "Applicator" ||
+                        userController.user?.permissionLevel == "Admin" ||
+                        userController.user?.permissionLevel == "Superadmin" ||
+                        userController.user?.permissionLevel == "Overseer"
+                    ? Card(
+                        elevation: 4,
+                        child: ListTile(
+                          leading: Icon(Icons.history),
+                          title: Text('Historico de vacinas aplicadas'),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                          onTap: () {
+                            Get.toNamed(Routes.HISTORICVACCINE);
+                          },
+                        ),
+                      )
+                    : Container(),
                 Card(
                   elevation: 4,
                   child: ListTile(

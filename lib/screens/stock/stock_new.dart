@@ -1,8 +1,5 @@
-import 'package:covid_19/common/botton_navigation_bar/bottom_navigation_bar_new.dart';
-import 'package:covid_19/common/text_fiel_custom.dart';
 import 'package:covid_19/controllers/StockController.dart';
 import 'package:covid_19/controllers/user_controller.dart';
-import 'package:covid_19/models/priceVacine.dart';
 import 'package:covid_19/models/stock_vacine_model.dart';
 import 'package:covid_19/screens/stock/autocomplete/textFormField.dart';
 import 'package:covid_19/screens/stock/graphics/pie_chart.dart';
@@ -11,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:string_validator/string_validator.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class Stock extends StatefulWidget {
@@ -26,9 +24,12 @@ class _StockState extends State<Stock> {
   TextEditingController datavalidade = TextEditingController();
   TextEditingController quantidade = TextEditingController();
   TextEditingController valor = TextEditingController();
+  TextEditingController addFielController = TextEditingController();
+
   UserController user = Get.find();
 
   final _formKey = GlobalKey<FormState>();
+  var _formKeyUpAdd = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -143,16 +144,16 @@ class _StockState extends State<Stock> {
                       ),
                     ),
                     actions: <Widget>[
-                      IconSlideAction(
-                        color: Colors.blue,
-                        icon: Icons.add,
-                        onTap: () => _add(vacines[index]),
-                      ),
-                      IconSlideAction(
-                        color: Colors.indigo,
-                        icon: Icons.remove,
-                        onTap: () => _remove(vacines[index]),
-                      ),
+                      // IconSlideAction(
+                      //   color: Colors.blue,
+                      //   icon: Icons.add,
+                      //   onTap: () => _add(vacines[index], controller),
+                      // ),
+                      // IconSlideAction(
+                      //   color: Colors.indigo,
+                      //   icon: Icons.remove,
+                      //   onTap: () => _remove(vacines[index]),
+                      // ),
                     ],
                     secondaryActions: <Widget>[
                       IconSlideAction(
@@ -346,22 +347,41 @@ class _StockState extends State<Stock> {
     }
   }
 
-  _add(StockVacineModel vacine) {
+  _add(StockVacineModel vacine, StockController controller) {
     Get.defaultDialog(
       radius: 5,
       title: 'Adicionar',
       content: Container(
         width: 350,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: TextFormField(
-                enabled: false,
-                initialValue: vacine.name,
+        child: Form(
+          key: _formKeyUpAdd,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: TextFormField(
+                  enabled: false,
+                  initialValue: vacine.name,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    prefixIcon: Icon(Icons.medication),
+                    //enabledBorder: InputBorder.none,
+                    border: OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(
+                        const Radius.circular(10.0),
+                      ),
+                    ),
+                  ),
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+              TextFormField(
+                controller: addFielController,
                 decoration: InputDecoration(
                   isDense: true,
-                  prefixIcon: Icon(Icons.medication),
+                  prefixIcon: Icon(Icons.plus_one),
+                  labelText: 'Quantidade',
+                  hintText: 'Quantidade',
                   //enabledBorder: InputBorder.none,
                   border: OutlineInputBorder(
                     borderRadius: const BorderRadius.all(
@@ -369,67 +389,57 @@ class _StockState extends State<Stock> {
                     ),
                   ),
                 ),
+                validator: (values) {
+                  if (values!.isEmpty || !isInt(values)) {
+                    return 'Digite uma quantidade valida';
+                  }
+                },
                 keyboardType: TextInputType.number,
               ),
-            ),
-            TextFormField(
-              decoration: InputDecoration(
-                isDense: true,
-                prefixIcon: Icon(Icons.plus_one),
-                labelText: 'Quantidade',
-                hintText: 'Quantidade',
-                //enabledBorder: InputBorder.none,
-                border: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(
-                    const Radius.circular(10.0),
-                  ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: 150,
+                      child: ElevatedButton(
+                        onPressed: () => Get.back(),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                            Color(0xff303f9f),
+                          ),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                          ),
+                        ),
+                        child: Text('Cancelar'),
+                      ),
+                    ),
+                    Container(
+                      width: 150,
+                      child: ElevatedButton(
+                        onPressed: () => incrementStock(vacine, controller),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                            Color(0xff303f9f),
+                          ),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                          ),
+                        ),
+                        child: Text('Adicionar'),
+                      ),
+                    )
+                  ],
                 ),
-              ),
-              keyboardType: TextInputType.number,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: 150,
-                    child: ElevatedButton(
-                      onPressed: () => Get.back(),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                          Color(0xff303f9f),
-                        ),
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
-                        ),
-                      ),
-                      child: Text('Cancelar'),
-                    ),
-                  ),
-                  Container(
-                    width: 150,
-                    child: ElevatedButton(
-                      onPressed: () => Get.back(),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                          Color(0xff303f9f),
-                        ),
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
-                        ),
-                      ),
-                      child: Text('Adicionar'),
-                    ),
-                  )
-                ],
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -522,5 +532,25 @@ class _StockState extends State<Stock> {
         ),
       ),
     );
+  }
+
+  incrementStock(StockVacineModel vaccine, StockController controller) {
+    if (_formKeyUpAdd.currentState!.validate()) {
+      controller.updateVaccines(
+        StockVacineModel(
+          name: vaccine.name,
+          lote: vaccine.lote,
+          dataValidade: vaccine.dataValidade,
+          quantidade: (vaccine.quantidade + int.parse(addFielController.text)),
+        ),
+      );
+      Get.snackbar(
+        'Sucesso',
+        'Quantidade actualizada!',
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
   }
 }

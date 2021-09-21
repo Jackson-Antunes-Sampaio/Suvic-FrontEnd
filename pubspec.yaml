@@ -58,6 +58,8 @@ dependencies:
   geocoding: 
   flutter_slidable: ^0.6.0
   cool_stepper_reloaded: ^3.2.5
+  string_validator: ^0.3.0
+  image_picker: ^0.8.4+1
   
 
 dev_dependencies:
