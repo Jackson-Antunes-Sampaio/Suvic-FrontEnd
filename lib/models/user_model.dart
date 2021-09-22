@@ -31,40 +31,43 @@ class UserModel {
   String? updatedAt;
   String? permissionLevel;
   int? clinicId;
+  String? documentFront;
 
-  UserModel(
-      {this.civilName,
-        this.socialName,
-        this.cpf,
-        this.rg,
-        this.sUScard,
-        this.birthdate,
-        this.sex,
-        this.healthProfessional,
-        this.addressStreetName,
-        this.addressNumber,
-        this.addressComplement,
-        this.addressDistrict,
-        this.addressCity,
-        this.addressState,
-        this.addressZip,
-        this.addressCountry,
-        this.contactPreferenceWhatsapp,
-        this.contactPreferenceSms,
-        this.contactPreferenceEmail,
-        this.contactPreferencePush,
-        this.contactPhone,
-        this.contactCellphone,
-        this.email,
-        this.bloodType,
-        this.bedridden,
-        this.covidLast30Days,
-        this.id,
-        this.password,
-        this.createdAt,
-        this.updatedAt,
-        this.permissionLevel,
-        this.clinicId});
+  UserModel({
+    this.civilName,
+    this.socialName,
+    this.cpf,
+    this.rg,
+    this.sUScard,
+    this.birthdate,
+    this.sex,
+    this.healthProfessional,
+    this.addressStreetName,
+    this.addressNumber,
+    this.addressComplement,
+    this.addressDistrict,
+    this.addressCity,
+    this.addressState,
+    this.addressZip,
+    this.addressCountry,
+    this.contactPreferenceWhatsapp,
+    this.contactPreferenceSms,
+    this.contactPreferenceEmail,
+    this.contactPreferencePush,
+    this.contactPhone,
+    this.contactCellphone,
+    this.email,
+    this.bloodType,
+    this.bedridden,
+    this.covidLast30Days,
+    this.id,
+    this.password,
+    this.createdAt,
+    this.updatedAt,
+    this.permissionLevel,
+    this.clinicId,
+    this.documentFront,
+  });
 
   UserModel.fromJson(Map<String, dynamic> json) {
     civilName = json['civilName'];
@@ -99,6 +102,7 @@ class UserModel {
     updatedAt = json['updatedAt'];
     permissionLevel = json['permissionLevel'];
     clinicId = json['clinicId'];
+    documentFront = json['documentFront'];
   }
 
   Map<String, dynamic> toJson() {
@@ -135,6 +139,7 @@ class UserModel {
     data['updatedAt'] = this.updatedAt;
     data['permissionLevel'] = this.permissionLevel;
     data['clinicId'] = this.clinicId;
+    data['documentFront'] = this.documentFront;
     return data;
   }
 }
