@@ -1,4 +1,3 @@
-import 'package:covid_19/controllers/stock_vacine_controller.dart';
 import 'package:covid_19/routes/app_page.dart';
 import 'package:covid_19/utils/styles/style.dart';
 import 'package:firebase_core/firebase_core.dart';

@@ -4,8 +4,8 @@ import 'package:covid_19/utils/dio/custom_dio.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class PassaportRepository {
-  getpassaport() async {
+class OldVaccinationCardRepository {
+  getCard() async {
     try {
       Dio? dio = CustomDio().instance;
 
@@ -13,7 +13,7 @@ class PassaportRepository {
       final token = await storage.read(key: "token");
 
       dio!.options.headers["Cookie"] = token;
-      final response = await dio.get(API_URL + "users/images/covidPassport");
+      final response = await dio.get(API_URL + "users/images/paperCard");
 
       return response.data;
     } catch (e) {
@@ -22,7 +22,7 @@ class PassaportRepository {
     }
   }
 
-  Future postPassaport(PassaportModel passpaort) async {
+  Future insert(PassaportModel passpaort) async {
     try {
       Dio? dio = CustomDio().instance;
       final storage = FlutterSecureStorage();
@@ -30,7 +30,7 @@ class PassaportRepository {
       dio!.options.headers["Cookie"] = token;
 
       Map<String, dynamic> map = {
-        "covidPassport": passpaort.documentFront!,
+        "paperCard": passpaort.documentFront!,
       };
 
       final response = await dio.post(API_URL + "users/images", data: map);

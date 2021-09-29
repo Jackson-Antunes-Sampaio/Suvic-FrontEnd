@@ -1,4 +1,5 @@
 import 'package:covid_19/common/my_header_widget.dart';
+import 'package:covid_19/screens/old_vaccination_card/old_vaccination_card.dart';
 import 'package:flutter/material.dart';
 import 'package:covid_19/routes/app_page.dart';
 import 'package:get/get.dart';
@@ -82,7 +83,9 @@ class _VaccineCardScreenState extends State<OldVaccineCardScreen> {
                   height: 100,
                   width: 150,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(OldVaccinationCard());
+                    },
                     child: Text("Carteira Antiga"),
                   ),
                 )

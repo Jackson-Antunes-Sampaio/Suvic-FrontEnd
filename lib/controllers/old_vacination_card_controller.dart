@@ -1,31 +1,29 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:covid_19/models/passaport_model.dart';
-import 'package:covid_19/repositories/passaport_repository.dart';
+import 'package:covid_19/repositories/old_vaccination_card_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 
-class PassaportController extends GetxController {
-  var repository = PassaportRepository();
+class OldVaccinationCardController extends GetxController {
+  var repository = OldVaccinationCardRepository();
   File? image;
   Uint8List? imageByte;
   PassaportModel passaport = PassaportModel();
 
   bool loading = false;
 
-  PassaportController() {
-    getPassaport();
+  OldVaccinationCardController() {
+    getOldVaccinationCard();
   }
 
-  getPassaport() async {
+  getOldVaccinationCard() async {
     loading = true;
-    var resPassaport = await repository.getpassaport();
+    var resPassaport = await repository.getCard();
 
     if (resPassaport != null) {
       var byteEnconde = resPassaport['data'];
@@ -58,16 +56,11 @@ class PassaportController extends GetxController {
 
       //convert in byte
       final bytes = File(image.path).readAsBytesSync();
-      // var utf8s = utf8.encode(bytes.toString());
       var utf8s = bytes.toList();
       String img64 = base64Encode(utf8s);
 
       //insert
-      await repository.postPassaport(PassaportModel(
-        civilName: passaport.civilName,
-        birthdate: passaport.birthdate,
-        cpf: passaport.cpf,
-        email: passaport.email,
+      await repository.insert(PassaportModel(
         documentFront: img64,
       ));
 
@@ -75,7 +68,7 @@ class PassaportController extends GetxController {
 
       update();
     } on PlatformException catch (e) {
-      Get.snackbar('Erro', 'Não houve imagem selecionada',
+      Get.snackbar('Erro', 'Não foi possível selecionar a imagem!',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.black,
           colorText: Colors.white);

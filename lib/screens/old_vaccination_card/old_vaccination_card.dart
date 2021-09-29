@@ -1,25 +1,25 @@
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:covid_19/controllers/passaport_controller.dart';
+import 'package:covid_19/controllers/old_vacination_card_controller.dart';
 import 'package:covid_19/utils/styles/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 // ignore: must_be_immutable
-class Passaport extends StatelessWidget {
+class OldVaccinationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
-        title: Text('Comprovante Covid-19'),
+        title: Text('Carteira Antiga'),
         centerTitle: true,
       ),
       body: Container(
-        child: GetBuilder<PassaportController>(
-            init: PassaportController(),
+        child: GetBuilder<OldVaccinationCardController>(
+            init: OldVaccinationCardController(),
             builder: (controller) {
               return controller.loading
                   ? Center(

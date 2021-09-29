@@ -60,6 +60,8 @@ dependencies:
   cool_stepper_reloaded: ^3.2.5
   string_validator: ^0.3.0
   image_picker: ^0.8.4+1
+  path: ^1.8.0
+  path_provider: ^2.0.5
   
 
 dev_dependencies:
