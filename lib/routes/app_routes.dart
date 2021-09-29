@@ -21,5 +21,6 @@ abstract class Routes {
   static const SINGUP = 'SingUpScreen';
   static const AGENDAM = 'AgendamScreen';
   static const PROFILE = 'ProfileScreen';
+  static const OLDVACCINECARD = "oldvaccinecard";
+  static const PASSAPORT = "passaport";
 }
-

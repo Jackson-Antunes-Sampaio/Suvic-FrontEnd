@@ -62,7 +62,6 @@ class StockController extends GetxController {
     var getPricesVaccines = await repository.getPriceVaccine();
 
     if (getPricesVaccines.isNotEmpty) {
-
       getPricesVaccines.forEach((priceVaccines) {
         priceVaccine.add(
           PriceVacine(
@@ -159,6 +158,25 @@ class StockController extends GetxController {
   delete(StockVacineModel vaccine) {
     repository.delete(vaccine);
     vaccineInStock.remove(vaccine);
+    getFourMoreVaccines();
+    update();
+  }
+
+  updateVaccines(StockVacineModel vaccine) async {
+    //Removel old
+    // repository.delete(vaccine);
+    vaccineInStock.remove(vaccine);
+    var index = vaccineInStock.indexWhere(
+      (element) => element.name == vaccine.name && element.lote == vaccine.lote,
+    );
+    vaccineInStock.removeWhere(
+      (element) => element.name == vaccine.name && element.lote == vaccine.lote,
+    );
+    await repository.delete(vaccine);
+
+    await repository.insert(vaccine);
+
+    vaccineInStock.insert(index, vaccine);
     getFourMoreVaccines();
     update();
   }

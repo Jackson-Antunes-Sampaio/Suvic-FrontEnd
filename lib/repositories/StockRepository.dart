@@ -267,23 +267,23 @@ class StockRepository {
         'vaccine': stockvacine.name
       });
 
-      if (response.statusCode == 200) {
-        Get.snackbar(
-          'Sucesso',
-          'vacina removida do esqoque!',
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
-        );
-      } else {
-        Get.snackbar(
-          'Erro',
-          'oucorreu um erro interno code: ${response.statusCode}',
-          backgroundColor: Colors.red,
-          snackPosition: SnackPosition.BOTTOM,
-        );
-        print('Error code ${response.statusCode}');
-      }
+      // if (response.statusCode == 200) {
+      //   Get.snackbar(
+      //     'Sucesso',
+      //     'vacina removida do esqoque!',
+      //     backgroundColor: Colors.green,
+      //     colorText: Colors.white,
+      //     snackPosition: SnackPosition.BOTTOM,
+      //   );
+      // } else {
+      //   Get.snackbar(
+      //     'Erro',
+      //     'oucorreu um erro interno code: ${response.statusCode}',
+      //     backgroundColor: Colors.red,
+      //     snackPosition: SnackPosition.BOTTOM,
+      //   );
+      //   print('Error code ${response.statusCode}');
+      // }
     } catch (e) {
       Get.snackbar(
         'Erro',
