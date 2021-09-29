@@ -139,7 +139,7 @@ class _VaccineCardScreenState extends State<VaccineCardScreen> {
                         return VaccineItem(
                             title:
                                 "${vaccinesController.vaccinesFilterCard[index].vaccine?.name}",
-                            quantity: "${vaccinesController.vaccinesFilterCard[index].doseNumber}º dose",
+                            quantity: vaccinesController.vaccinesFilterCard[index].doseNumber == null ? "" : "${vaccinesController.vaccinesFilterCard[index].doseNumber}º dose",
                             date: "${date}",
                             city: "São Paulo",
                             status : "${vaccinesController.vaccinesFilterCard[index].status}");

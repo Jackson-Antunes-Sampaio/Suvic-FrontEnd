@@ -150,7 +150,7 @@ class _ProductCardScreenState extends State<ProductCardScreen> {
                                     .pagarMeModel.value.cardNumber ==
                                 null) {
                               keyScaffold.currentState?.showSnackBar(SnackBar(
-                                content: Text("Adicione um Cartãoo de Credito"),
+                                content: Text("Adicione um Cartão de Credito"),
                               ));
                             } else {
                               if (_keyForm.currentState!.validate()) {

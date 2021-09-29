@@ -51,8 +51,9 @@ class VaccineItem extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(width: 10,),
-                    Image.asset("assets/images/qrcode_suvic.png", height: 60, width: 60,)
+                    SizedBox(width: 20,),
+                    Icon(Icons.qr_code, size: 60,)
+                    //Image.asset("assets/images/qrcode_suvic.png", height: 60, width: 60,)
                   ],
                 ),
                 Align(

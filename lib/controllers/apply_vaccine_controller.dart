@@ -57,10 +57,14 @@ class ApplyVaccineController extends GetxController{
   Future<void> postApplyVaccine()async{
     stateApplyVaccine.value = StateApplyVaccine.LOADING;
     List<String> responses = [];
+
     for(var item in listvaccines){
       String date = "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2,'0')}-${DateTime.now().day.toString().padLeft(2,'0')}";
       String response = await vaccineRepository.postApplyVaccine(
           item.cpf!, date, item.vaccine!.name!, item.vaccine!.dose!, item.vaccine?.manufacturer);
+      responses.add(response);
+      String responseComplete = await vaccineRepository.postApplyVaccineComplete(item.cpf!, date, item.vaccine!.name!, item.slot!.toString(), false);
+      responses.add(responseComplete);
     }
     print(responses);
     listvaccines.value = [];

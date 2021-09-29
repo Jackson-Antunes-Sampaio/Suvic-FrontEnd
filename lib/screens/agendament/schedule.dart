@@ -8,6 +8,7 @@ import 'package:covid_19/controllers/credit_card_controller.dart';
 import 'package:covid_19/controllers/time_slot.dart';
 import 'package:covid_19/models/Clinic_model.dart';
 import 'package:covid_19/models/agendament_model.dart';
+import 'package:covid_19/models/page_manager.dart';
 import 'package:covid_19/models/stock_vacine_model.dart';
 import 'package:covid_19/models/time_slot.dart';
 import 'package:covid_19/routes/app_page.dart';
@@ -40,6 +41,7 @@ class _ScheduleState extends State<Schedule> {
   final TextEditingController vaccine = TextEditingController();
   final TextEditingController time = TextEditingController();
   final TextEditingController data = TextEditingController();
+  final PageManager pageManager = Get.find();
 
   var maskDate = new MaskTextInputFormatter(mask: '##-##-####');
   final oCcy = NumberFormat("R\$ #,##0.00", "en_US");
@@ -591,9 +593,11 @@ class _ScheduleState extends State<Schedule> {
               ));
               if (done == 0) {
                 flush.show(context);
-                Future.delayed(Duration(seconds: 3), () {
-                  Get.offAllNamed(Routes.BASE);
-                });
+                await Future.delayed(Duration(seconds: 3));
+                Get.back();
+                pageManager.indexNavigation.value = 0;
+                pageManager.pageController.jumpToPage(0);
+                //Get.offAllNamed(Routes.BASE);
               } else {
                 switch (res) {
                   case 1:
@@ -710,10 +714,12 @@ class _ScheduleState extends State<Schedule> {
         });
 
         if (res == 0) {
-          Future.delayed(Duration(seconds: 3), () {
-            Get.offAllNamed(Routes.BASE);
-          });
           flush.show(context);
+          await Future.delayed(Duration(seconds: 3));
+          Get.back();
+          pageManager.indexNavigation.value = 0;
+          pageManager.pageController.jumpToPage(0);
+          //Get.offAllNamed(Routes.BASE);
         } else {
           switch (res) {
             case 1:
