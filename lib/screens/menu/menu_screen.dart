@@ -6,6 +6,7 @@ import 'package:covid_19/screens/menu/components/header_menu.dart';
 import 'package:covid_19/screens/stock/stock_new.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:share/share.dart';
 
 class MenuScreen extends StatelessWidget {
   final UserController userController = Get.find();
@@ -113,6 +114,8 @@ class MenuScreen extends StatelessWidget {
                         ),
                       )
                     : Container(),
+
+
                 userController.user?.permissionLevel == "Applicator" ||
                         userController.user?.permissionLevel == "Admin" ||
                         userController.user?.permissionLevel == "Superadmin" ||
@@ -127,8 +130,18 @@ class MenuScreen extends StatelessWidget {
                             Get.toNamed(Routes.HISTORICVACCINE);
                           },
                         ),
-                      )
-                    : Container(),
+                      ):Container(),
+                Card(
+                  elevation: 4,
+                  child: ListTile(
+                    leading: Icon(Icons.share),
+                    title: Text('Compartilhar App com Amigos'),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: () {
+                      Share.share('Pessoal Olha que fantastico esse app, ele será nossa nova carteira de vacinação! https://suvic.com.br/download/', subject: 'Pessoal Olha que fantastico esse app, ele será nossa nova carteira de vacinação!');
+                    },
+                  ),
+                ),
                 Card(
                   elevation: 4,
                   child: ListTile(
