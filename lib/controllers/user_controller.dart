@@ -70,10 +70,15 @@ class UserController extends GetxController {
         "password" : pass,
         "birthdate" : date
       });
+
       message = response;
-      print("aquiii");
-      loading.value = false;
-      return true;
+      if(response == "Usuario criado com sucesso."){
+        loading.value = false;
+        return true;
+      }else{
+        loading.value = false;
+        return false;
+      }
 
     } catch (e) {
       print(e);
