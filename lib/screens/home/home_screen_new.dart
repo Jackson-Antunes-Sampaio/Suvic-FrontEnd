@@ -99,13 +99,24 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                   SizedBox(
                     height: 50,
                   ),
-                  Center(
-                    child: FloatingActionButton.extended(
-                        onPressed: () {
-                          Get.toNamed(Routes.OLDVACCINECARD);
-                        },
-                        label: Text("Seu Comprovante de Vacinação Covid-19")),
-                  )
+                  LayoutBuilder(
+                      builder: (context, constraints){
+                        print(constraints.biggest);
+                        return
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                            child: Center(
+                              child: FloatingActionButton.extended(
+                                backgroundColor: Theme.of(context).primaryColor,
+                                  onPressed: () {
+                                    Get.toNamed(Routes.OLDVACCINECARD);
+                                  },
+                                  label: Text("Seu Comprovante de Vacinação Covid-19",style: TextStyle(
+                                      fontSize:constraints.maxWidth >=400?20:12 ),)),
+                            ),
+
+                          );
+                      })
                 ],
               ),
             ),

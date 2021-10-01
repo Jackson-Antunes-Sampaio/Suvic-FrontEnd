@@ -326,8 +326,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 if(formKey.currentState!.validate()){
                   userController.user?.civilName = nameController.text;
                   userController.user?.email = emailController.text;
-                  int rg = int.parse(rgController.text.replaceAll(".", "").replaceAll("-", ""));
-                  userController.user?.rg = rg;
+                  if(rgController.text.isNotEmpty){
+                    int rg = int.parse(rgController.text.replaceAll(".", "").replaceAll("-", ""));
+                    userController.user?.rg = rg;
+                  }
+
                   String cpf = cpfController.text.replaceAll(".", "").replaceAll("-", "").replaceAll(" ", "");
                   userController.user?.cpf = cpf;
                   List listData = birthdateController.text.split("/");
