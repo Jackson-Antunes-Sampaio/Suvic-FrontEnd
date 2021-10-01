@@ -72,12 +72,15 @@ class PassaportController extends GetxController {
       ));
 
       loading = false;
-
+      Get.snackbar('Concluído', 'Imagem carregada com sucesso',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green,
+          colorText: Colors.white);
       update();
     } on PlatformException catch (e) {
       Get.snackbar('Erro', 'Não houve imagem selecionada',
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.red,
           colorText: Colors.white);
       print('Error pick Image: $e');
     }

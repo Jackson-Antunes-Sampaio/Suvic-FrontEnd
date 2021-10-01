@@ -63,7 +63,10 @@ class OldVaccinationCardController extends GetxController {
       await repository.insert(PassaportModel(
         documentFront: img64,
       ));
-
+      Get.snackbar('Concluído', 'Imagem carregada com sucesso',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green,
+          colorText: Colors.white);
       loading = false;
 
       update();
