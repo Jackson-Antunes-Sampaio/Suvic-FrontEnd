@@ -138,7 +138,7 @@ class MenuScreen extends StatelessWidget {
                     title: Text('Compartilhar App com Amigos'),
                     trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () {
-                      Share.share('Pessoal Olha que fantastico esse app, ele será nossa nova carteira de vacinação! https://suvic.com.br/download/', subject: 'Pessoal Olha que fantastico esse app, ele será nossa nova carteira de vacinação!');
+                      Share.share('Pessoal Olha que fantastico minha carteirinha de vacinação é digital! A sua também é? https://suvic.com.br/download/', subject: 'Pessoal Olha que fantastico esse app, ele será nossa nova carteira de vacinação!');
                     },
                   ),
                 ),
