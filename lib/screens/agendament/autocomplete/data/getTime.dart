@@ -1,4 +1,6 @@
-import 'package:covid_19/controllers/time_slot.dart';
+
+
+import 'package:suvic_app/controllers/time_slot.dart';
 
 class GetTimeScheld {
   static final List<Map<String, dynamic>> times = [];

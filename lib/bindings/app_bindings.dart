@@ -1,5 +1,6 @@
-import 'package:covid_19/controllers/user_controller.dart';
+
 import 'package:get/get.dart';
+import 'package:suvic_app/controllers/user_controller.dart';
 
 class AppBindings implements Bindings {
   @override

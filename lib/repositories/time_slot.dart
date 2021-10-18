@@ -1,10 +1,10 @@
-import 'package:covid_19/models/time_slot.dart';
-import 'package:covid_19/utils/constants.dart';
-import 'package:covid_19/utils/dio/custom_dio.dart';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:suvic_app/utils/constants.dart';
+import 'package:suvic_app/utils/dio/custom_dio.dart';
 
 class SlotTimesRepository {
   // Future<TimeSlotsModel?> getSlotsByClinic(id) async {

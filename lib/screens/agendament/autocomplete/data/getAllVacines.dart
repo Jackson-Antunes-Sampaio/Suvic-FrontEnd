@@ -1,5 +1,6 @@
-import 'package:covid_19/controllers/vaccine_controller.dart';
+
 import 'package:get/get.dart';
+import 'package:suvic_app/controllers/vaccine_controller.dart';
 
 class GetAllVacines {
   static Future<List<Map<String, String>>> getSuggestions(String query) async {

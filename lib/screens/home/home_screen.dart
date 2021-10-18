@@ -1,8 +1,8 @@
 import 'dart:ui';
-import 'package:covid_19/common/botton_navigation_bar/bottom_navigation_bar.dart';
-import 'package:covid_19/common/my_header_widget.dart';
-import 'package:covid_19/routes/app_page.dart';
-import 'package:covid_19/utils/styles/style.dart';
+import 'package:suvic_app/common/botton_navigation_bar/bottom_navigation_bar.dart';
+import 'package:suvic_app/common/my_header_widget.dart';
+import 'package:suvic_app/routes/app_page.dart';
+import 'package:suvic_app/utils/styles/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../info/info_screen.dart';

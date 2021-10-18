@@ -1,4 +1,4 @@
-import 'package:covid_19/screens/credit_card/components/text_form_field.dart';
+import 'package:suvic_app/screens/credit_card/components/text_form_field.dart';
 import 'package:flutter/material.dart';
 
 Widget autocompleVaccine() {

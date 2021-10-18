@@ -1,7 +1,7 @@
-import 'package:covid_19/common/my_header_widget.dart';
-import 'package:covid_19/screens/old_vaccination_card/old_vaccination_card.dart';
+import 'package:suvic_app/common/my_header_widget.dart';
+import 'package:suvic_app/screens/old_vaccination_card/old_vaccination_card.dart';
 import 'package:flutter/material.dart';
-import 'package:covid_19/routes/app_page.dart';
+import 'package:suvic_app/routes/app_page.dart';
 import 'package:get/get.dart';
 
 class OldVaccineCardScreen extends StatefulWidget {

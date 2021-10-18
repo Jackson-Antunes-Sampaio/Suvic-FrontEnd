@@ -1,9 +1,9 @@
-import 'package:covid_19/controllers/user_controller.dart';
-import 'package:covid_19/routes/app_page.dart';
-import 'package:covid_19/screens/agendament/scheduled.dart';
+import 'package:suvic_app/controllers/user_controller.dart';
+import 'package:suvic_app/routes/app_page.dart';
+import 'package:suvic_app/screens/agendament/scheduled.dart';
 
-import 'package:covid_19/screens/menu/components/header_menu.dart';
-import 'package:covid_19/screens/stock/stock_new.dart';
+import 'package:suvic_app/screens/menu/components/header_menu.dart';
+import 'package:suvic_app/screens/stock/stock_new.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share/share.dart';

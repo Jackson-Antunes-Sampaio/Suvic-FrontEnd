@@ -463,14 +463,14 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.covid19;
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.suvic;
 =======
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.suvicFrontendAntunes;
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.suvic;
 >>>>>>> 364b78f9302a7361a91f131984e32cd75b83fd96
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -625,14 +625,14 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.covid19;
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.suvic;
 =======
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.suvicFrontendAntunes;
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.suvic;
 >>>>>>> 364b78f9302a7361a91f131984e32cd75b83fd96
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -661,14 +661,14 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.covid19;
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.suvic;
 =======
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.suvicFrontendAntunes;
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.suvic;
 >>>>>>> 364b78f9302a7361a91f131984e32cd75b83fd96
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";

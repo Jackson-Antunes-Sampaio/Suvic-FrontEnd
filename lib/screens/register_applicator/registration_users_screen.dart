@@ -1,8 +1,8 @@
 import 'package:brasil_fields/brasil_fields.dart';
-import 'package:covid_19/common/botton_navigation_bar/bottom_navigation_bar_new.dart';
-import 'package:covid_19/common/button_custom.dart';
-import 'package:covid_19/common/text_fiel_custom.dart';
-import 'package:covid_19/controllers/register_applicator_controller.dart';
+import 'package:suvic_app/common/botton_navigation_bar/bottom_navigation_bar_new.dart';
+import 'package:suvic_app/common/button_custom.dart';
+import 'package:suvic_app/common/text_fiel_custom.dart';
+import 'package:suvic_app/controllers/register_applicator_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

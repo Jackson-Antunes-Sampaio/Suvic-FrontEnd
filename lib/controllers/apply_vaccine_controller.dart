@@ -1,7 +1,7 @@
-import 'package:covid_19/models/schedule_model.dart';
-import 'package:covid_19/models/vaccine_model.dart';
-import 'package:covid_19/repositories/vaccines_repository.dart';
 import 'package:get/get.dart';
+import 'package:suvic_app/models/schedule_model.dart';
+import 'package:suvic_app/models/vaccine_model.dart';
+import 'package:suvic_app/repositories/vaccines_repository.dart';
 
 enum StateApplyVaccine{IDLE, VACCINES, LOADING, ERROR, SUCCESS, EMPTY}
 

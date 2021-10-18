@@ -1,4 +1,4 @@
-import 'package:covid_19/common/icon_button_custom.dart';
+import 'package:suvic_app/common/icon_button_custom.dart';
 import 'package:flutter/material.dart';
 
 class Header extends StatelessWidget {

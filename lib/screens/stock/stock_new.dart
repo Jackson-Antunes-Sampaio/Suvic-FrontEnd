@@ -1,9 +1,9 @@
-import 'package:covid_19/controllers/StockController.dart';
-import 'package:covid_19/controllers/user_controller.dart';
-import 'package:covid_19/models/stock_vacine_model.dart';
-import 'package:covid_19/screens/stock/autocomplete/textFormField.dart';
-import 'package:covid_19/screens/stock/graphics/pie_chart.dart';
-import 'package:covid_19/utils/styles/style.dart';
+import 'package:suvic_app/controllers/StockController.dart';
+import 'package:suvic_app/controllers/user_controller.dart';
+import 'package:suvic_app/models/stock_vacine_model.dart';
+import 'package:suvic_app/screens/stock/autocomplete/textFormField.dart';
+import 'package:suvic_app/screens/stock/graphics/pie_chart.dart';
+import 'package:suvic_app/utils/styles/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';

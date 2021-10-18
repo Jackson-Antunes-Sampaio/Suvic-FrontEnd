@@ -1,7 +1,8 @@
-import 'package:covid_19/models/user_model.dart';
-import 'package:covid_19/repositories/user_repository.dart';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:suvic_app/models/user_model.dart';
+import 'package:suvic_app/repositories/user_repository.dart';
 
 class UserController extends GetxController {
   final UserRepository userRepository = UserRepository();

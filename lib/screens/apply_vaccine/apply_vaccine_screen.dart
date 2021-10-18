@@ -1,9 +1,9 @@
 import 'package:brasil_fields/brasil_fields.dart';
-import 'package:covid_19/common/button_custom.dart';
-import 'package:covid_19/controllers/apply_vaccine_controller.dart';
-import 'package:covid_19/controllers/user_controller.dart';
-import 'package:covid_19/screens/apply_vaccine/components/custom_expansion_tile.dart';
-import 'package:covid_19/screens/credit_card/components/text_form_field.dart';
+import 'package:suvic_app/common/button_custom.dart';
+import 'package:suvic_app/controllers/apply_vaccine_controller.dart';
+import 'package:suvic_app/controllers/user_controller.dart';
+import 'package:suvic_app/screens/apply_vaccine/components/custom_expansion_tile.dart';
+import 'package:suvic_app/screens/credit_card/components/text_form_field.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

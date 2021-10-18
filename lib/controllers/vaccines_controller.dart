@@ -1,6 +1,7 @@
-import 'package:covid_19/models/vacine_card_model.dart';
-import 'package:covid_19/repositories/vaccines_repository.dart';
+
 import 'package:get/get.dart';
+import 'package:suvic_app/models/vacine_card_model.dart';
+import 'package:suvic_app/repositories/vaccines_repository.dart';
 class VaccinesController extends GetxController{
 
 

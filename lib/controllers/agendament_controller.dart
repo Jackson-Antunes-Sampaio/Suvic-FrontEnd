@@ -1,7 +1,8 @@
-import 'package:covid_19/controllers/user_controller.dart';
-import 'package:covid_19/models/agendament_model.dart';
-import 'package:covid_19/repositories/agendament_repository.dart';
+
 import 'package:get/get.dart';
+import 'package:suvic_app/controllers/user_controller.dart';
+import 'package:suvic_app/models/agendament_model.dart';
+import 'package:suvic_app/repositories/agendament_repository.dart';
 
 class AgendamentController extends GetxController {
   var repository = AgendamentRepository();

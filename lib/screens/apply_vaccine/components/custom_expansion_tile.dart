@@ -1,4 +1,4 @@
-import 'package:covid_19/controllers/apply_vaccine_controller.dart';
+import 'package:suvic_app/controllers/apply_vaccine_controller.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

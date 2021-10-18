@@ -1,5 +1,5 @@
-import 'package:covid_19/common/icon_button_custom.dart';
-import 'package:covid_19/controllers/historic_vaccine_controller.dart';
+import 'package:suvic_app/common/icon_button_custom.dart';
+import 'package:suvic_app/controllers/historic_vaccine_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

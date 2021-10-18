@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:covid_19/utils/styles/style.dart';
+import 'package:suvic_app/utils/styles/style.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable

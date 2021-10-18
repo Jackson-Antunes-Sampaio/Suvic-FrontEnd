@@ -1,5 +1,5 @@
-import 'package:covid_19/models/stock_vacine_model.dart';
-import 'package:covid_19/utils/styles/style.dart';
+import 'package:suvic_app/models/stock_vacine_model.dart';
+import 'package:suvic_app/utils/styles/style.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';

@@ -1,8 +1,8 @@
-import 'package:covid_19/models/scheduledModel.dart';
-import 'package:covid_19/models/stock_vacine_model.dart';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:suvic_app/models/scheduledModel.dart';
 import 'indicator.dart';
 
 class PieChartScheduled extends StatefulWidget {

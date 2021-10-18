@@ -1,4 +1,4 @@
-import 'package:covid_19/controllers/StockController.dart';
+import 'package:suvic_app/controllers/StockController.dart';
 
 import 'package:get/get.dart';
 

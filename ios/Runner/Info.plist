@@ -16,7 +16,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-<<<<<<< HEAD
+	<string>Suvic</string>
 	<string>covid_19</string>
 =======
 	<string>suvic_frontend_antunes</string>

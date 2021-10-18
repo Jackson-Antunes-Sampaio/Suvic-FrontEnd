@@ -1,4 +1,4 @@
-package com.example.suvic_frontend_antunes
+package br.com.suvic.suvic_app
 
 import io.flutter.embedding.android.FlutterActivity
 

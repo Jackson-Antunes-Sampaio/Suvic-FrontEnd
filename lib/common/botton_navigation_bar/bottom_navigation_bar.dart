@@ -1,6 +1,7 @@
-import 'package:covid_19/models/page_manager.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:suvic_app/models/page_manager.dart';
 import 'custom_icon_navigation_bar.dart';
 
 

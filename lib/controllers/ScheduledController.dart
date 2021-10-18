@@ -1,6 +1,6 @@
-import 'package:covid_19/models/scheduledModel.dart';
-import 'package:covid_19/repositories/ScheduledRepository.dart';
 import 'package:get/get.dart';
+import 'package:suvic_app/models/scheduledModel.dart';
+import 'package:suvic_app/repositories/ScheduledRepository.dart';
 
 class ScheduledController extends GetxController {
   var repository = ScheduledRepository();

@@ -1,7 +1,7 @@
-import 'package:covid_19/controllers/agendamentController.dart';
-import 'package:covid_19/controllers/clinicController.dart';
-import 'package:covid_19/screens/agendament/schedule.dart';
-import 'package:covid_19/utils/styles/style.dart';
+import 'package:suvic_app/controllers/agendamentController.dart';
+import 'package:suvic_app/controllers/clinicController.dart';
+import 'package:suvic_app/screens/agendament/schedule.dart';
+import 'package:suvic_app/utils/styles/style.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';

@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:covid_19/controllers/passaport_controller.dart';
-import 'package:covid_19/utils/styles/style.dart';
+import 'package:suvic_app/controllers/passaport_controller.dart';
+import 'package:suvic_app/utils/styles/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -171,7 +171,7 @@ class Passaport extends StatelessWidget {
 
 // import 'dart:io';
 
-// import 'package:covid_19/controllers/passaport_controller.dart';
+// import 'package:suvic_app/controllers/passaport_controller.dart';
 // import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
 // import 'package:image_picker/image_picker.dart';

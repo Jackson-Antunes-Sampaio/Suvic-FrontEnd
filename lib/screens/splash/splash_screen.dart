@@ -1,9 +1,9 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:covid_19/controllers/user_controller.dart';
-import 'package:covid_19/routes/app_page.dart';
-import 'package:covid_19/screens/home/home_screen.dart';
-import 'package:covid_19/screens/login/login_screen.dart';
+import 'package:suvic_app/controllers/user_controller.dart';
+import 'package:suvic_app/routes/app_page.dart';
+import 'package:suvic_app/screens/home/home_screen.dart';
+import 'package:suvic_app/screens/login/login_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

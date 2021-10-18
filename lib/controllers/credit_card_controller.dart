@@ -1,6 +1,6 @@
-import 'package:covid_19/models/pagarme_model.dart';
-import 'package:covid_19/repositories/credit_card_repository.dart';
 import 'package:get/get.dart';
+import 'package:suvic_app/models/pagarme_model.dart';
+import 'package:suvic_app/repositories/credit_card_repository.dart';
 
 enum StateCreditCard { LOADING, FORMCARD, FORMDATA, SUCCESS, FAIL }
 enum StateProductCard { LOADING, IDL, SUCCESS, FAIL }

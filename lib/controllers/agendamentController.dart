@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'package:covid_19/models/Clinic_model.dart';
-import 'package:covid_19/repositories/clinicRepository.dart';
-import 'package:covid_19/screens/agendament/schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:suvic_app/models/Clinic_model.dart';
+import 'package:suvic_app/repositories/clinicRepository.dart';
+import 'package:suvic_app/screens/agendament/schedule.dart';
 
 class AgentamentController extends GetxController {
   final clinicsRepository = ClinicRepository();

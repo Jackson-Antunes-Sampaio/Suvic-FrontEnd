@@ -1,7 +1,7 @@
-import 'package:covid_19/common/icon_button_custom.dart';
-import 'package:covid_19/common/my_header_widget.dart';
-import 'package:covid_19/controllers/vaccines_controller.dart';
-import 'package:covid_19/screens/vaccine_card/components/vaccine_item.dart';
+import 'package:suvic_app/common/icon_button_custom.dart';
+import 'package:suvic_app/common/my_header_widget.dart';
+import 'package:suvic_app/controllers/vaccines_controller.dart';
+import 'package:suvic_app/screens/vaccine_card/components/vaccine_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

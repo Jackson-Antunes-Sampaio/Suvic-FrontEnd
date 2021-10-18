@@ -1,11 +1,12 @@
-import 'package:covid_19/models/scheduledModel.dart';
-import 'package:covid_19/models/user_model.dart';
-import 'package:covid_19/utils/constants.dart';
-import 'package:covid_19/utils/dio/custom_dio.dart';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:suvic_app/models/scheduledModel.dart';
+import 'package:suvic_app/models/user_model.dart';
+import 'package:suvic_app/utils/constants.dart';
+import 'package:suvic_app/utils/dio/custom_dio.dart';
 
 class ScheduledRepository {
   Future<List<ScheduledModel>> getAllScheduled() async {

@@ -1,10 +1,11 @@
-import 'package:covid_19/models/schedule_model.dart';
-import 'package:covid_19/models/vaccine_model.dart';
-import 'package:covid_19/models/vacine_card_model.dart';
-import 'package:covid_19/utils/constants.dart';
-import 'package:covid_19/utils/dio/custom_dio.dart';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:suvic_app/models/schedule_model.dart';
+import 'package:suvic_app/models/vaccine_model.dart';
+import 'package:suvic_app/models/vacine_card_model.dart';
+import 'package:suvic_app/utils/constants.dart';
+import 'package:suvic_app/utils/dio/custom_dio.dart';
 
 class VaccineRepository {
   Future<List<VaccineCardModel>> getVaccineCard() async {

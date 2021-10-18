@@ -1,8 +1,8 @@
-import 'package:covid_19/common/button_custom.dart';
-import 'package:covid_19/common/icon_button_custom.dart';
-import 'package:covid_19/common/text_fiel_custom.dart';
-import 'package:covid_19/controllers/credit_card_controller.dart';
-import 'package:covid_19/routes/app_page.dart';
+import 'package:suvic_app/common/button_custom.dart';
+import 'package:suvic_app/common/icon_button_custom.dart';
+import 'package:suvic_app/common/text_fiel_custom.dart';
+import 'package:suvic_app/controllers/credit_card_controller.dart';
+import 'package:suvic_app/routes/app_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

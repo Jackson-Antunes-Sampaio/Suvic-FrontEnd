@@ -1,5 +1,5 @@
-import 'package:covid_19/controllers/StockController.dart';
-import 'package:covid_19/models/stock_vacine_model.dart';
+import 'package:suvic_app/controllers/StockController.dart';
+import 'package:suvic_app/models/stock_vacine_model.dart';
 
 import 'package:get/get.dart';
 

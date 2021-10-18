@@ -1,6 +1,6 @@
 import 'package:brasil_fields/brasil_fields.dart';
-import 'package:covid_19/common/button_custom.dart';
-import 'package:covid_19/controllers/user_controller.dart';
+import 'package:suvic_app/common/button_custom.dart';
+import 'package:suvic_app/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

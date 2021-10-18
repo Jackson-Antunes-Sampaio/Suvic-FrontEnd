@@ -1,9 +1,9 @@
-import 'package:covid_19/models/stock_vacine_model.dart';
-import 'package:covid_19/models/vaccine_model.dart';
-import 'package:covid_19/utils/constants.dart';
-import 'package:covid_19/utils/dio/custom_dio.dart';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:suvic_app/models/stock_vacine_model.dart';
+import 'package:suvic_app/utils/constants.dart';
+import 'package:suvic_app/utils/dio/custom_dio.dart';
 
 class StockVacineRepository {
   final String service = 'clinics/storage/list';

@@ -1,4 +1,6 @@
-import 'package:covid_19/models/user_model.dart';
+
+
+import 'package:suvic_app/models/user_model.dart';
 
 class ScheduledModel {
   String? date;

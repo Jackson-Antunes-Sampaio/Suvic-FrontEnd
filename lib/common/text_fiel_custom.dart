@@ -1,7 +1,9 @@
-import 'package:covid_19/common/icon_button_custom.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
+
+import 'icon_button_custom.dart';
 
 class TextFieldCustom extends StatelessWidget {
   TextFieldCustom(

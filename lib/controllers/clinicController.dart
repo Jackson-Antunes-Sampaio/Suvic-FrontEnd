@@ -1,10 +1,11 @@
-import 'package:covid_19/models/Clinic_model.dart';
-import 'package:covid_19/models/stock_vacine_model.dart';
-import 'package:covid_19/models/user_model.dart';
-import 'package:covid_19/repositories/StockRepository.dart';
-import 'package:covid_19/repositories/clinicRepository.dart';
-import 'package:covid_19/repositories/user_repository.dart';
+
 import 'package:get/get.dart';
+import 'package:suvic_app/models/Clinic_model.dart';
+import 'package:suvic_app/models/stock_vacine_model.dart';
+import 'package:suvic_app/models/user_model.dart';
+import 'package:suvic_app/repositories/StockRepository.dart';
+import 'package:suvic_app/repositories/clinicRepository.dart';
+import 'package:suvic_app/repositories/user_repository.dart';
 
 class ClinicController extends GetxController {
   //Get User Repository

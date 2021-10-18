@@ -1,7 +1,8 @@
-import 'package:covid_19/models/historic_vaccine_model.dart';
-import 'package:covid_19/repositories/historic_vaccine_repository.dart';
+
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:suvic_app/models/historic_vaccine_model.dart';
+import 'package:suvic_app/repositories/historic_vaccine_repository.dart';
 
 
 enum StateHistoric {IDLE, LOADING}

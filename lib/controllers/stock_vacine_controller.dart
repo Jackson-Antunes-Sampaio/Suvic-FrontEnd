@@ -1,6 +1,7 @@
-import 'package:covid_19/models/stock_vacine_model.dart';
-import 'package:covid_19/repositories/stock_vacine_repository.dart';
+
 import 'package:get/get.dart';
+import 'package:suvic_app/models/stock_vacine_model.dart';
+import 'package:suvic_app/repositories/stock_vacine_repository.dart';
 
 class StockVacineController extends GetxController {
   var repository = StockVacineRepository();

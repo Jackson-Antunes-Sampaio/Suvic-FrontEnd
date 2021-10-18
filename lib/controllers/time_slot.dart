@@ -1,10 +1,10 @@
-import 'package:covid_19/models/priceVacine.dart';
-import 'package:covid_19/models/time_slot.dart';
-import 'package:covid_19/repositories/time_slot.dart';
-import 'package:covid_19/utils/styles/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:suvic_app/models/priceVacine.dart';
+import 'package:suvic_app/models/time_slot.dart';
+import 'package:suvic_app/repositories/time_slot.dart';
+import 'package:suvic_app/utils/styles/style.dart';
 
 class TimeSlotController extends GetxController {
   //user clinic

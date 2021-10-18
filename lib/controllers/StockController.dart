@@ -1,7 +1,8 @@
-import 'package:covid_19/models/priceVacine.dart';
-import 'package:covid_19/models/stock_vacine_model.dart';
-import 'package:covid_19/repositories/StockRepository.dart';
+
 import 'package:get/get.dart';
+import 'package:suvic_app/models/priceVacine.dart';
+import 'package:suvic_app/models/stock_vacine_model.dart';
+import 'package:suvic_app/repositories/StockRepository.dart';
 
 class StockController extends GetxController {
   //user clinic

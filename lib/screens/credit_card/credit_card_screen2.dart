@@ -1,10 +1,10 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:covid_19/common/button_custom.dart';
-import 'package:covid_19/controllers/credit_card_controller.dart';
-import 'package:covid_19/controllers/user_controller.dart';
-import 'package:covid_19/models/pagarme_model.dart';
-import 'package:covid_19/screens/credit_card/components/text_form_field.dart';
+import 'package:suvic_app/common/button_custom.dart';
+import 'package:suvic_app/controllers/credit_card_controller.dart';
+import 'package:suvic_app/controllers/user_controller.dart';
+import 'package:suvic_app/models/pagarme_model.dart';
+import 'package:suvic_app/screens/credit_card/components/text_form_field.dart';
 import 'package:credit_card_type_detector/credit_card_type_detector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

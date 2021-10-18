@@ -2,12 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:covid_19/models/passaport_model.dart';
-import 'package:covid_19/repositories/old_vaccination_card_repository.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:suvic_app/models/passaport_model.dart';
+import 'package:suvic_app/repositories/old_vaccination_card_repository.dart';
 
 class OldVaccinationCardController extends GetxController {
   var repository = OldVaccinationCardRepository();

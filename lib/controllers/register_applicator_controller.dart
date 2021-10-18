@@ -1,7 +1,6 @@
 
-
-import 'package:covid_19/repositories/register_applicator_repository.dart';
 import 'package:get/get.dart';
+import 'package:suvic_app/repositories/register_applicator_repository.dart';
 
 class RegisterApplicatorController extends GetxController{
   RxBool loading = false.obs;

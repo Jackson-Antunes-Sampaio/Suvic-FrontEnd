@@ -1,7 +1,8 @@
-import 'package:covid_19/models/page_manager.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+import 'package:suvic_app/models/page_manager.dart';
 
 class BottomNavigationBarNew extends StatefulWidget {
   @override

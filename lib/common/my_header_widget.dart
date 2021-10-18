@@ -1,6 +1,7 @@
 
-import 'package:covid_19/utils/styles/style.dart';
+
 import 'package:flutter/material.dart';
+import 'package:suvic_app/utils/styles/style.dart';
 //import 'package:flutter_svg/flutter_svg.dart';
 
 class MyHeader extends StatefulWidget {

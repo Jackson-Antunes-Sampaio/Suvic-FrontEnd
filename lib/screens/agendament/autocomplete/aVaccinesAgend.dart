@@ -1,7 +1,7 @@
-import 'package:covid_19/controllers/StockController.dart';
-import 'package:covid_19/controllers/clinicController.dart';
-import 'package:covid_19/models/stock_vacine_model.dart';
-import 'package:covid_19/screens/stock/autocomplete/data/getAllVacinesAgend.dart';
+import 'package:suvic_app/controllers/StockController.dart';
+import 'package:suvic_app/controllers/clinicController.dart';
+import 'package:suvic_app/models/stock_vacine_model.dart';
+import 'package:suvic_app/screens/stock/autocomplete/data/getAllVacinesAgend.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
