@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -30,9 +29,11 @@ class OldVaccinationCardController extends GetxController {
       var byteEnconde = resPassaport['data'];
       List<int> bytes = [];
 
-      byteEnconde.forEach((byte) {
-        bytes.add(byte);
-      });
+      if (byteEnconde != null) {
+        byteEnconde.forEach((byte) {
+          bytes.add(byte);
+        });
+      }
 
       if (bytes.isNotEmpty) {
         imageByte = base64Decode(utf8.decode(bytes));

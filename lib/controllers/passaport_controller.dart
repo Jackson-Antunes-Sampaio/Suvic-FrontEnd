@@ -8,7 +8,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:suvic_app/models/passaport_model.dart';
 import 'package:suvic_app/repositories/passaport_repository.dart';
 
-
 class PassaportController extends GetxController {
   var repository = PassaportRepository();
   File? image;
@@ -29,9 +28,11 @@ class PassaportController extends GetxController {
       var byteEnconde = resPassaport['data'];
       List<int> bytes = [];
 
-      byteEnconde.forEach((byte) {
-        bytes.add(byte);
-      });
+      if (byteEnconde != null) {
+        byteEnconde.forEach((byte) {
+          bytes.add(byte);
+        });
+      }
 
       if (bytes.isNotEmpty) {
         imageByte = base64Decode(utf8.decode(bytes));
