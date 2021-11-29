@@ -16,6 +16,7 @@ class PieChart2State extends State {
   PieChart2State({required this.vaccines});
   final List<StockVacineModel> vaccines;
   int touchedIndex = -1;
+  var colors = [kPrimaryColor, Colors.green, Colors.blue, Colors.orange];
 
   @override
   Widget build(BuildContext context) {
@@ -62,44 +63,31 @@ class PieChart2State extends State {
             const SizedBox(
               height: 90,
             ),
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                Indicator(
-                  color: kPrimaryColor,
-                  text: vaccines[0].name,
-                  isSquare: true,
-                ),
-                SizedBox(
-                  height: 4,
-                ),
-                Indicator(
-                  color: Colors.green,
-                  text: vaccines[1].name,
-                  isSquare: true,
-                ),
-                SizedBox(
-                  height: 4,
-                ),
-                Indicator(
-                  color: Colors.blue,
-                  text: vaccines[2].name,
-                  isSquare: true,
-                ),
-                SizedBox(
-                  height: 4,
-                ),
-                Indicator(
-                  color: Colors.orange,
-                  text: vaccines[3].name,
-                  isSquare: true,
-                ),
-                SizedBox(
-                  height: 18,
-                ),
-              ],
+            SizedBox(
+              width: double.maxFinite,
+              height: 130,
+              child: ListView.builder(
+                  itemCount: vaccines.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Indicator(
+                          color: colors[index],
+                          text: vaccines[index].name,
+                          isSquare: true,
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                      ],
+                    );
+                  }),
+            ),
+            SizedBox(
+              height: 18,
             ),
             const SizedBox(
               width: 0,
@@ -111,69 +99,29 @@ class PieChart2State extends State {
   }
 
   List<PieChartSectionData> showingSections() {
-    int totalqty = vaccines[0].quantidade +
-        vaccines[1].quantidade +
-        vaccines[2].quantidade +
-        vaccines[3].quantidade;
+    int totalqty = 0;
+    //total
+    for (var item in vaccines) {
+      totalqty = totalqty + item.quantidade;
+    }
 
-    var total1 = ((vaccines[0].quantidade / totalqty) * 100).toStringAsFixed(2);
-    var total2 = ((vaccines[1].quantidade / totalqty) * 100).toStringAsFixed(2);
-    var total3 = ((vaccines[2].quantidade / totalqty) * 100).toStringAsFixed(2);
-    var total4 = ((vaccines[3].quantidade / totalqty) * 100).toStringAsFixed(2);
-
-    // print('tota:' + total1);
-    return List.generate(4, (i) {
+    return List.generate(vaccines.length, (i) {
       final isTouched = i == touchedIndex;
       final fontSize = isTouched ? 25.0 : 16.0;
       final radius = isTouched ? 60.0 : 165.0;
-      switch (i) {
-        case 0:
-          return PieChartSectionData(
-            color: kPrimaryColor,
-            value: double.parse(total1),
-            title: '$total1%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-          );
-        case 1:
-          return PieChartSectionData(
-            color: Colors.green,
-            value: double.parse(total2),
-            title: '$total2%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-          );
-        case 2:
-          return PieChartSectionData(
-            color: Colors.blue,
-            value: double.parse(total3),
-            title: '$total3%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-          );
-        case 3:
-          return PieChartSectionData(
-            color: Colors.orange,
-            value: double.parse(total4),
-            title: '$total4%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-          );
-        default:
-          throw Error();
-      }
+      var total =
+          ((vaccines[i].quantidade / totalqty) * 100).toStringAsFixed(2);
+
+      return PieChartSectionData(
+        color: colors[i],
+        value: double.parse(total),
+        title: '$total%',
+        radius: radius,
+        titleStyle: TextStyle(
+            fontSize: fontSize,
+            fontWeight: FontWeight.bold,
+            color: const Color(0xffffffff)),
+      );
     });
   }
 }

@@ -1,3 +1,4 @@
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:suvic_app/controllers/StockController.dart';
 import 'package:suvic_app/controllers/user_controller.dart';
 import 'package:suvic_app/models/stock_vacine_model.dart';
@@ -39,7 +40,7 @@ class _StockState extends State<Stock> {
         initialIndex: 1,
         child: Scaffold(
           appBar: AppBar(
-            toolbarHeight: 74,
+            toolbarHeight: 4,
             automaticallyImplyLeading: false,
             backgroundColor: kPrimaryColor,
             bottom: TabBar(indicatorColor: Colors.white, tabs: [
@@ -86,7 +87,7 @@ class _StockState extends State<Stock> {
     final oCcy = NumberFormat("R\$ #,##0.00", "en_US");
 
     return vacines.length == 0
-        ? Center(child: Text('Sem vacina em Stock'))
+        ? Center(child: Text('Sem vacina em estoque'))
         : Padding(
             padding: const EdgeInsets.all(10.0),
             child: ListView.builder(
@@ -168,7 +169,7 @@ class _StockState extends State<Stock> {
   }
 
   Widget dashbaordTabPage(StockController controller) {
-    return controller.vaccineInChart.length == 4
+    return controller.vaccineInChart.isNotEmpty
         ? Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
@@ -177,8 +178,38 @@ class _StockState extends State<Stock> {
               child: PieChartStock(vaccines: controller.vaccineInChart),
             ),
           )
-        : Center(
-            child: Text('Stock de Vacinas'),
+        : Padding(
+            padding: const EdgeInsets.only(top: 90, left: 10, right: 10),
+            child: Column(
+              children: [
+                SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: CircleAvatar(
+                    child: Icon(
+                      FontAwesomeIcons.barcode,
+                      size: 45,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Estoque',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: kPrimaryColor,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                Text(
+                  'Adicione cada produto que está no seu estoque, sua produção ou seus produtos para revenda. Você definirá o lote, data de validade, valor de venda e quantidade de estoque de cada produto.',
+                  textAlign: TextAlign.center,
+                )
+              ],
+            ),
           );
   }
 
