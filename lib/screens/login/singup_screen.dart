@@ -22,6 +22,7 @@ class _SingUpState extends State<SingUp> {
   final TextEditingController passController = TextEditingController();
   final TextEditingController confirmPassController = TextEditingController();
   final TextEditingController birthdateController = TextEditingController();
+  String? sexController;
   final UserController userController = UserController();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -98,6 +99,43 @@ class _SingUpState extends State<SingUp> {
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
+                child: labelText('Sexo:'),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(16, 3, 16, 6),
+                child: DropdownButton<String>(
+                  hint: Text("Selecione uma opção"),
+                  value: sexController,
+                  elevation: 16,
+                  isExpanded: true,
+                  //style: const TextStyle(color: Colors.deepPurple),
+                  underline: Container(
+                    height: 1,
+                    color: Colors.transparent,
+                  ),
+                  onChanged: (newValue) {
+                    setState(() {
+                      sexController = newValue;
+                    });
+                  },
+                  items: ["M", "F", "Não especificado"]
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value == "M"
+                          ? "Masculino"
+                          : value == "F"
+                              ? "Feminino"
+                              : value),
+                    );
+                  }).toList(),
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
                 child: labelText('Senha:'),
               ),
               InputTextField(
@@ -128,36 +166,42 @@ class _SingUpState extends State<SingUp> {
                   );
                 } else {
                   return ButtonCustom(
-                    onPressed: () async{
+                    onPressed: () async {
                       print("começo");
                       bool status = await userController.singUp(
-                              nameController.text,
-                              emailController.text,
-                              cpfController.text,
-                              passController.text,
-                              confirmPassController.text,
-                              birthdateController.text);
+                          nameController.text,
+                          emailController.text,
+                          cpfController.text,
+                          passController.text,
+                          confirmPassController.text,
+                          birthdateController.text,
+                          sexController == "Não especificado" ? "NS" : sexController
+                      );
                       if (status) {
                         print("foi ${status}");
-                        scaffoldKey.currentState?.showSnackBar(SnackBar(
-                            content: Text("${userController.message}")));
+                        scaffoldKey.currentState?.showSnackBar(
+                          SnackBar(
+                            content: Text("${userController.message}"),
+                          ),
+                        );
                         await Future.delayed(Duration(seconds: 2));
                         nameController.text = "";
-                      emailController.text= "";
-                      cpfController.text= "";
-                      passController.text= "";
-                      confirmPassController.text= "";
-                      birthdateController.text= "";
+                        emailController.text = "";
+                        cpfController.text = "";
+                        passController.text = "";
+                        confirmPassController.text = "";
+                        birthdateController.text = "";
                         Get.back();
-
                       } else {
-                        print("não foi${status}");
-                        scaffoldKey.currentState?.showSnackBar(SnackBar(
-                          content: Text(
-                            "${userController.message}",
+                        print("não foi ${status}");
+                        scaffoldKey.currentState?.showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              "${userController.message}",
+                            ),
+                            backgroundColor: Colors.red,
                           ),
-                          backgroundColor: Colors.red,
-                        ));
+                        );
                       }
                     },
                     title: "Cadastra-se",

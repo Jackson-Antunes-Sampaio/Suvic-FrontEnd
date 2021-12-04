@@ -108,11 +108,24 @@ class _VaccineCardScreenState extends State<VaccineCardScreen> {
               ],
             ),
             Obx(() {
-              return vaccinesController.loading.value
-                  ? Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : ListView.builder(
+              if(vaccinesController.loading.value){
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }else{
+                if(vaccinesController.vaccinesFilterCard.isEmpty){
+                  return Column(
+                    children: [
+                      SizedBox(height: 30,),
+                      Padding(padding: EdgeInsets.symmetric(horizontal: 20), child:
+                      Text('''Caro usuário, nesse espaço estará presente todo seu histórico de vacinas, em um primeiro momento constarão todas vacinas que realizar diretamente pelo nosso app, estamos trabalhando para em pouco tempo trazer todas suas vacinas realizadas no SUS também, muita facilidade né? adeus carteirinha de papel!
+                      ''',
+                        textAlign: TextAlign.center,
+                      ),),
+                    ],
+                  );
+                }else{
+                  return ListView.builder(
                       shrinkWrap: true,
                       physics: new NeverScrollableScrollPhysics(),
                       itemCount: vaccinesController.vaccinesFilterCard.length,
@@ -138,12 +151,15 @@ class _VaccineCardScreenState extends State<VaccineCardScreen> {
 
                         return VaccineItem(
                             title:
-                                "${vaccinesController.vaccinesFilterCard[index].vaccine?.name}",
+                            "${vaccinesController.vaccinesFilterCard[index].vaccine?.name}",
                             quantity: vaccinesController.vaccinesFilterCard[index].doseNumber == null ? "" : "${vaccinesController.vaccinesFilterCard[index].doseNumber}º dose",
                             date: "${date}",
                             city: "São Paulo",
                             status : "${vaccinesController.vaccinesFilterCard[index].status}");
                       });
+
+                }
+              }
             }),
             SizedBox(height: 10,)
           ],
