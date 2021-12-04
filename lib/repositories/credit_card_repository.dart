@@ -22,7 +22,13 @@ class CreditCardRepository {
 
       print("Response: ${response.statusCode}");
 
-      return response.data.toString();
+      if(response.statusCode == 200){
+        return response.data.toString();
+      }else{
+        return Future.error("error");
+      }
+
+
     }catch(e){
       print("ERRO ${e}");
       return Future.error("error");
