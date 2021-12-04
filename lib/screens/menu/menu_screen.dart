@@ -21,12 +21,13 @@ class MenuScreen extends StatelessWidget {
             email: '${userController.user?.civilName ?? '-'}',
             offset: 0,
           ),
+          userController.user?.permissionLevel == "Overseer"?
           TextButton(
             onPressed: () {
               Get.toNamed(Routes.PROFILE);
             },
             child: Text("Editar perfil"),
-          ),
+          ):Container(),
           Padding(
             padding: EdgeInsets.only(top: 20, left: 10, right: 10),
             child: Column(
