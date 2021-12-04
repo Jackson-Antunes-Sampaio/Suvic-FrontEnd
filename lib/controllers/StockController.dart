@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 import 'package:suvic_app/models/priceVacine.dart';
 import 'package:suvic_app/models/stock_vacine_model.dart';
@@ -82,7 +81,6 @@ class StockController extends GetxController {
     var getvaccinesStock = await repository.getStockVaccine();
 
     if (getvaccinesStock.isNotEmpty) {
-      // print(getvaccinesStock);
       getvaccinesStock.forEach((vaccine) {
         var name;
         if (vaccine['vaccine'] == null) {
@@ -118,7 +116,6 @@ class StockController extends GetxController {
     var getvaccinesStock = await repository.getStockVaccineByIdClinic(idClinic);
 
     if (getvaccinesStock.isNotEmpty) {
-      // print(getvaccinesStock);
       vaccineInStock.clear();
 
       getvaccinesStock.forEach((vaccine) {
@@ -182,22 +179,17 @@ class StockController extends GetxController {
     update();
   }
 
-  // insertPrice(PriceVacine price) {
-  //   repository.insertPrice(price);
-  //   priceVaccine.add(price);
-  //   update();
-  // }
-
   getFourMoreVaccines() {
     vaccineInChart.clear();
     var vacineS = vaccineInStock;
-    if (vacineS.isNotEmpty && vacineS.length > 4) {
-      vacineS.sort((a, b) => b.quantidade.compareTo(a.quantidade));
-
-      //clear older vaccines
-      vaccineInChart.clear();
-      for (var x = 0; x < 4; x++) {
-        vaccineInChart.add(vacineS[x]);
+    // order desc by quantity
+    vacineS.sort((a, b) => b.quantidade.compareTo(a.quantidade));
+    //clear older vaccines
+    vaccineInChart.clear();
+    //add new vaccine
+    for (var item in vacineS) {
+      if (vaccineInChart.length <= 4) {
+        vaccineInChart.add(item);
       }
     }
   }
