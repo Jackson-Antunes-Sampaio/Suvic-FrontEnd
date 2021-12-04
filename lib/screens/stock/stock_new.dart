@@ -40,7 +40,7 @@ class _StockState extends State<Stock> {
         initialIndex: 1,
         child: Scaffold(
           appBar: AppBar(
-            toolbarHeight: 4,
+            toolbarHeight: 74,
             automaticallyImplyLeading: false,
             backgroundColor: kPrimaryColor,
             bottom: TabBar(indicatorColor: Colors.white, tabs: [
