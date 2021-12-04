@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:suvic_app/common/my_header_widget.dart';
+import 'package:suvic_app/controllers/user_controller.dart';
 import 'package:suvic_app/models/page_manager.dart';
 import 'package:suvic_app/routes/app_page.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class HomeScreenNew extends StatefulWidget {
 class _HomeScreenNewState extends State<HomeScreenNew> {
   final controller = ScrollController();
   final PageManager pageManager = Get.find();
+  final userController = Get.put(UserController());
   double offset = 0;
 
   @override
@@ -99,6 +101,7 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                   SizedBox(
                     height: 50,
                   ),
+                  userController.user?.permissionLevel == "Overseer"?
                   LayoutBuilder(
                       builder: (context, constraints){
                         print(constraints.biggest);
@@ -111,12 +114,13 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                                   onPressed: () {
                                     Get.toNamed(Routes.OLDVACCINECARD);
                                   },
-                                  label: Text("Seu Comprovante de Vacinação Covid-19",style: TextStyle(
+                                  label:
+                                  Text("Seu Comprovante de Vacinação Covid-19",style: TextStyle(
                                       fontSize:constraints.maxWidth >=400?20:12 ),)),
                             ),
 
                           );
-                      })
+                      }):Container()
                 ],
               ),
             ),
