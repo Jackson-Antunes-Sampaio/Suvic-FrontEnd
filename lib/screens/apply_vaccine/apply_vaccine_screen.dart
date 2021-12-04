@@ -134,7 +134,24 @@ class _ApplyVaccineScreenState extends State<ApplyVaccineScreen> {
                           }
                         }),
                     SizedBox(height: 30,),
-                    Image.asset("assets/images/clinic.jpeg"),
+                    SizedBox(
+                        height: 300,
+                        width: 180,
+                        child: Image.asset("assets/images/clinic.jpeg")),
+                    Container(
+
+                      child:
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('1- Digite o cpf do paciente que vai realizar a vacina.'),
+                          Text('2- Após digite todos os campos necessários, não deixe nenhuma em branco.'),
+                          Text('3- Após conferir todos os dados, confirme.'),
+                          Text('4- Pronto, o paciente irá receber em sua carteirinha a vacina que realizou.')
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
