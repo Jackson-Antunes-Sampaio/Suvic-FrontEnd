@@ -25,7 +25,7 @@ class PassaportController extends GetxController {
     var resPassaport = await repository.getpassaport();
 
     if (resPassaport != null) {
-      var byteEnconde = resPassaport['data'];
+      var byteEnconde = resPassaport['covidPassport']['data'];
       List<int> bytes = [];
 
       if (byteEnconde != null) {

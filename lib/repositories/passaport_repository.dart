@@ -15,7 +15,7 @@ class PassaportRepository {
 
       dio!.options.headers["Cookie"] = token;
       final response = await dio.get(API_URL + "users/images/covidPassport");
-
+      print('RESULTADO DO RESPONSE AO FAZER O GET COVIDPASS ===>${response.data}');
       return response.data;
     } catch (e) {
       print(e);
@@ -35,8 +35,8 @@ class PassaportRepository {
       };
 
       final response = await dio.post(API_URL + "users/images", data: map);
-
-      return response.data['message'];
+      print('RESULTADO DO RESPONSE AO FAZER O POST COVIDPASS ===>${response.data}');
+      return response.data;
     } catch (e) {
       print(e);
       return Future.error("Não foi possível realizar está operação!");

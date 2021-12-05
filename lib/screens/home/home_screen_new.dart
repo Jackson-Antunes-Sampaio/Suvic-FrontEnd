@@ -101,7 +101,12 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                   SizedBox(
                     height: 50,
                   ),
-                  userController.user?.permissionLevel == "Overseer"?
+
+                  userController.user?.permissionLevel == "Applicator" ||
+                      userController.user?.permissionLevel == "Oversser" ||
+                      userController.user?.permissionLevel == "Admin" ||
+                      userController.user?.permissionLevel == "Superadmin"
+                  ?Container():
                   LayoutBuilder(
                       builder: (context, constraints){
                         print(constraints.biggest);
@@ -120,7 +125,7 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                             ),
 
                           );
-                      }):Container()
+                      })
                 ],
               ),
             ),

@@ -22,11 +22,13 @@ class OldVaccinationCardController extends GetxController {
   }
 
   getOldVaccinationCard() async {
+    print('GET CARTEIRA ANTIGA');
     loading = true;
     var resPassaport = await repository.getCard();
 
     if (resPassaport != null) {
-      var byteEnconde = resPassaport['data'];
+      var byteEnconde = resPassaport['paperCard']['data'];
+      print('RESPONSE ===>${resPassaport['paperCard']['data']}');
       List<int> bytes = [];
 
       if (byteEnconde != null) {
@@ -37,6 +39,7 @@ class OldVaccinationCardController extends GetxController {
 
       if (bytes.isNotEmpty) {
         imageByte = base64Decode(utf8.decode(bytes));
+        print('SUCESSO ImageByte $imageByte');
       }
     }
     loading = false;
@@ -45,13 +48,16 @@ class OldVaccinationCardController extends GetxController {
   }
 
   Future pickImage(ImageSource source) async {
+    print('INICIANDO PICKIMAGE');
+    print('SOURCE RECEBIDO ====> $source');
     try {
       loading = true;
 
       final image = await ImagePicker().pickImage(source: source);
-      if (image == null) return;
+      print('IMAGE ===> $image');
+      //if (image == null) return;
 
-      final imageTemporary = File(image.path);
+      final imageTemporary = File(image!.path);
       this.image = imageTemporary;
 
       imageByte = null;
@@ -60,7 +66,7 @@ class OldVaccinationCardController extends GetxController {
       final bytes = File(image.path).readAsBytesSync();
       var utf8s = bytes.toList();
       String img64 = base64Encode(utf8s);
-
+      print('IMAGE BASE 64 ====> $img64');
       //insert
       await repository.insert(PassaportModel(
         documentFront: img64,
