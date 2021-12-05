@@ -15,7 +15,7 @@ class OldVaccinationCardRepository {
 
       dio!.options.headers["Cookie"] = token;
       final response = await dio.get(API_URL + "users/images/paperCard");
-
+      print('MENSAGEM DE RETORNO AO CAPTURAR IMAGEM ====> ${response.data}');
       return response.data;
     } catch (e) {
       print(e);
@@ -35,7 +35,7 @@ class OldVaccinationCardRepository {
       };
 
       final response = await dio.post(API_URL + "users/images", data: map);
-
+      print('MENSAGEM DE RETORNO AO ENVIAR IMAGEM ====> ${response.data['message']}');
       return response.data['message'];
     } catch (e) {
       print(e);
