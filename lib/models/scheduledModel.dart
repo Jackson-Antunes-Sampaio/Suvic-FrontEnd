@@ -1,12 +1,10 @@
-
-
 import 'package:suvic_app/models/user_model.dart';
 
 class ScheduledModel {
   String? date;
   String? updatedAt;
   int? slot;
-  double? time;
+  String? time;
   UserModel? user;
   String? status;
 
