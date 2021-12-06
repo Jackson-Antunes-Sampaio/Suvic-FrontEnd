@@ -53,6 +53,35 @@ class VaccinesController extends GetxController{
     loading.value = false;
   }
 
+   statusToUser(String status){
+    switch(status) {
+      case 'scheduled': {
+         return  'agendado';
+      }
+      case 'awaitingCommit': {
+       return 'realizado';
+      }
+      case 'late': {
+        return 'atrasado';
+      }
+      case 'latePaid': {
+        return 'Atrasado pago';
+      }
+      case 'complete': {
+        return 'realizado';
+      }
+      case 'scheduledPaid': {
+        return 'Agendado pago';
+      }
+      case 'canceledPaid': {
+        return 'Cancelado pago';
+      }
+      default: {
+       return 'Desconhecido/aguardando';
+      }
+    }
+  }
+
 
 }
 

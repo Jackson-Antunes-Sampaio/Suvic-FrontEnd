@@ -25,12 +25,14 @@ class ScheduledRepository {
           scheduleds.add(ScheduledModel(
             date: scheduled['date'] ?? '',
             updatedAt: scheduled['updatedAt'] ?? '',
+           // time:scheduled['time'],
             slot: scheduled['slot'],
             status: scheduled['status'],
             user: UserModel.fromJson(scheduled['user']),
           ));
         });
       }
+      //print('O TIME ESTA RETORNANDO ====>${response.data['time'].toString()}');
       return scheduleds;
     } catch (e) {
       Get.snackbar(

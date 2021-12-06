@@ -155,7 +155,7 @@ class _VaccineCardScreenState extends State<VaccineCardScreen> {
                             quantity: vaccinesController.vaccinesFilterCard[index].doseNumber == null ? "" : "${vaccinesController.vaccinesFilterCard[index].doseNumber}º dose",
                             date: "${date}",
                             city: "São Paulo",
-                            status : "${vaccinesController.vaccinesFilterCard[index].status}");
+                            status : vaccinesController.statusToUser("${vaccinesController.vaccinesFilterCard[index].status}"));
                       });
 
                 }
