@@ -2,7 +2,6 @@ import 'package:suvic_app/controllers/ScheduledController.dart';
 import 'package:suvic_app/controllers/StockController.dart';
 import 'package:suvic_app/controllers/user_controller.dart';
 import 'package:suvic_app/models/stock_vacine_model.dart';
-import 'package:suvic_app/repositories/ScheduledRepository.dart';
 import 'package:suvic_app/screens/agendament/graphics/pie_chart.dart';
 import 'package:suvic_app/utils/styles/style.dart';
 import 'package:flutter/material.dart';
@@ -216,20 +215,18 @@ class _ScheduledState extends State<Scheduled> {
   }
 
   Widget dashbaordTabPage(ScheduledController controller) {
-    return
-        // controller.vaccineInChart.length == 4
-        //     ?
-        Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        width: double.maxFinite,
-        height: 600,
-        child: PieChartScheduled(scheduleds: controller.scheduleds),
-      ),
-    );
-    // : Center(
-    //     child: Text('Stock de Vacinas'),
-    //   );
+    return controller.scheduleds.length > 0
+        ? Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              width: double.maxFinite,
+              height: 600,
+              child: PieChartScheduled(scheduleds: controller.scheduleds),
+            ),
+          )
+        : Center(
+            child: Text('Agendados'),
+          );
   }
 
   Widget agendamentPendent(ScheduledController controller) {
