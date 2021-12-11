@@ -143,6 +143,9 @@ class _SingUpState extends State<SingUp> {
                 hintText: "*******",
                 obscureText: true,
               ),
+              Align(
+                  alignment: Alignment.centerRight,
+                  child: Text('Minimo de 8 digitos',style: TextStyle(fontSize: 10),)),
               SizedBox(
                 height: 5,
               ),
@@ -155,6 +158,9 @@ class _SingUpState extends State<SingUp> {
                 hintText: "*******",
                 obscureText: true,
               ),
+              Align(
+                  alignment: Alignment.centerRight,
+                  child: Text('Minimo de 8 digitos',style: TextStyle(fontSize: 10),)),
               SizedBox(
                 height: 20,
               ),
