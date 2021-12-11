@@ -24,9 +24,10 @@ class OldVaccinationCardController extends GetxController {
   getOldVaccinationCard() async {
     print('GET CARTEIRA ANTIGA');
     loading = true;
+    //loading = false;
     var resPassaport = await repository.getCard();
-
-    if (resPassaport != null) {
+     print('RESULTADO DE RESPASSAPORT ${resPassaport.toString()}');
+    if (resPassaport['paperCard'] != null) {
       var byteEnconde = resPassaport['paperCard']['data'];
       print('RESPONSE ===>${resPassaport['paperCard']['data']}');
       List<int> bytes = [];
@@ -42,7 +43,7 @@ class OldVaccinationCardController extends GetxController {
         print('SUCESSO ImageByte $imageByte');
       }
     }
-    loading = false;
+      loading = false;
 
     update();
   }
