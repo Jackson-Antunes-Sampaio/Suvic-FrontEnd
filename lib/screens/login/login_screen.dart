@@ -134,7 +134,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                         content: Text('$response'),
                                         backgroundColor: Colors.red,
                                       );
-                                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackBar);
                                     }
                                   }
                                 },
@@ -173,41 +174,38 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      LoginSocialMediaBtn(
-                        icon: FontAwesomeIcons.facebookF,
-                        color: facebookColor,
-                        onPress: (){
-                          final snackBar = SnackBar(
-                            content: Text('Em manutenção'),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        }
+                      InkWell(
+                        child: LoginSocialMediaBtn(
+                            icon: FontAwesomeIcons.facebookF,
+                            color: facebookColor,
+                            onPress: () {
+                              Get.toNamed(Routes.FACEBOOK);
+                            }),
                       ),
                       SizedBox(
                         width: 16,
                       ),
-                      LoginSocialMediaBtn(
-                        onPress: (){
-                          final snackBar = SnackBar(
-                            content: Text('Em manutenção'),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        },
-                        icon: FontAwesomeIcons.google,
-                        color: googleColor,
+                      InkWell(
+                        child: LoginSocialMediaBtn(
+                          onPress: () {
+                            Get.toNamed(Routes.INSTAGRAM);
+                          },
+                          icon: FontAwesomeIcons.instagram,
+                          color: instagramColor,
+                        ),
                       ),
                       SizedBox(
                         width: 16,
                       ),
-                      LoginSocialMediaBtn(
-                        onPress: (){
-                          final snackBar = SnackBar(
-                            content: Text('Em manutenção'),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        },
-                        icon: FontAwesomeIcons.twitter,
-                        color: twitterColor,
+                      InkWell(
+
+                        child: LoginSocialMediaBtn(
+                          onPress: () {
+                           Get.toNamed(Routes.YOUTUBE);
+                           },
+                          icon: FontAwesomeIcons.youtube,
+                          color: youTubeColor,
+                        ),
                       ),
                     ],
                   ),

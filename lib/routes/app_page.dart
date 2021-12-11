@@ -20,6 +20,9 @@ import 'package:suvic_app/screens/register_applicator/registration_users_screen.
 import 'package:suvic_app/screens/splash/splash_screen.dart';
 import 'package:suvic_app/screens/stock/stock_new.dart';
 import 'package:suvic_app/screens/vaccine_card/vaccine_card_screen.dart';
+import 'package:suvic_app/screens/webview_suvic/webView_faceBook.dart';
+import 'package:suvic_app/screens/webview_suvic/webView_instragram.dart';
+import 'package:suvic_app/screens/webview_suvic/webView_youTube.dart';
 import 'package:suvic_app/screens/webview_suvic/webview_suvic_screen.dart';
 
 part 'app_routes.dart';
@@ -108,6 +111,18 @@ class AppPage {
     GetPage(
       name: Routes.PASSAPORT,
       page: () => Passaport(),
+    ),
+    GetPage(
+      name: Routes.FACEBOOK,
+      page: () => WebViewSuvicFaceBook(),
+    ),
+    GetPage(
+      name: Routes.INSTAGRAM,
+      page: () => WebViewSuvicInstagram(),
+    ),
+    GetPage(
+      name: Routes.YOUTUBE,
+      page: () => WebViewSuvicYouTube(),
     ),
   ];
 }
