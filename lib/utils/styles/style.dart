@@ -14,6 +14,8 @@ final kActiveShadowColor = Color(0xFF4056C6).withOpacity(.15);
 Color facebookColor = Color(0xFF416BC1);
 Color googleColor = Color(0xFFCF4333);
 Color twitterColor = Color(0xFF08A0E9);
+Color instagramColor= Color(0xFF3f729b);
+Color youTubeColor= Color(0xFFc4302b);
 
 //Material Color
 Map<int, Color> colorKPrimaryColor = {

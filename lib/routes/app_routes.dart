@@ -23,4 +23,7 @@ abstract class Routes {
   static const PROFILE = 'ProfileScreen';
   static const OLDVACCINECARD = "oldvaccinecard";
   static const PASSAPORT = "passaport";
+  static const INSTAGRAM='instagram';
+  static const YOUTUBE='youTube';
+  static const FACEBOOK= 'faceBook';
 }
