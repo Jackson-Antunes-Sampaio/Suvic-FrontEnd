@@ -22,9 +22,11 @@ class PassaportController extends GetxController {
 
   getPassaport() async {
     loading = true;
-    var resPassaport = await repository.getpassaport();
 
-    if (resPassaport != null) {
+    var resPassaport = await repository.getpassaport();
+    print('RESULTADO DE RESPASSAPORT ${resPassaport.toString()}');
+    if (resPassaport['covidPassport'] != null) {
+      print('INICIO DA FUNÇÃO GETPASSAPORT');
       var byteEnconde = resPassaport['covidPassport']['data'];
       List<int> bytes = [];
 
@@ -36,9 +38,11 @@ class PassaportController extends GetxController {
 
       if (bytes.isNotEmpty) {
         imageByte = base64Decode(utf8.decode(bytes));
+        print('SUCESSO ImageByte $imageByte');
       }
     }
     loading = false;
+      print('O STATUS DO LOADING===>$loading');
 
     update();
   }
