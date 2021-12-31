@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:suvic_app/models/schedule_model.dart';
@@ -17,7 +16,7 @@ class VaccineRepository {
 
       dio!.options.headers["Cookie"] = token;
       final response = await dio.get(API_URL + "users/vaccinecard");
-
+      print("VACINAS AGENDADAS===>$response");
       return (response.data as List).map<VaccineCardModel>((e) {
         return VaccineCardModel.fromJson(e);
       }).toList();
@@ -35,11 +34,11 @@ class VaccineRepository {
       final token = await storage.read(key: "token");
 
       dio!.options.headers["Cookie"] = token;
-      final response = await dio.post(API_URL + "clinics/schedule/user", data: {
-        "cpf" : "$cpf"
-      });
+      final response = await dio
+          .post(API_URL + "clinics/schedule/user", data: {"cpf": "$cpf"});
       print(response.data);
       return (response.data as List).map<ScheduleModel>((e) {
+        print('SCHEDULEMODEL===>${ScheduleModel.fromJson(e)}');
         return ScheduleModel.fromJson(e);
       }).toList();
     } catch (e) {
@@ -48,28 +47,28 @@ class VaccineRepository {
     }
   }
 
-  Future<String> postApplyVaccine(String cpf, String date, String vaccine, int dose, String? manufacturer) async {
+  Future<String> postApplyVaccine(String cpf, String date, String vaccine,
+      int dose, String? manufacturer) async {
     try {
-
       Dio? dio = CustomDio().instance;
       final storage = FlutterSecureStorage();
       final token = await storage.read(key: "token");
       dio!.options.headers["Cookie"] = token;
 
       Map<String, dynamic> map = {
-        "target" : cpf,
-        "applicationDate" : date,
-        "vaccine" : vaccine,
-        "batch" : "1",
-        "doseNumber" : dose,
-        "manufacturer" : manufacturer
+        "target": cpf,
+        "applicationDate": date,
+        "vaccine": vaccine,
+        "batch": "1",
+        "doseNumber": dose,
+        "manufacturer": manufacturer
       };
       final response = await dio.post(API_URL + "users/vaccinecard", data: map);
       print("${response.data}");
 
-      if(response.data["message"] != null){
+      if (response.data["message"] != null) {
         return response.data["message"];
-      }else{
+      } else {
         return "Error";
       }
     } catch (e) {
@@ -78,31 +77,31 @@ class VaccineRepository {
     }
   }
 
-  Future<String> postApplyVaccineComplete(String cpf, String date, String vaccine, String slot, bool? houseCall) async {
+  Future<String> postApplyVaccineComplete(String cpf, String date,
+      String vaccine, String slot, bool? houseCall) async {
     try {
-
       Dio? dio = CustomDio().instance;
       final storage = FlutterSecureStorage();
       final token = await storage.read(key: "token");
       dio!.options.headers["Cookie"] = token;
 
       Map<String, dynamic> map = {
-        "cpf" : cpf,
-        "slot" : slot,
-        "vaccine" : vaccine,
-        "houseCall" : houseCall,
-        "date" : date,
+        "cpf": cpf,
+        "slot": slot,
+        "vaccine": vaccine,
+        "houseCall": houseCall,
+        "date": date,
       };
       print("date: ${date}");
-      final response = await dio.post(API_URL + "clinics/schedule/status/complete", data: map);
+      final response = await dio
+          .post(API_URL + "clinics/schedule/status/complete", data: map);
       print("${response.data}");
 
-      if(response.data["message"] != null){
+      if (response.data["message"] != null) {
         return response.data["message"];
-      }else{
+      } else {
         return "Error";
       }
-
     } catch (e) {
       print(e);
       return Future.error("error");
@@ -111,7 +110,6 @@ class VaccineRepository {
 
   Future<List<VaccinesModel>> getAllVaccines() async {
     try {
-
       Dio? dio = CustomDio().instance;
       final storage = FlutterSecureStorage();
       final token = await storage.read(key: "token");
@@ -125,7 +123,6 @@ class VaccineRepository {
         return (response.data as List).map<VaccinesModel>((e) {
           return VaccinesModel.fromJson(e);
         }).toList();
-
       } else {
         print('Error code ${response.statusCode}');
         return [];
@@ -134,5 +131,4 @@ class VaccineRepository {
       return Future.error(e);
     }
   }
-
 }
