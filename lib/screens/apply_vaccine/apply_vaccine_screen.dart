@@ -24,7 +24,7 @@ class _ApplyVaccineScreenState extends State<ApplyVaccineScreen> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final UserController _userController = Get.find();
   final ApplyVaccineController _applyVaccineController =
-  Get.put(ApplyVaccineController());
+      Get.put(ApplyVaccineController());
 
   @override
   Widget build(BuildContext context) {
@@ -32,24 +32,26 @@ class _ApplyVaccineScreenState extends State<ApplyVaccineScreen> {
       key: scaffoldKey,
       appBar: AppBar(
         title: Obx(() {
-          if(_applyVaccineController.listvaccines.isNotEmpty){
-            if(_applyVaccineController.listvaccines.first.user?.civilName != '') {
+          if (_applyVaccineController.listvaccines.isNotEmpty) {
+            if (_applyVaccineController.listvaccines.first.user?.civilName !=
+                '') {
               return Text("${cpfController.text}");
             } else {
               return Text("Aplicação");
             }
-          }else{
+          } else {
             return Text("Aplicação");
           }
         }),
         actions: [
           Obx(() {
-            if(_applyVaccineController.listvaccines.isNotEmpty){
-              if (_applyVaccineController.listvaccines.first.user!.civilName != '') {
+            if (_applyVaccineController.listvaccines.isNotEmpty) {
+              if (_applyVaccineController.listvaccines.first.user!.civilName !=
+                  '') {
                 return IconButton(
                   onPressed: () {
                     _applyVaccineController.listvaccines.first.user!.civilName =
-                    '';
+                        '';
                     cpfController.text = '';
                     _applyVaccineController.stateApplyVaccine.value =
                         StateApplyVaccine.IDLE;
@@ -59,33 +61,29 @@ class _ApplyVaccineScreenState extends State<ApplyVaccineScreen> {
               } else {
                 return Container();
               }
-            }else{
+            } else {
               return Container();
             }
-
           })
         ],
       ),
       bottomSheet: Obx(() {
-        if(_applyVaccineController.listvaccines.isNotEmpty){
-          if (_applyVaccineController.listvaccines.first.user!.civilName != '') {
+        if (_applyVaccineController.listvaccines.isNotEmpty) {
+          if (_applyVaccineController.listvaccines.first.user!.civilName !=
+              '') {
             return Container(
               color: Colors.transparent,
               padding: EdgeInsets.symmetric(horizontal: 10),
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height * 0.06,
+              height: MediaQuery.of(context).size.height * 0.06,
               child: ButtonCustom(
-                onPressed: () async{
-                  if(_formKey.currentState != null){
-                    if(_formKey.currentState!.validate()){
+                onPressed: () async {
+                  if (_formKey.currentState != null) {
+                    if (_formKey.currentState!.validate()) {
                       await _showMyDialog();
-                    }else{
+                    } else {
                       print("aquii");
-                      scaffoldKey.currentState!.showSnackBar(
-                          SnackBar(content: Text("Preencha os campos obrigatórios"))
-                      );
+                      scaffoldKey.currentState!.showSnackBar(SnackBar(
+                          content: Text("Preencha os campos obrigatórios")));
                     }
                   }
                 },
@@ -93,10 +91,14 @@ class _ApplyVaccineScreenState extends State<ApplyVaccineScreen> {
               ),
             );
           } else {
-            return Container(height: 1,);
+            return Container(
+              height: 1,
+            );
           }
-        }else{
-          return Container(height: 1,);
+        } else {
+          return Container(
+            height: 1,
+          );
         }
       }),
       body: Obx(() {
@@ -128,27 +130,31 @@ class _ApplyVaccineScreenState extends State<ApplyVaccineScreen> {
                         keyboardType: TextInputType.number,
                         onChanget: (value) {
                           if (value.length == 14) {
-                            _applyVaccineController.postUserVaccine(value.replaceAll(".", "").replaceAll("-", ""));
+                            _applyVaccineController.postUserVaccine(
+                                value.replaceAll(".", "").replaceAll("-", ""));
                             //_applyVaccineController.userApply.value = value;
                             //_applyVaccineController.stateApplyVaccine.value = StateApplyVaccine.VACCINES;
                           }
                         }),
-                    SizedBox(height: 30,),
+                    SizedBox(
+                      height: 30,
+                    ),
                     SizedBox(
                         height: 300,
                         width: 180,
                         child: Image.asset("assets/images/clinic.jpeg")),
                     Container(
-
-                      child:
-                      Column(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('1- Digite o cpf do paciente que vai realizar a vacina.'),
-                          Text('2- Após digite todos os campos necessários, não deixe nenhuma em branco.'),
+                          Text(
+                              '1- Digite o cpf do paciente que vai realizar a vacina.'),
+                          Text(
+                              '2- Após digite todos os campos necessários, não deixe nenhuma em branco.'),
                           Text('3- Após conferir todos os dados, confirme.'),
-                          Text('4- Pronto, o paciente irá receber em sua carteirinha a vacina que realizou.')
+                          Text(
+                              '4- Pronto, o paciente irá receber em sua carteirinha a vacina que realizou.')
                         ],
                       ),
                     )
@@ -165,10 +171,13 @@ class _ApplyVaccineScreenState extends State<ApplyVaccineScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Column(
                     children: [
-                      SizedBox(height: 10,),
+                      SizedBox(
+                        height: 10,
+                      ),
                       TextFormField(
                         enabled: false,
-                        initialValue: '${_applyVaccineController.listvaccines.first.user!.civilName}',
+                        initialValue:
+                            '${_applyVaccineController.listvaccines.first.user!.civilName}',
                         decoration: InputDecoration(
                           labelText: 'Nome Paciente',
                           border: InputBorder.none,
@@ -184,8 +193,7 @@ class _ApplyVaccineScreenState extends State<ApplyVaccineScreen> {
                         height: 10,
                       ),
                       Column(
-                        children: _applyVaccineController.listvaccines.map((
-                            e) {
+                        children: _applyVaccineController.listvaccines.map((e) {
                           return Column(
                             children: [
                               ExpansionTileCard(
@@ -197,8 +205,7 @@ class _ApplyVaccineScreenState extends State<ApplyVaccineScreen> {
                                   TextFormField(
                                     enabled: false,
                                     initialValue:
-                                    '${DateFormat('dd/MM/yyyy').format(
-                                        DateTime.now())}',
+                                        '${DateFormat('dd/MM/yyyy').format(DateTime.now())}',
                                     decoration: InputDecoration(
                                       labelText: 'Data APlicação',
                                       border: InputBorder.none,
@@ -208,7 +215,8 @@ class _ApplyVaccineScreenState extends State<ApplyVaccineScreen> {
                                   ),
                                   TextFormField(
                                     enabled: false,
-                                    initialValue: '${_userController.user?.civilName}',
+                                    initialValue:
+                                        '${_userController.user?.civilName}',
                                     decoration: InputDecoration(
                                       labelText: 'Aplicador',
                                       border: InputBorder.none,
@@ -234,12 +242,11 @@ class _ApplyVaccineScreenState extends State<ApplyVaccineScreen> {
                                         ),
                                         onChanged: (newValue) {
                                           e.vaccine!.dose = newValue!;
-                                          setState(() {
-
-                                          });
+                                          setState(() {});
                                         },
                                         items: e.vaccine?.listDose
-                                            ?.map<DropdownMenuItem<int>>((int value) {
+                                            ?.map<DropdownMenuItem<int>>(
+                                                (int value) {
                                           return DropdownMenuItem<int>(
                                             value: value,
                                             child: Text(value.toString()),
@@ -249,34 +256,37 @@ class _ApplyVaccineScreenState extends State<ApplyVaccineScreen> {
                                     ],
                                   ),
                                   e.vaccine?.name == "COVID-19"
-                                  ? TextFormField(
-                                    onChanged: (value){
-                                      e.vaccine?.manufacturer = value;
-                                    },
-                                    decoration: InputDecoration(
-                                      labelText: 'Fabricante',
-                                      border: InputBorder.none,
-                                      prefixIcon: Icon(Icons.corporate_fare),
-                                    ),
-                                    validator: (value){
-                                      if(value!.isEmpty){
-                                        if(e.vaccineName == "COVID-19"){
-                                          return "Campo inválido";
-                                        }else{
-                                          return null;
-                                        }
-
-                                      }else{
-                                        return null;
-                                      }
-                                    },
-                                  ) : Container(),
+                                      ? TextFormField(
+                                          onChanged: (value) {
+                                            e.vaccine?.manufacturer = value;
+                                          },
+                                          decoration: InputDecoration(
+                                            labelText: 'Fabricante',
+                                            border: InputBorder.none,
+                                            prefixIcon:
+                                                Icon(Icons.corporate_fare),
+                                          ),
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              if (e.vaccineName == "COVID-19") {
+                                                return "Campo inválido";
+                                              } else {
+                                                return null;
+                                              }
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                        )
+                                      : Container(),
                                   SizedBox(
                                     height: 10,
                                   )
                                 ],
                               ),
-                              SizedBox(height: 10,),
+                              SizedBox(
+                                height: 10,
+                              ),
                             ],
                           );
                         }).toList(),
@@ -301,20 +311,30 @@ class _ApplyVaccineScreenState extends State<ApplyVaccineScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.error, size: 60,),
-                  SizedBox(height: 10,),
-                  Text("Nenhuma agenda encontra para esse usuario.", textAlign: TextAlign.center, style: TextStyle(fontSize: 18),),
-                  SizedBox(height: 10,),
+                  Icon(
+                    Icons.error,
+                    size: 60,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "Nenhuma agenda encontra para esse usuario.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   RaisedButton(
                     color: Theme.of(context).primaryColor,
-                      textColor: Colors.white,
-                      onPressed: (){
-
-                        cpfController.text = '';
-                        _applyVaccineController.stateApplyVaccine.value =
-                            StateApplyVaccine.IDLE;
-                      },
-                      child: Text("Buscar outro CPF"),
+                    textColor: Colors.white,
+                    onPressed: () {
+                      cpfController.text = '';
+                      _applyVaccineController.stateApplyVaccine.value =
+                          StateApplyVaccine.IDLE;
+                    },
+                    child: Text("Buscar outro CPF"),
                   )
                 ],
               ),
@@ -324,14 +344,26 @@ class _ApplyVaccineScreenState extends State<ApplyVaccineScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.check, size: 60,color: Colors.green,),
-                  SizedBox(height: 10,),
-                  Text("Sucesso!", textAlign: TextAlign.center, style: TextStyle(fontSize: 18),),
-                  SizedBox(height: 10,),
+                  Icon(
+                    Icons.check,
+                    size: 60,
+                    color: Colors.green,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "Sucesso!",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   RaisedButton(
                     color: Theme.of(context).primaryColor,
                     textColor: Colors.white,
-                    onPressed: (){
+                    onPressed: () {
                       cpfController.text = '';
                       _applyVaccineController.stateApplyVaccine.value =
                           StateApplyVaccine.IDLE;
@@ -360,7 +392,7 @@ class _ApplyVaccineScreenState extends State<ApplyVaccineScreen> {
           title: const Text('Confirma vacinas:'),
           content: SingleChildScrollView(
             child: ListBody(
-              children: _applyVaccineController.listvaccines.map((element){
+              children: _applyVaccineController.listvaccines.map((element) {
                 return Text('${element.vaccineName}');
               }).toList(),
             ),
@@ -374,7 +406,7 @@ class _ApplyVaccineScreenState extends State<ApplyVaccineScreen> {
             ),
             TextButton(
               child: const Text('Sim'),
-              onPressed: () async{
+              onPressed: () async {
                 Navigator.of(context).pop();
                 await _applyVaccineController.postApplyVaccine();
               },

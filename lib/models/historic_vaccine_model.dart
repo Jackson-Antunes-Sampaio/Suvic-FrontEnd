@@ -14,17 +14,17 @@ class HistoricVaccineModel {
 
   HistoricVaccineModel(
       {this.id,
-        this.batch,
-        this.applicationDate,
-        this.doseNumber,
-        this.status,
-        this.createdAt,
-        this.updatedAt,
-        this.userId,
-        this.vaccineName,
-        this.applicatorId,
-        this.clinicId,
-        this.user});
+      this.batch,
+      this.applicationDate,
+      this.doseNumber,
+      this.status,
+      this.createdAt,
+      this.updatedAt,
+      this.userId,
+      this.vaccineName,
+      this.applicatorId,
+      this.clinicId,
+      this.user});
 
   HistoricVaccineModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -73,19 +73,19 @@ class User {
   User({this.socialName, this.email});
 
   User.fromJson(Map<String, dynamic> json) {
-    socialName = json['socialName'];
+    socialName = json['civilName'];
     email = json['email'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['socialName'] = this.socialName;
+    data['civilName'] = this.socialName;
     data['email'] = this.email;
     return data;
   }
 
   @override
   String toString() {
-    return 'User{socialName: $socialName, email: $email}';
+    return 'User{civilName: $socialName, email: $email}';
   }
 }
