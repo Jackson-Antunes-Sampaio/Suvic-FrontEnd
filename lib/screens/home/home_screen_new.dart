@@ -106,26 +106,26 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                       userController.user?.permissionLevel == "Oversser" ||
                       userController.user?.permissionLevel == "Admin" ||
                       userController.user?.permissionLevel == "Superadmin"
-                  ?Container():
-                  LayoutBuilder(
-                      builder: (context, constraints){
-                        print(constraints.biggest);
-                        return
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                            child: Center(
-                              child: FloatingActionButton.extended(
-                                backgroundColor: Theme.of(context).primaryColor,
-                                  onPressed: () {
-                                    Get.toNamed(Routes.OLDVACCINECARD);
-                                  },
-                                  label:
-                                  Text("Seu Comprovante de Vacinação Covid-19",style: TextStyle(
-                                      fontSize:constraints.maxWidth >=400?20:12 ),)),
-                            ),
-
-                          );
-                      })
+                  ?Container():Container()
+                  // LayoutBuilder(
+                  //     builder: (context, constraints){
+                  //       print(constraints.biggest);
+                  //       return
+                  //         Padding(
+                  //           padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                  //           child: Center(
+                  //             child: FloatingActionButton.extended(
+                  //               backgroundColor: Theme.of(context).primaryColor,
+                  //                 onPressed: () {
+                  //                   Get.toNamed(Routes.OLDVACCINECARD);
+                  //                 },
+                  //                 label:
+                  //                 Text("Seu Comprovante de Vacinação Covid-19",style: TextStyle(
+                  //                     fontSize:constraints.maxWidth >=400?20:12 ),)),
+                  //           ),
+                  //
+                  //         );
+                  //     })
                 ],
               ),
             ),

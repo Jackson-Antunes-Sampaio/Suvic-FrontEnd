@@ -122,7 +122,7 @@ class MenuScreen extends StatelessWidget {
                     : Container(),
 
 
-                userController.user?.permissionLevel == "Applicator" ||
+                        userController.user?.permissionLevel == "Applicator" ||
                         userController.user?.permissionLevel == "Admin" ||
                         userController.user?.permissionLevel == "Superadmin" ||
                         userController.user?.permissionLevel == "Overseer"
@@ -148,6 +148,21 @@ class MenuScreen extends StatelessWidget {
                     },
                   ),
                 ),
+                    userController.user?.permissionLevel == "Applicator" ||
+                    userController.user?.permissionLevel == "Admin" ||
+                    userController.user?.permissionLevel == "Superadmin" ||
+                    userController.user?.permissionLevel == "Overseer"?
+                Card(
+                  elevation: 4,
+                  child: ListTile(
+                    leading: Icon(Icons.schedule),
+                    title: Text('Meus agendamentos'),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: () {
+                     Get.toNamed(Routes.B2CMYAGENDAMENTPAGE);
+                    },
+                  ),
+                ):Container(),
                 Card(
                   elevation: 4,
                   child: ListTile(
