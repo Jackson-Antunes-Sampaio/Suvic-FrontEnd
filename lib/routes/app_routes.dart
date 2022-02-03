@@ -26,4 +26,6 @@ abstract class Routes {
   static const INSTAGRAM='instagram';
   static const YOUTUBE='youTube';
   static const FACEBOOK= 'faceBook';
+  static const B2CMYAGENDAMENTPAGE='b2cMyAgendamentPage';
+  static const B2C_SHOW_MY_AGENDAMENTS_PAGE='b2cShowMyAgendamentsPage';
 }

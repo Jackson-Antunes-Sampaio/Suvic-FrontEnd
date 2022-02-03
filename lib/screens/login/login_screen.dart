@@ -156,59 +156,59 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 12,
                   ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Ou",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black54,
-                      ),
-                    ),
-                  ),
+                  // Align(
+                  //   alignment: Alignment.center,
+                  //   child: Text(
+                  //     "Ou",
+                  //     style: TextStyle(
+                  //       fontSize: 16,
+                  //       fontWeight: FontWeight.w700,
+                  //       color: Colors.black54,
+                  //     ),
+                  //   ),
+                  // ),
                   SizedBox(
                     height: 18,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        child: LoginSocialMediaBtn(
-                            icon: FontAwesomeIcons.facebookF,
-                            color: facebookColor,
-                            onPress: () {
-                              Get.toNamed(Routes.FACEBOOK);
-                            }),
-                      ),
-                      SizedBox(
-                        width: 16,
-                      ),
-                      InkWell(
-                        child: LoginSocialMediaBtn(
-                          onPress: () {
-                            Get.toNamed(Routes.INSTAGRAM);
-                          },
-                          icon: FontAwesomeIcons.instagram,
-                          color: instagramColor,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 16,
-                      ),
-                      InkWell(
-
-                        child: LoginSocialMediaBtn(
-                          onPress: () {
-                           Get.toNamed(Routes.YOUTUBE);
-                           },
-                          icon: FontAwesomeIcons.youtube,
-                          color: youTubeColor,
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                  //   children: [
+                  //     InkWell(
+                  //       child: LoginSocialMediaBtn(
+                  //           icon: FontAwesomeIcons.facebookF,
+                  //           color: facebookColor,
+                  //           onPress: () {
+                  //             Get.toNamed(Routes.FACEBOOK);
+                  //           }),
+                  //     ),
+                  //     SizedBox(
+                  //       width: 16,
+                  //     ),
+                  //     InkWell(
+                  //       child: LoginSocialMediaBtn(
+                  //         onPress: () {
+                  //           Get.toNamed(Routes.INSTAGRAM);
+                  //         },
+                  //         icon: FontAwesomeIcons.instagram,
+                  //         color: instagramColor,
+                  //       ),
+                  //     ),
+                  //     SizedBox(
+                  //       width: 16,
+                  //     ),
+                  //     InkWell(
+                  //
+                  //       child: LoginSocialMediaBtn(
+                  //         onPress: () {
+                  //          Get.toNamed(Routes.YOUTUBE);
+                  //          },
+                  //         icon: FontAwesomeIcons.youtube,
+                  //         color: youTubeColor,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(
                     height: 18,
                   ),

@@ -2,6 +2,8 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:suvic_app/screens/agendament/scheduling.dart';
 import 'package:suvic_app/screens/apply_vaccine/apply_vaccine_screen.dart';
+import 'package:suvic_app/screens/b2c_my_agendaments/b2c_my_agendaments_page.dart';
+import 'package:suvic_app/screens/b2c_show_my_agendaments/b2c_show_my_agendaments_page.dart';
 import 'package:suvic_app/screens/base/base_screen.dart';
 import 'package:suvic_app/screens/credit_card/credit_card_screen.dart';
 import 'package:suvic_app/screens/credit_card/credit_card_screen2.dart';
@@ -123,6 +125,16 @@ class AppPage {
     GetPage(
       name: Routes.YOUTUBE,
       page: () => WebViewSuvicYouTube(),
+    ),
+    GetPage(
+      name: Routes.B2CMYAGENDAMENTPAGE,
+      page: () => B2cMyAgendamentPage(),
+      //binding: HomeBindings()
+    ),
+    GetPage(
+      name: Routes.B2C_SHOW_MY_AGENDAMENTS_PAGE,
+      page: () => B2cShowMyAgendamentsPage(),
+      //binding: HomeBindings()
     ),
   ];
 }
