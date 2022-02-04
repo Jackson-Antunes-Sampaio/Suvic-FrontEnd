@@ -151,7 +151,8 @@ class MenuScreen extends StatelessWidget {
                     userController.user?.permissionLevel == "Applicator" ||
                     userController.user?.permissionLevel == "Admin" ||
                     userController.user?.permissionLevel == "Superadmin" ||
-                    userController.user?.permissionLevel == "Overseer"?
+                    userController.user?.permissionLevel == "Overseer"||
+                        userController.user?.permissionLevel == "User"?
                 Card(
                   elevation: 4,
                   child: ListTile(
