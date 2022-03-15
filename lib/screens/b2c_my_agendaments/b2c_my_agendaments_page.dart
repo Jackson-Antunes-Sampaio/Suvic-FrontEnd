@@ -35,7 +35,7 @@ class B2cMyAgendamentPage extends StatelessWidget {
                               width: 300,
                               height: 120,
                               child: InkWell(
-                                onTap: ()=>Get.toNamed(Routes.B2C_SHOW_MY_AGENDAMENTS_PAGE,arguments: controller.list[index]),
+                                onTap: ()=>Get.toNamed(Routes.B2C_SHOW_MY_AGENDAMENTS_PAGE,arguments: [controller.list[index],index]),
                                 child: Card(
                                   child:
                                   Column(
