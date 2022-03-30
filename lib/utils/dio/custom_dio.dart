@@ -1,16 +1,11 @@
 import 'dart:io';
-
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
-import 'package:dio_cookie_manager/dio_cookie_manager.dart';
-import 'package:cookie_jar/cookie_jar.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-
-class CustomDio{
-
+class CustomDio {
   Dio? _dio;
-  CustomDio(){
+  CustomDio() {
     _dio = Dio();
 
     (_dio!.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
@@ -23,14 +18,15 @@ class CustomDio{
 
   Dio? get instance => _dio;
 
-  CustomDio.withAuthentication(){
+  CustomDio.withAuthentication() {
     _dio = Dio();
 
-    _dio!.interceptors.add(InterceptorsWrapper(onRequest: _onRequest, onResponse: _onResponse, onError: _onError));
-
+    _dio!.interceptors.add(InterceptorsWrapper(
+        onRequest: _onRequest, onResponse: _onResponse, onError: _onError));
   }
 
-  void _onRequest(RequestOptions options, RequestInterceptorHandler handler)async{
+  void _onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
     final storage = FlutterSecureStorage();
     final token = await storage.read(key: "token");
 

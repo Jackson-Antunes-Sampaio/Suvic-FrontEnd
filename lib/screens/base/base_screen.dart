@@ -62,7 +62,7 @@ class _BaseScreenState extends State<BaseScreen> {
       print("token: $value");
     });
     // APLICATIVO ABERTO
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    /*FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.notification != null) {
         showNotification(
           message.notification!.title,
@@ -71,7 +71,7 @@ class _BaseScreenState extends State<BaseScreen> {
         print(
             'Message also contained a notification: ${message.notification!.body}');
       }
-    });
+    });*/
   }
 
   void showNotification(String? title, String? message) {
