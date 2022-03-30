@@ -121,10 +121,6 @@ class DashboardChartState extends State<DashboardChart> {
                         show: true,
                         bottomTitles: SideTitles(
                           showTitles: true,
-                          getTextStyles: (value) => const TextStyle(
-                              color: Color(0xff7589a2),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14),
                           margin: 20,
                           getTitles: (double value) {
                             switch (value.toInt()) {
@@ -149,10 +145,6 @@ class DashboardChartState extends State<DashboardChart> {
                         ),
                         leftTitles: SideTitles(
                           showTitles: false,
-                          getTextStyles: (value) => const TextStyle(
-                              color: Color(0xff7589a2),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14),
                           margin: 32,
                           reservedSize: 14,
                           getTitles: (value) {
