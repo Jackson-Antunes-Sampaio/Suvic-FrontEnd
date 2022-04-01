@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:suvic_app/models/stock_vacine_model.dart';
@@ -13,27 +12,13 @@ class StockVacineRepository {
       Dio? dio = CustomDio().instance;
       final storage = FlutterSecureStorage();
       final token = await storage.read(key: "token");
-
-      // print('Tock:' + token!);
       dio!.options.headers["Cookie"] = token;
       final response = await dio.get(API_URL + service);
-
-      // List<StockVacineModel> res = [];
-
-      // response.data.forEach((element) {
-      //   // print(element);
-      //   res.add(
-      //     StockVacineModel(
-      //       name: element['vaccine'].toString(),
-      //       lote: int.parse(element['batch']),
-      //       dataValidade: element['expirationdate'],
-      //       quantidade: element['count'],
-      //       valor: 0,
-      //     ),
-      //   );
-      // });
-
-      return [];
+      var vacines;
+      response.data.forEach((element) {
+        vacines.add(StockVacineModel.fromJson(element));
+      });
+      return vacines;
     } catch (e) {
       return Future.error("error");
     }
