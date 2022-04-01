@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 import 'package:suvic_app/models/Clinic_model.dart';
 import 'package:suvic_app/models/stock_vacine_model.dart';
@@ -8,6 +7,7 @@ import 'package:suvic_app/repositories/clinicRepository.dart';
 import 'package:suvic_app/repositories/user_repository.dart';
 
 class ClinicController extends GetxController {
+  ClinicController({this.idClinic});
   //Get User Repository
   final UserRepository userRepository = UserRepository();
   var repository = StockRepository();
@@ -19,8 +19,7 @@ class ClinicController extends GetxController {
   var clinicAdress = ''.obs;
   var clinic = ClinicModel();
   List<ClinicModel> clinics = [];
-  //Get Instance
-  static ClinicController get to => Get.find();
+
   //vacine selected
   List<StockVacineModel> vaccineInStock = [];
   //seach
@@ -29,14 +28,10 @@ class ClinicController extends GetxController {
   //args
   String? idClinic;
 
-  ClinicController({this.idClinic}) {
-    // getClinicAdress();
+  @override
+  onInit() {
     getAllClinics();
-    // var cli = idClinic ?? '';
-    // if (cli.isNotEmpty) {
-    //   print('Entro');
-    //   getVaccinesInStock();
-    // }
+    super.onInit();
   }
 
   changeSeachStatus() {
@@ -48,40 +43,8 @@ class ClinicController extends GetxController {
     update();
   }
 
-  // getVaccinesInStock() async {
-  //   loading = true;
-  //   var getvaccinesStock =
-  //       await repository.getStockVaccineByIdClinic(idClinic!);
-
-  //   if (getvaccinesStock != null) {
-  //     vaccineInStock.clear();
-  //     getvaccinesStock.forEach((vaccine) {
-  //       var name;
-  //       if (vaccine['vaccineName'] == null) {
-  //         name = '';
-  //       } else {
-  //         name = vaccine['vaccineName'];
-  //       }
-  //       vaccineInStock.add(
-  //         StockVacineModel(
-  //           name: name,
-  //           lote: vaccine['batch'] == null ? '' : vaccine['batch'],
-  //           dataValidade: vaccine['expirationdate'] == null
-  //               ? ''
-  //               : vaccine['expirationdate'],
-  //           quantidade: vaccine['count'],
-  //         ),
-  //       );
-  //     });
-  //     loading = false;
-  //     print('Update:' + vaccineInStock.toString());
-  //     update();
-  //   }
-  // }
-
   getAllClinics() async {
     loading = true;
-    //get id Clinic
     var cli = idClinic ?? '';
     var clinicsList = await clinicRepository.getAllClinis();
     clinics.clear();

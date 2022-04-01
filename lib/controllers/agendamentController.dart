@@ -13,9 +13,8 @@ class AgentamentController extends GetxController {
   final longitude = 0.0.obs;
   final raio = 0.0.obs;
 
-  // late StreamSubscription<Position> positionStream;
   LatLng _position = LatLng(-23.571505, -46.689104);
-  // LatLng _position = LatLng(-30.0557, -51.1988);
+
   late GoogleMapController _mapsController;
   final markers = Set<Marker>();
 
@@ -26,73 +25,23 @@ class AgentamentController extends GetxController {
       ? '${(raio.value * 1000).toStringAsFixed(0)} m'
       : '${(raio.value).toStringAsFixed(1)} km';
 
-  // filtrarclinics() {
-  //   final geo = Geoflutterfire();
-  //   final db = DB.get();
-
-  //   GeoFirePoint center = geo.point(
-  //     latitude: latitude.value,
-  //     longitude: longitude.value,
-  //   );
-
-  //   CollectionReference ref = db.collection('clinics');
-
-  //   String field = 'position';
-
-  //   Stream<List<DocumentSnapshot>> stream = geo
-  //       .collection(collectionRef: ref)
-  //       .within(center: center, radius: raio.value, field: field);
-
-  //   stream.listen((List<DocumentSnapshot> clinics) {
-  //     markers.clear();
-  //     clinics.forEach((clinic) {
-  //       addMarker(clinic);
-  //       update();
-  //     });
-  //     Get.back();
-  //   });
-  // }
-
   onMapCreated(GoogleMapController gmc) async {
     _mapsController = gmc;
     getPosicao();
     loadClinics();
-    // var style = await rootBundle.loadString('assets/map/light.json');
-    // _mapsController.setMapStyle(style);
-    // var style = await rootBundle.loadString('assets/map/light.json');
-    // _mapsController.setMapStyle(style);
   }
 
   loadClinics() async {
     var clinicsList = await clinicsRepository.getAllClinis();
 
-    // var clinics = [];
-
-    // clinicsList!.forEach((element) {
-    //   clinics.add({
-    //     'id': element.id.toString(),
-    //     'name': element.name.toString(),
-    //     'icon': 'assets/images/hospital128px.png',
-    //     'position': {
-    //       'latitude': element.latitude ?? 0.0,
-    //       'longitude': element.longitude ?? 0.0
-    //     }
-    //   });
-
-    //   print('latitude:' + element.latitude.toString());
-    //   print('longitude:' + element.longitude.toString());
-    // });
-
     clinicsList!.forEach((clinic) => addMarker(clinic));
   }
 
   addMarker(ClinicModel clinic) async {
-    // var point = clinic['position'];
-
     markers.add(
       Marker(
         markerId: MarkerId(clinic.id.toString()),
-        position: LatLng(clinic.latitude, clinic.longitude),
+        position: LatLng(clinic.latitude!, clinic.longitude!),
         infoWindow: InfoWindow(title: clinic.name),
         icon: await BitmapDescriptor.fromAssetImage(
           ImageConfiguration(),
@@ -106,27 +55,7 @@ class AgentamentController extends GetxController {
 
   showDetails(ClinicModel clinic) {
     Get.to(Schedule(clinic: clinic));
-    // Get.bottomSheet(
-    //   ClinicDetails(
-    //     nome: clinic['name'],
-    //     imagem: clinic['imagem'],
-    //   ),
-    //   barrierColor: Colors.transparent,
-    // );
   }
-
-  // watchPosicao() async {
-  //   positionStream = Geolocator.getPositionStream().listen((Position position) {
-  //     latitude.value = position.latitude;
-  //     longitude.value = position.longitude;
-  //   });
-  // }
-
-  // @override
-  // void onClose() {
-  //   positionStream.cancel();
-  //   super.onClose();
-  // }
 
   Future<Position> _posicaoAtual() async {
     LocationPermission permissao;

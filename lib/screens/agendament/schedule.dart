@@ -284,7 +284,7 @@ class _ScheduleState extends State<Schedule> {
               return Center(
                 child: CircularProgressIndicator(),
               );
-              break;
+
             case StateProductCard.IDL:
               return SingleChildScrollView(
                 child: load
@@ -829,8 +829,8 @@ class _ScheduleState extends State<Schedule> {
               //Get all vacine in stock
               var vaccinesInCart = StockController.to.vacineSelected;
               //data GEOLOCATION
-              var latitude = clinic.latitude;
-              var longitude = clinic.longitude;
+              int latitude = clinic.latitude;
+              int longitude = clinic.longitude;
 
               return controller.loading
                   ? Center(
@@ -858,8 +858,8 @@ class _ScheduleState extends State<Schedule> {
                                         zoomControlsEnabled: false,
                                         initialCameraPosition: CameraPosition(
                                           target: LatLng(
-                                            latitude,
-                                            longitude,
+                                            latitude.toDouble(),
+                                            longitude.toDouble(),
                                           ),
                                           zoom: 26,
                                         ),
@@ -869,8 +869,9 @@ class _ScheduleState extends State<Schedule> {
                                             Marker(
                                               markerId: MarkerId(
                                                   clinic.id.toString()),
-                                              position:
-                                                  LatLng(latitude, longitude),
+                                              position: LatLng(
+                                                  latitude.toDouble(),
+                                                  longitude.toDouble()),
                                               infoWindow: InfoWindow(
                                                   title: clinic.name),
                                               icon: await BitmapDescriptor

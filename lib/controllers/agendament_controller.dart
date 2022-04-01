@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 import 'package:suvic_app/controllers/user_controller.dart';
 import 'package:suvic_app/models/agendament_model.dart';
@@ -6,7 +5,6 @@ import 'package:suvic_app/repositories/agendament_repository.dart';
 
 class AgendamentController extends GetxController {
   var repository = AgendamentRepository();
-  UserController userController = Get.find();
   List agendaments = [].obs;
   var loading = false.obs;
   var dialg = false.obs;
