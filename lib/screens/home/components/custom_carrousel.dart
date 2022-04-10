@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 
 class CarouselCustom extends StatelessWidget {
-  const CarouselCustom({Key? key, required this.carouselModel}) : super(key: key);
+  const CarouselCustom({Key? key, required this.carouselModel})
+      : super(key: key);
   final List<CarouselModel> carouselModel;
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class CarouselCustom extends StatelessWidget {
         enlargeCenterPage: true,
         scrollDirection: Axis.horizontal,
       ),
-      items: carouselModel.map((e){
+      items: carouselModel.map((e) {
         return InkWell(
           onTap: e.onTap,
           child: ClipRRect(
@@ -32,18 +33,25 @@ class CarouselCustom extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               width: double.infinity,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage(e.image!,)
-                )
-              ),
-              child: e.title != null? Container(
-                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-                color: Colors.black.withAlpha(50),
-                width: double.infinity,
-                child: Text("Acesse sua carteinha digital", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),),
-              ) : Container(),
+                  borderRadius: BorderRadius.circular(20),
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage(
+                        e.image!,
+                      ))),
+              child: e.title != null
+                  ? Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                      color: Colors.black.withAlpha(50),
+                      width: double.infinity,
+                      child: Text(
+                        e.title!,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
+                    )
+                  : Container(),
             ),
           ),
         );
@@ -52,13 +60,10 @@ class CarouselCustom extends StatelessWidget {
   }
 }
 
-class CarouselModel{
-
+class CarouselModel {
   CarouselModel({this.image, this.onTap, this.title});
 
   String? image;
   Callback? onTap;
   String? title;
-
 }
-

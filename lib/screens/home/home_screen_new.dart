@@ -1,13 +1,15 @@
 import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:lottie/lottie.dart';
+import 'package:share/share.dart';
 import 'package:suvic_app/common/my_header_widget.dart';
+import 'package:suvic_app/controllers/notification_controller.dart';
 import 'package:suvic_app/controllers/user_controller.dart';
 import 'package:suvic_app/models/page_manager.dart';
 import 'package:suvic_app/routes/app_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'components/custom_carrousel.dart';
-import 'components/custom_carrousel_slider.dart';
 
 class HomeScreenNew extends StatefulWidget {
   @override
@@ -18,6 +20,7 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
   final controller = ScrollController();
   final PageManager pageManager = Get.find();
   final userController = Get.put(UserController());
+  final notification = Get.put(NotificationController());
   double offset = 0;
 
   @override
@@ -47,13 +50,36 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
         controller: controller,
         child: Column(
           children: <Widget>[
-            MyHeader(
-              image: "assets/icons/Drcorona.png",
-              textTop: "SUVIC",
-              textBottom: "HealthTech",
-              offset: offset,
+            Stack(
+              children: [
+                MyHeader(
+                  image: "assets/icons/Drcorona.png",
+                  textTop: "SUVIC",
+                  textBottom: "Saúde Digital",
+                  offset: offset,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: 200,
+                    ),
+                    GestureDetector(
+                        onTap: () {
+                          print('Funcionando');
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.all(20),
+                          child: Lottie.network(
+                              'https://assets9.lottiefiles.com/private_files/lf30_3frgatkh.json',
+                              height: 100,
+                              width: 100,
+                              fit: BoxFit.fitHeight),
+                        )),
+                  ],
+                ),
+              ],
             ),
-            SizedBox(height: 20),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Column(
@@ -75,6 +101,13 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                         },
                       ),
                       CarouselModel(
+                        image: "assets/images/febreamrela-carteirinha.webp",
+                        title: "Digitalizar minha antiga carteira",
+                        onTap: () {
+                          Get.toNamed(Routes.OLDVACCINECARD);
+                        },
+                      ),
+                      CarouselModel(
                         image:
                             "assets/images/carteirinha-vacinacao-960x540.jpg",
                         title: "Acesse sua carteirinha",
@@ -83,49 +116,27 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                           pageManager.pageController.jumpToPage(1);
                         },
                       ),
+                      CarouselModel(
+                        image: "assets/images/icon-share-new.png",
+                        title: 'Compartilhar App com Amigos',
+                        onTap: () {
+                          Share.share(
+                              'Pessoal Olha que fantastico minha carteirinha de vacinação é digital! A sua também é? https://suvic.com.br/download/',
+                              subject:
+                                  'Pessoal Olha que fantastico esse app, ele será nossa nova carteira de vacinação!');
+                        },
+                      ),
                     ],
                   ),
-                  // SizedBox(height: 100,),
-                  // CustomCarouselSlider(
-                  //   itemsString: [
-                  // "O App SUVIC é a sua Carteirinha de Vacinação Digital e GRATUITA, com\n"
-                  // "funções de Agendamento (SUS e Particular), Histórico, Calendário e\n"
-                  // "muito mais!",
-                  //     "Avise-me quando a vacina chegar em minha cidade"
-                  //   ],
-                  //   itemsImage: [
-                  //     "assets/images/suvic.png",
-                  //     "assets/images/undraw_Map_dark_re_36sy.png"
-                  //   ],
-                  // ),
                   SizedBox(
                     height: 50,
                   ),
-
                   userController.user?.permissionLevel == "Applicator" ||
-                      userController.user?.permissionLevel == "Oversser" ||
-                      userController.user?.permissionLevel == "Admin" ||
-                      userController.user?.permissionLevel == "Superadmin"
-                  ?Container():Container()
-                  // LayoutBuilder(
-                  //     builder: (context, constraints){
-                  //       print(constraints.biggest);
-                  //       return
-                  //         Padding(
-                  //           padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                  //           child: Center(
-                  //             child: FloatingActionButton.extended(
-                  //               backgroundColor: Theme.of(context).primaryColor,
-                  //                 onPressed: () {
-                  //                   Get.toNamed(Routes.OLDVACCINECARD);
-                  //                 },
-                  //                 label:
-                  //                 Text("Seu Comprovante de Vacinação Covid-19",style: TextStyle(
-                  //                     fontSize:constraints.maxWidth >=400?20:12 ),)),
-                  //           ),
-                  //
-                  //         );
-                  //     })
+                          userController.user?.permissionLevel == "Oversser" ||
+                          userController.user?.permissionLevel == "Admin" ||
+                          userController.user?.permissionLevel == "Superadmin"
+                      ? Container()
+                      : Container()
                 ],
               ),
             ),

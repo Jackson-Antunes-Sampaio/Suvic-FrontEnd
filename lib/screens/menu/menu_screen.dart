@@ -22,22 +22,22 @@ class MenuScreen extends StatelessWidget {
             offset: 0,
           ),
           userController.user?.permissionLevel == "Applicator" ||
-              userController.user?.permissionLevel == "Oversser" ||
-              userController.user?.permissionLevel == "Admin" ||
-              userController.user?.permissionLevel == "Superadmin"?
-              Container():
-          TextButton(
-            onPressed: () {
-              Get.toNamed(Routes.PROFILE);
-            },
-            child: Text("Editar perfil"),
-          ),
+                  userController.user?.permissionLevel == "Oversser" ||
+                  userController.user?.permissionLevel == "Admin" ||
+                  userController.user?.permissionLevel == "Superadmin"
+              ? Container()
+              : TextButton(
+                  onPressed: () {
+                    Get.toNamed(Routes.PROFILE);
+                  },
+                  child: Text("Editar perfil"),
+                ),
           Padding(
             padding: EdgeInsets.only(top: 20, left: 10, right: 10),
             child: Column(
               children: [
-                userController.user?.permissionLevel == "Superadmin"||
-                    userController.user?.permissionLevel == "Admin"
+                userController.user?.permissionLevel == "Superadmin" ||
+                        userController.user?.permissionLevel == "Admin"
                     ? Card(
                         elevation: 4,
                         child: ListTile(
@@ -121,8 +121,7 @@ class MenuScreen extends StatelessWidget {
                       )
                     : Container(),
 
-
-                        userController.user?.permissionLevel == "Applicator" ||
+                userController.user?.permissionLevel == "Applicator" ||
                         userController.user?.permissionLevel == "Admin" ||
                         userController.user?.permissionLevel == "Superadmin" ||
                         userController.user?.permissionLevel == "Overseer"
@@ -136,7 +135,8 @@ class MenuScreen extends StatelessWidget {
                             Get.toNamed(Routes.HISTORICVACCINE);
                           },
                         ),
-                      ):Container(),
+                      )
+                    : Container(),
                 Card(
                   elevation: 4,
                   child: ListTile(
@@ -144,26 +144,30 @@ class MenuScreen extends StatelessWidget {
                     title: Text('Compartilhar App com Amigos'),
                     trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () {
-                      Share.share('Pessoal Olha que fantastico minha carteirinha de vacinação é digital! A sua também é? https://suvic.com.br/download/', subject: 'Pessoal Olha que fantastico esse app, ele será nossa nova carteira de vacinação!');
+                      Share.share(
+                          'Pessoal Olha que fantastico minha carteirinha de vacinação é digital! A sua também é? https://suvic.com.br/download/',
+                          subject:
+                              'Pessoal Olha que fantastico esse app, ele será nossa nova carteira de vacinação!');
                     },
                   ),
                 ),
-                    userController.user?.permissionLevel == "Applicator" ||
-                    userController.user?.permissionLevel == "Admin" ||
-                    userController.user?.permissionLevel == "Superadmin" ||
-                    userController.user?.permissionLevel == "Overseer"||
-                        userController.user?.permissionLevel == "User"?
-                Card(
-                  elevation: 4,
-                  child: ListTile(
-                    leading: Icon(Icons.schedule),
-                    title: Text('Meus agendamentos'),
-                    trailing: Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                     Get.toNamed(Routes.B2CMYAGENDAMENTPAGE);
-                    },
-                  ),
-                ):Container(),
+                /*userController.user?.permissionLevel == "Applicator" ||
+                        userController.user?.permissionLevel == "Admin" ||
+                        userController.user?.permissionLevel == "Superadmin" ||
+                        userController.user?.permissionLevel == "Overseer" ||
+                        userController.user?.permissionLevel == "User"
+                    ? Card(
+                        elevation: 4,
+                        child: ListTile(
+                          leading: Icon(Icons.schedule),
+                          title: Text('Meus agendamentos'),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                          onTap: () {
+                            Get.toNamed(Routes.B2CMYAGENDAMENTPAGE);
+                          },
+                        ),
+                      )
+                    : Container(),*/
                 Card(
                   elevation: 4,
                   child: ListTile(
