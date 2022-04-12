@@ -30,12 +30,14 @@ class _AgendamentState extends State<Agendament> {
             Tab(icon: Icon(Icons.list)),
           ]),
         ),
-        body: TabBarView(
-          physics: NeverScrollableScrollPhysics(),
-          children: [
-            mapClinics(),
-            listClinics(),
-          ],
+        body: SafeArea(
+          child: TabBarView(
+            physics: NeverScrollableScrollPhysics(),
+            children: [
+              mapClinics(),
+              listClinics(),
+            ],
+          ),
         ),
       ),
     );
@@ -75,8 +77,8 @@ class _AgendamentState extends State<Agendament> {
                                         clinic: clinics[index],
                                       ),
                                     ),
-                                    leading: FaIcon(
-                                      FontAwesomeIcons.hospitalSymbol,
+                                    leading: Icon(
+                                      Icons.medical_services_rounded,
                                       color: kPrimaryColor,
                                     ),
                                     title: Text(clinics[index].name ?? ''),
