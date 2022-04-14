@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -114,15 +113,8 @@ class StockRepository {
           "clinic": idClinic,
         },
       );
-      // final response = await dio.post(
-      //   API_URL + 'clinics/vaccines',
-      //   data: {
-      //     "clinic": int.parse(idClinic),
-      //   },
-      // );
 
       List<StockVacineModel> vacines = [];
-
       response.data.forEach((vaccine) async {
         vacines.add(
           StockVacineModel(
