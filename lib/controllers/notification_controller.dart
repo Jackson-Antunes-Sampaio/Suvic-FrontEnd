@@ -1,18 +1,31 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class NotificationController extends GetxController {
-  bool news = false;
+  late RxBool news;
+  late RxBool show;
+  PageController pageController = PageController();
+  @override
+  onInit() {
+    super.onInit();
+    //news.value = false;
+    getNews();
+  }
 
   getNews() {
     //busca info no serviço e joga resultData no news boleano
-    if (news) {
-      repeatAnimation();
+    if (news.value) {
+      showAnimation();
     } else {
       pauseAnimation();
     }
   }
 
-  repeatAnimation() {}
+  showAnimation() {
+    show.value = true;
+  }
 
-  pauseAnimation() {}
+  pauseAnimation() {
+    show.value = false;
+  }
 }
