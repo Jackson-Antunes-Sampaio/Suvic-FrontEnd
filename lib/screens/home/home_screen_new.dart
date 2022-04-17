@@ -1,5 +1,3 @@
-import 'dart:ui';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:lottie/lottie.dart';
 import 'package:share/share.dart';
 import 'package:suvic_app/common/my_header_widget.dart';
@@ -16,23 +14,24 @@ class HomeScreenNew extends StatefulWidget {
   _HomeScreenNewState createState() => _HomeScreenNewState();
 }
 
-class _HomeScreenNewState extends State<HomeScreenNew> {
+class _HomeScreenNewState extends State<HomeScreenNew>
+    with TickerProviderStateMixin {
+  late final AnimationController animationController;
   final controller = ScrollController();
   final PageManager pageManager = Get.find();
+
   final userController = Get.put(UserController());
   final notification = Get.put(NotificationController());
   double offset = 0;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     controller.addListener(onScroll);
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     controller.dispose();
     super.dispose();
   }
@@ -58,26 +57,30 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                   textBottom: "Saúde Digital",
                   offset: offset,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: 200,
-                    ),
-                    GestureDetector(
-                        onTap: () {
-                          print('Funcionando');
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.all(20),
-                          child: Lottie.network(
-                              'https://assets9.lottiefiles.com/private_files/lf30_3frgatkh.json',
-                              height: 100,
-                              width: 100,
-                              fit: BoxFit.fitHeight),
-                        )),
-                  ],
-                ),
+                Obx(
+                  () => Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 200,
+                      ),
+                      notification.show.value
+                          ? GestureDetector(
+                              onTap: () {
+                                print('Funcionando');
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.all(20),
+                                child: Lottie.network(
+                                    'https://assets9.lottiefiles.com/private_files/lf30_3frgatkh.json',
+                                    height: 100,
+                                    width: 100,
+                                    fit: BoxFit.fitHeight),
+                              ))
+                          : Container(),
+                    ],
+                  ),
+                )
               ],
             ),
             Padding(
