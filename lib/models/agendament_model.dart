@@ -4,15 +4,9 @@ class AgendementModel {
   int? slot;
   bool? houseCall;
   String? date;
-  String? phone;
 
   AgendementModel(
-      {this.clinicId,
-      this.vaccine,
-      this.slot,
-      this.houseCall,
-      this.date,
-      this.phone});
+      {this.clinicId, this.vaccine, this.slot, this.houseCall, this.date});
 
   AgendementModel.fromJson(Map<String, dynamic> json) {
     clinicId = json['clinicId'];
@@ -20,7 +14,6 @@ class AgendementModel {
     slot = json['slot'];
     houseCall = json['houseCall'];
     date = json['date'];
-    phone = json['phone'];
   }
 
   Map<String, dynamic> toJson() {
@@ -30,7 +23,6 @@ class AgendementModel {
     data['slot'] = this.slot;
     data['houseCall'] = this.houseCall;
     data['date'] = this.date;
-    data['phone'] = this.phone;
     return data;
   }
 }
