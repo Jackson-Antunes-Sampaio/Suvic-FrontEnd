@@ -136,6 +136,15 @@ class StockController extends GetxController {
       });
     }
 
+    vaccineInStock.add(
+      StockVacineModel(
+        name: 'Covid 19',
+        lote: "",
+        dataValidade: "",
+        quantidade: 0,
+        price: 100,
+      ),
+    );
     loading = false;
     update();
   }
