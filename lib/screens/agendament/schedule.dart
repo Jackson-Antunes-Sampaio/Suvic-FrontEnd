@@ -14,6 +14,7 @@ import '../../controllers/agendament_controller.dart';
 import '../../controllers/time_slot.dart';
 import '../../models/agendament_model.dart';
 import '../../models/time_slot.dart';
+import '../home/home_screen.dart';
 import 'autocomplete/data/getTime.dart';
 
 class Schedule extends StatefulWidget {
@@ -41,10 +42,10 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
   int? _dropdownValueSeleted;
 
   bool docilio = false;
-  bool payLocal = false;
+  bool beContacted = false;
 
   var maskFormatter = new MaskTextInputFormatter(
-      mask: '+# (###) ###-##-##',
+      mask: '(##) ####-####',
       filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
 
@@ -205,7 +206,7 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
                 height: 10,
               ),
               TextFormField(
-                controller: productController..text = productName,
+                controller: vaccine..text = productName,
                 enabled: false,
                 decoration: InputDecoration(
                   labelText: 'Produto/Vacina',
@@ -261,48 +262,66 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
               SizedBox(
                 height: 10,
               ),
-              payLocal
-                  ? Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: TextFormField(
-                        inputFormatters: [maskFormatter],
-                        keyboardType: TextInputType.number,
-                        controller: numberPhoneController,
-                        decoration: InputDecoration(
-                          labelText: 'Número de telefone',
-                          isDense: true,
-                          border: OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(
-                              const Radius.circular(10.0),
-                            ),
-                            borderSide: BorderSide(
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: TextFormField(
+                  inputFormatters: [maskFormatter],
+                  keyboardType: TextInputType.number,
+                  controller: numberPhoneController,
+                  decoration: InputDecoration(
+                    labelText: 'Número de telefone',
+                    isDense: true,
+                    border: OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(
+                        const Radius.circular(10.0),
                       ),
-                    )
-                  : SizedBox(),
+                      borderSide: BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                  validator: (text) {
+                    if (text == null || text.isEmpty || text.length < 14) {
+                      return 'Campo obrigatório';
+                    }
+                    return null;
+                  },
+                ),
+              ),
               Card(
                 margin: EdgeInsets.all(0),
-                child: CheckboxListTile(
-                    title: Text(
-                      'Ser contatado por telefone ou whatsapp',
-                      style: TextStyle(fontSize: 14),
-                    ),
-                    value: payLocal,
-                    onChanged: (value) {
-                      if (payLocal) {
-                        setState(() {
-                          payLocal = false;
-                          print(payLocal);
-                        });
-                      } else {
-                        setState(() {
-                          payLocal = true;
-                        });
-                      }
-                    }),
+                child: RadioListTile(
+                  title: Text(
+                    'Ser contatado pelo whatsapp',
+                    style: TextStyle(fontSize: 14),
+                  ),
+                  value: true,
+                  onChanged: (value) {
+                    setState(() {
+                      beContacted = true;
+                    });
+                  },
+                  groupValue: beContacted,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Card(
+                margin: EdgeInsets.all(0),
+                child: RadioListTile(
+                  title: Text(
+                    'Ser contatado por telefone',
+                    style: TextStyle(fontSize: 14),
+                  ),
+                  value: false,
+                  onChanged: (value) {
+                    setState(() {
+                      beContacted = false;
+                    });
+                  },
+                  groupValue: beContacted,
+                ),
               ),
               SizedBox(
                 height: 10,
@@ -457,7 +476,19 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
   }
 
   void makeScheduling() async {
-    if (_formKey.currentState!.validate()) {
+    //Valid vaccine
+    if (vaccine.text.isEmpty) {
+      Get.snackbar('Erro!', 'Precisa clicar em uma das vacinas para selecionar',
+          backgroundColor: Colors.grey,
+          icon: Icon(Icons.announcement_outlined),
+          snackPosition: SnackPosition.BOTTOM);
+    } else if (data.text.isEmpty) {
+      Get.snackbar('Erro!', 'Precisa selecionar uma data',
+          backgroundColor: Colors.grey,
+          icon: Icon(Icons.announcement_outlined),
+          snackPosition: SnackPosition.BOTTOM);
+    }
+    if (_formKey.currentState!.validate() && vaccine.text.isNotEmpty) {
       setState(() {
         load = true;
       });
@@ -467,7 +498,39 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
         date: data.text,
         slot: _dropdownValueSeleted,
         clinicId: widget.clinic.id!,
+        phone: numberPhoneController.text,
+        houseCall: beContacted,
       ));
+
+      switch (res) {
+        case 0:
+          Get.snackbar('Concluído!', 'Agendamento realizado com sucesso',
+              backgroundColor: Color.fromARGB(255, 40, 143, 43),
+              icon: Icon(Icons.done),
+              snackPosition: SnackPosition.BOTTOM);
+          Future.delayed(Duration(seconds: 3), () {
+            Get.offAllNamed('/SplashScreenAppScreen');
+          });
+          break;
+        case 1:
+          Get.snackbar('Erro!', 'Usuário já tem consulta de vacina no dia',
+              backgroundColor: Colors.grey,
+              icon: Icon(Icons.announcement_outlined),
+              snackPosition: SnackPosition.BOTTOM);
+          break;
+        case 2:
+          Get.snackbar('Erro', 'Por favor selecione um slot de vacina',
+              backgroundColor: Colors.grey,
+              icon: Icon(Icons.announcement_outlined),
+              snackPosition: SnackPosition.BOTTOM);
+          break;
+        default:
+          Get.snackbar('Erro!',
+              'Ocorreu um erro desconhecido, tente novamente mais tarde',
+              backgroundColor: Colors.grey,
+              icon: Icon(Icons.announcement_outlined),
+              snackPosition: SnackPosition.BOTTOM);
+      }
 
       setState(() {
         load = false;

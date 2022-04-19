@@ -23,11 +23,7 @@ class StockRepository {
 
       return response.data;
     } catch (e) {
-      Get.snackbar(
-        'Erro',
-        'Não possível obter as vaccinas',
-        backgroundColor: Colors.red,
-      );
+      print(e);
       return Future.error("error");
     }
   }
@@ -45,12 +41,7 @@ class StockRepository {
 
       return response.data;
     } catch (e) {
-      Get.snackbar(
-        'Erro',
-        'Não possível obter as vaccinas em stock',
-        backgroundColor: Colors.red,
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      print(e);
       return Future.error("error");
     }
   }
@@ -90,12 +81,7 @@ class StockRepository {
 
       return response.data;
     } catch (e) {
-      Get.snackbar(
-        'Erro',
-        'Não possível obter os preços das vaccinas em stock',
-        backgroundColor: Colors.red,
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      print(e);
     }
   }
 
@@ -129,12 +115,7 @@ class StockRepository {
 
       return vacines;
     } catch (e) {
-      Get.snackbar(
-        'Erro',
-        'Não possível obter as vaccinas em stock.',
-        backgroundColor: Colors.red,
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      print(e);
       List<StockVacineModel> vacines = [];
       return vacines;
     }
@@ -180,20 +161,9 @@ class StockRepository {
           snackPosition: SnackPosition.BOTTOM,
         );
       } else {
-        Get.snackbar(
-          'Erro',
-          'Valide o formulario',
-          backgroundColor: Colors.red,
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        print('Error 23213');
       }
     } catch (e) {
-      Get.snackbar(
-        'Erro',
-        'oucorreu um erro interno',
-        backgroundColor: Colors.red,
-        snackPosition: SnackPosition.BOTTOM,
-      );
       print('Error Insert $e');
     }
   }
@@ -213,21 +183,9 @@ class StockRepository {
       });
 
       if (response.data['message'] != 'Success') {
-        Get.snackbar(
-          'Erro',
-          'oucorreu um erro interno relacionado com preço}',
-          backgroundColor: Colors.red,
-          snackPosition: SnackPosition.BOTTOM,
-        );
         print('Error code ${response.data}');
       }
     } catch (e) {
-      Get.snackbar(
-        'Erro',
-        'oucorreu um erro interno',
-        backgroundColor: Colors.red,
-        snackPosition: SnackPosition.BOTTOM,
-      );
       print('Error Insert $e');
     }
   }
@@ -278,12 +236,6 @@ class StockRepository {
       //   print('Error code ${response.statusCode}');
       // }
     } catch (e) {
-      Get.snackbar(
-        'Erro',
-        'oucorreu um erro interno',
-        backgroundColor: Colors.red,
-        snackPosition: SnackPosition.BOTTOM,
-      );
       print('Error Insert $e');
     }
   }
