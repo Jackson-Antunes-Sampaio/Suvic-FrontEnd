@@ -1,8 +1,5 @@
-
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:suvic_app/models/agendament_model.dart';
 import 'package:suvic_app/utils/constants.dart';
@@ -46,13 +43,19 @@ class AgendamentRepository {
         "date": date,
         "slot": agendamentModel.slot,
         "vaccine": agendamentModel.vaccine,
-        "houseCall": false,
+        "houseCall": agendamentModel.houseCall,
+        "payOnApp": false
       });
 
       //mensager
-      var mesagerError = ['&', 'User already has vaccine appointment on day'];
+      var mesagerError = [
+        '&',
+        'User already has vaccine appointment on day',
+        'Missing slot'
+      ];
 
       if (res.data['message'] != 'Success') {
+        print(res.data);
         return mesagerError
             .indexWhere((element) => element == res.data['error']);
       } else {
