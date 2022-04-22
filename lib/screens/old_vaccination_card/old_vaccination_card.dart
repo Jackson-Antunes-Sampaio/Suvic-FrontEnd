@@ -14,6 +14,7 @@ class OldVaccinationCard extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
         title: Text('Carteira Antiga'),
         centerTitle: true,
       ),
@@ -33,7 +34,7 @@ class OldVaccinationCard extends StatelessWidget {
                           child: Container(
                             decoration: BoxDecoration(
                               border: Border.all(
-                                color: Colors.blueAccent.shade100,
+                                color: Theme.of(context).primaryColor,
                                 width: 8,
                               ),
                               borderRadius: BorderRadius.circular(12),
@@ -58,6 +59,7 @@ class OldVaccinationCard extends StatelessWidget {
                                     controller.imageByte!,
                                     width: double.maxFinite,
                                     height: double.maxFinite,
+                                    fit: BoxFit.fill,
                                   ),
                           ),
                         ),

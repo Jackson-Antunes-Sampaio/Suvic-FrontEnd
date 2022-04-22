@@ -1,4 +1,3 @@
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +38,7 @@ class MyApp extends StatelessWidget {
       title: 'Suvic',
       theme: ThemeData(
           scaffoldBackgroundColor: kBackgroundColor,
-          primaryColor: Color(0xff303f9f),
+          primaryColor: colorKPrimaryColor[600],
           fontFamily: "Poppins",
           textTheme: TextTheme(
             bodyText1: TextStyle(color: kBodyTextColor),
