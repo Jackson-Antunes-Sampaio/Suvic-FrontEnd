@@ -9,6 +9,8 @@ import 'package:suvic_app/utils/constants.dart';
 import 'package:suvic_app/utils/dio/custom_dio.dart';
 
 class StockRepository {
+  List<StockVacineModel> vacines = [];
+
   getVaccines() async {
     try {
       Dio? dio = CustomDio().instance;
@@ -100,7 +102,8 @@ class StockRepository {
         },
       );
 
-      List<StockVacineModel> vacines = [];
+      print("Aqui...." + response.data.toString());
+
       response.data.forEach((vaccine) async {
         vacines.add(
           StockVacineModel(
@@ -116,7 +119,6 @@ class StockRepository {
       return vacines;
     } catch (e) {
       print(e);
-      List<StockVacineModel> vacines = [];
       return vacines;
     }
   }

@@ -4,9 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:suvic_app/common/botton_navigation_bar/bottom_navigation_bar_new.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:suvic_app/models/Clinic_model.dart';
+import 'package:suvic_app/models/page_manager.dart';
 import 'package:suvic_app/models/stock_vacine_model.dart';
+import 'package:suvic_app/screens/base/base_screen.dart';
 import 'package:suvic_app/utils/styles/style.dart';
 
 import '../../controllers/StockController.dart';
@@ -14,7 +16,6 @@ import '../../controllers/agendament_controller.dart';
 import '../../controllers/time_slot.dart';
 import '../../models/agendament_model.dart';
 import '../../models/time_slot.dart';
-import '../home/home_screen.dart';
 import 'autocomplete/data/getTime.dart';
 
 class Schedule extends StatefulWidget {
@@ -55,9 +56,12 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
   final TextEditingController numberPhoneController = TextEditingController();
   final TextEditingController productController = TextEditingController();
   final TextEditingController valueController = TextEditingController();
+  PageManager pageManager = Get.find();
 
   bool load = false;
   bool seach = false;
+
+  int currentIndex = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +71,7 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
           return DefaultTabController(
             length: 2,
             child: Scaffold(
-              bottomNavigationBar: BottomNavigationBarNew(),
+              bottomNavigationBar: bottomNavigationBarInPage(context),
               appBar: AppBar(
                 title: seach
                     ? SizedBox()
@@ -106,6 +110,49 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
             ),
           );
         });
+  }
+
+  Widget bottomNavigationBarInPage(BuildContext context) {
+    return Obx(
+      () {
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: Colors.grey[100]!),
+          ),
+          child: SalomonBottomBar(
+            currentIndex: pageManager.indexNavigation.value,
+            onTap: (index) {
+              if (index != currentIndex) {
+                Get.offAll(BaseScreen(index: index));
+              }
+            },
+            items: [
+              SalomonBottomBarItem(
+                icon: Icon(Icons.home),
+                title: Text("Home"),
+                selectedColor: Theme.of(context).primaryColor,
+              ),
+              SalomonBottomBarItem(
+                icon: Icon(Icons.wallet_membership),
+                title: Text("Carteirinha"),
+                selectedColor: Theme.of(context).primaryColor,
+              ),
+              SalomonBottomBarItem(
+                icon: Icon(Icons.access_time),
+                title: Text("Agendar"),
+                selectedColor: Theme.of(context).primaryColor,
+              ),
+              SalomonBottomBarItem(
+                icon: Icon(Icons.menu),
+                title: Text("Mais"),
+                selectedColor: Theme.of(context).primaryColor,
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   Widget selectVaccine(StockController controllerStock) {
@@ -189,6 +236,7 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
                 controller: clinicsController
                   ..text = widget.clinic.name.toString(),
                 enabled: false,
+                style: TextStyle(fontSize: 13),
                 decoration: InputDecoration(
                   labelText: 'Nome da Clinica',
                   isDense: true,
@@ -208,6 +256,7 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
               TextFormField(
                 controller: vaccine..text = productName,
                 enabled: false,
+                style: TextStyle(fontSize: 13),
                 decoration: InputDecoration(
                   labelText: 'Produto/Vacina',
                   isDense: true,
@@ -246,6 +295,7 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
               TextFormField(
                 controller: valueController..text = productPrice,
                 enabled: false,
+                style: TextStyle(fontSize: 13),
                 decoration: InputDecoration(
                   labelText: 'Valor (R\$',
                   isDense: true,
@@ -268,6 +318,7 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
                   inputFormatters: [maskFormatter],
                   keyboardType: TextInputType.number,
                   controller: numberPhoneController,
+                  style: TextStyle(fontSize: 13),
                   decoration: InputDecoration(
                     labelText: 'Número de telefone',
                     isDense: true,
@@ -293,7 +344,7 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
                 child: RadioListTile(
                   title: Text(
                     'Ser contatado pelo whatsapp',
-                    style: TextStyle(fontSize: 14),
+                    style: TextStyle(fontSize: 13),
                   ),
                   value: true,
                   onChanged: (value) {
@@ -312,7 +363,7 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
                 child: RadioListTile(
                   title: Text(
                     'Ser contatado por telefone',
-                    style: TextStyle(fontSize: 14),
+                    style: TextStyle(fontSize: 13),
                   ),
                   value: false,
                   onChanged: (value) {
@@ -373,6 +424,7 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
           //   }
           //   // return '';
           // },
+          style: TextStyle(fontSize: 13),
           decoration: InputDecoration(
             labelText: 'Data',
             isDense: true,
