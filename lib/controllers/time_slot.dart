@@ -10,6 +10,7 @@ class TimeSlotController extends GetxController {
   //user clinic
   var repository = SlotTimesRepository();
   List<TimeSlotsModel> timeSlots = [];
+  List times = [];
   String? showDate;
   List<PriceVacine> priceVaccine = [];
   List<TimeSlotsModel> slotSeleted = [];
@@ -22,6 +23,24 @@ class TimeSlotController extends GetxController {
 
   //controller
   TimeSlotController({required this.idClinic});
+
+  getTimeOfSlot() {
+    times.clear();
+    timeSlots.forEach((element) {
+      String time = element.time.toString();
+      var timeList = time.split('.');
+      var calMinutes = (double.parse(('0.' + timeList[1]))) * 60;
+      var minutes =
+          calMinutes.toInt() == 0 ? '00' : calMinutes.toInt().toString();
+
+      times.add({
+        'value': timeList[0] + ':' + minutes,
+        'slot': element.slot,
+        'timeSlot': element.time
+      });
+    });
+    update();
+  }
 
   void getSlotsByClinic(String idClinic, String date) async {
     loading = true;
@@ -41,10 +60,11 @@ class TimeSlotController extends GetxController {
           );
         }
       });
-      loading = false;
-    } else {
-      loading = false;
     }
+    getTimeOfSlot();
+
+    loading = false;
+
     update();
   }
 

@@ -28,6 +28,33 @@ class Schedule extends StatefulWidget {
 }
 
 class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
+  TimeOfDay _time = TimeOfDay(
+    hour: DateTime.now().hour,
+    minute: DateTime.now().hour,
+  );
+
+  String _timeSelected = '';
+
+  void _selectTime() async {
+    final newTime = await showTimePicker(
+      context: context,
+      initialTime: _time,
+    );
+    if (newTime != null) {
+      setState(() {
+        _time = TimeOfDay(hour: newTime.hour, minute: newTime.minute);
+        int hour = newTime.hour;
+        int minute = newTime.minute;
+
+        time.text = (hour < 9 ? '0' + hour.toString() : hour.toString()) +
+            ':' +
+            (minute < 9 ? '0' + minute.toString() : minute.toString());
+
+        _timeSelected = hour.toString() + ':' + (minute < 29 ? '00' : '30');
+      });
+    }
+  }
+
   //schedule
   final AgendamentController agendamentController =
       Get.put(AgendamentController());
@@ -95,7 +122,7 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
                 backgroundColor: kPrimaryColor,
                 bottom: TabBar(indicatorColor: Colors.white, tabs: [
                   Tab(icon: Icon(Icons.vaccines)),
-                  GestureDetector(child: Tab(icon: Icon(Icons.schedule))),
+                  Tab(icon: Icon(Icons.schedule)),
                 ]),
               ),
               body: SafeArea(
@@ -110,49 +137,6 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
             ),
           );
         });
-  }
-
-  Widget bottomNavigationBarInPage(BuildContext context) {
-    return Obx(
-      () {
-        return Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: Colors.grey[100]!),
-          ),
-          child: SalomonBottomBar(
-            currentIndex: pageManager.indexNavigation.value,
-            onTap: (index) {
-              if (index != currentIndex) {
-                Get.offAll(BaseScreen(index: index));
-              }
-            },
-            items: [
-              SalomonBottomBarItem(
-                icon: Icon(Icons.home),
-                title: Text("Home"),
-                selectedColor: Theme.of(context).primaryColor,
-              ),
-              SalomonBottomBarItem(
-                icon: Icon(Icons.wallet_membership),
-                title: Text("Carteirinha"),
-                selectedColor: Theme.of(context).primaryColor,
-              ),
-              SalomonBottomBarItem(
-                icon: Icon(Icons.access_time),
-                title: Text("Agendar"),
-                selectedColor: Theme.of(context).primaryColor,
-              ),
-              SalomonBottomBarItem(
-                icon: Icon(Icons.menu),
-                title: Text("Mais"),
-                selectedColor: Theme.of(context).primaryColor,
-              ),
-            ],
-          ),
-        );
-      },
-    );
   }
 
   Widget selectVaccine(StockController controllerStock) {
@@ -197,20 +181,6 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
                       );
                     }),
           );
-  }
-
-  Widget noVaccines() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'Lamentamos, mas infelizmente a clínica',
-          ),
-          Text(' não tem vacinas em estoque no momento.')
-        ],
-      ),
-    );
   }
 
   Widget toSchedule(StockController controllerStock) {
@@ -277,9 +247,14 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
                   init:
                       TimeSlotController(idClinic: widget.clinic.id.toString()),
                   builder: (controllerSlot) {
-                    var items = [selectDateSchedule(controllerSlot)];
-                    if (controllerSlot.timeSlots.length > 0) {
-                      items.add(dropdownButtonSelectTimer(controllerSlot));
+                    var timeSlotsInt = controllerSlot.timeSlots.length;
+                    if (timeSlotsInt > 0) {
+                      var selected = controllerSlot.times.firstWhereOrNull(
+                        (e) => e['value'] == _timeSelected,
+                      );
+                      if (selected != null) {
+                        _dropdownValueSeleted = selected['slot'];
+                      }
                     }
                     return controllerSlot.loading
                         ? Center(
@@ -288,8 +263,31 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
                               child: CircularProgressIndicator(),
                             ),
                           )
-                        : Column(
-                            children: items,
+                        : Padding(
+                            padding: EdgeInsets.only(bottom: 10),
+                            child: timeSlotsInt == 0
+                                ? SizedBox(
+                                    width: double.maxFinite,
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: selectDateSchedule(
+                                              controllerSlot),
+                                        ),
+                                      ],
+                                    ))
+                                : Row(
+                                    children: [
+                                      Expanded(
+                                          child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 5),
+                                        child:
+                                            selectDateSchedule(controllerSlot),
+                                      )),
+                                      timerSlot()
+                                    ],
+                                  ),
                           );
                   }),
               TextFormField(
@@ -320,6 +318,7 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
                   controller: numberPhoneController,
                   style: TextStyle(fontSize: 13),
                   decoration: InputDecoration(
+                    errorStyle: TextStyle(height: 0),
                     labelText: 'Número de telefone',
                     isDense: true,
                     border: OutlineInputBorder(
@@ -333,7 +332,7 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
                   ),
                   validator: (text) {
                     if (text == null || text.isEmpty || text.length < 14) {
-                      return 'Campo obrigatório';
+                      return '';
                     }
                     return null;
                   },
@@ -391,7 +390,16 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
                     ),
                   ),
                   onPressed: () => makeScheduling(),
-                  icon: Icon(Icons.done),
+                  icon: load
+                      ? SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : Icon(Icons.done),
                   label: Text('Finalizar'),
                 ),
               ),
@@ -402,43 +410,153 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
     );
   }
 
+  Widget bottomNavigationBarInPage(BuildContext context) {
+    return Obx(
+      () {
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: Colors.grey[100]!),
+          ),
+          child: SalomonBottomBar(
+            currentIndex: pageManager.indexNavigation.value,
+            onTap: (index) {
+              if (index != currentIndex) {
+                Get.offAll(BaseScreen(index: index));
+              }
+            },
+            items: [
+              SalomonBottomBarItem(
+                icon: Icon(Icons.home),
+                title: Text("Home"),
+                selectedColor: Theme.of(context).primaryColor,
+              ),
+              SalomonBottomBarItem(
+                icon: Icon(Icons.wallet_membership),
+                title: Text("Carteirinha"),
+                selectedColor: Theme.of(context).primaryColor,
+              ),
+              SalomonBottomBarItem(
+                icon: Icon(Icons.access_time),
+                title: Text("Agendar"),
+                selectedColor: Theme.of(context).primaryColor,
+              ),
+              SalomonBottomBarItem(
+                icon: Icon(Icons.menu),
+                title: Text("Mais"),
+                selectedColor: Theme.of(context).primaryColor,
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget noVaccines() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Lamentamos, mas infelizmente a clínica',
+          ),
+          Text(' não tem vacinas em estoque no momento.')
+        ],
+      ),
+    );
+  }
+
+  Widget timerSlot() {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 5),
+        child: GestureDetector(
+          onTap: _selectTime,
+          child: TextFormField(
+            controller: time,
+            enabled: false,
+            style: TextStyle(fontSize: 13),
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.timer_outlined),
+              errorStyle: TextStyle(height: 0),
+              labelText: 'Horário',
+              isDense: true,
+              disabledBorder: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(
+                  const Radius.circular(10.0),
+                ),
+                borderSide: BorderSide(
+                  color: Colors.grey,
+                ),
+              ),
+              errorBorder: OutlineInputBorder(
+                gapPadding: 0,
+                borderRadius: const BorderRadius.all(
+                  const Radius.circular(10.0),
+                ),
+                borderSide: BorderSide(
+                  color: Colors.redAccent,
+                ),
+              ),
+            ),
+            validator: (text) {
+              if (text == null || text.isEmpty) {
+                return 'Campo obrigatório';
+              }
+              return null;
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget selectDateSchedule(TimeSlotController controllerSlot) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 10),
-      child: GestureDetector(
-        onTap: () async {
-          controllerSlot.selectDate(context);
-        },
-        child: TextFormField(
-          enabled: false,
-          controller: data..text = controllerSlot.showDate ?? '',
-          keyboardType: TextInputType.number,
-          inputFormatters: [
-            //maskDate
-            FilteringTextInputFormatter.digitsOnly,
-            DataInputFormatter()
-          ],
-          // validator: (value) {
-          //   if ((value ?? '').isEmpty) {
-          //     return 'Selecione uma data';
-          //   }
-          //   // return '';
-          // },
-          style: TextStyle(fontSize: 13),
-          decoration: InputDecoration(
-            labelText: 'Data',
-            isDense: true,
-            prefixIcon: Icon(Icons.calendar_today),
-            disabledBorder: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(
-                const Radius.circular(10.0),
-              ),
-              borderSide: BorderSide(
-                color: Colors.grey,
-              ),
+    //update value in input
+    return GestureDetector(
+      onTap: () async {
+        controllerSlot.selectDate(context);
+      },
+      child: TextFormField(
+        enabled: false,
+        controller: data..text = controllerSlot.showDate ?? '',
+        keyboardType: TextInputType.number,
+        inputFormatters: [
+          //maskDate
+          FilteringTextInputFormatter.digitsOnly,
+          DataInputFormatter()
+        ],
+        style: TextStyle(fontSize: 13),
+        decoration: InputDecoration(
+          errorStyle: TextStyle(height: 0),
+          labelText: 'Data',
+          isDense: true,
+          prefixIcon: Icon(Icons.calendar_today),
+          disabledBorder: OutlineInputBorder(
+            borderRadius: const BorderRadius.all(
+              const Radius.circular(10.0),
+            ),
+            borderSide: BorderSide(
+              color: Colors.grey,
+            ),
+          ),
+          errorBorder: OutlineInputBorder(
+            gapPadding: 0,
+            borderRadius: const BorderRadius.all(
+              const Radius.circular(10.0),
+            ),
+            borderSide: BorderSide(
+              color: Colors.redAccent,
             ),
           ),
         ),
+        validator: (text) {
+          if (text == null || text.isEmpty) {
+            return '';
+          }
+          return null;
+        },
       ),
     );
   }
@@ -468,7 +586,7 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
     );
   }
 
-  Widget dropdownButtonSelectTimer(TimeSlotController controller) {
+  dropdownButtonSelectTimer(TimeSlotController controller) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: DropdownButtonFormField<String>(
@@ -490,7 +608,7 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
         hint: const Text('Selecione o horário'),
         iconSize: 24,
         elevation: 16,
-        style: const TextStyle(color: Colors.black87),
+        style: const TextStyle(color: Colors.black87, fontSize: 13),
         onChanged: (String? newValue) {
           _dropdownValue = newValue;
           _dropdownValueSeleted = controller.slotSeleted.first.slot;
@@ -500,6 +618,7 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
           return DropdownMenuItem<String>(
             value: value['value'],
             onTap: () {
+              print(value);
               controller.selectSlot(
                   TimeSlotsModel(slot: value['slot'], time: value['timeSlot']));
             },
@@ -558,10 +677,14 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
         case 0:
           Get.snackbar('Concluído!', 'Agendamento realizado com sucesso',
               backgroundColor: Color.fromARGB(255, 40, 143, 43),
-              icon: Icon(Icons.done),
+              colorText: Colors.white,
+              icon: Icon(
+                Icons.done,
+                color: Colors.white,
+              ),
               snackPosition: SnackPosition.BOTTOM);
           Future.delayed(Duration(seconds: 3), () {
-            Get.offAllNamed('/SplashScreenAppScreen');
+            Get.offAll(BaseScreen(index: 0));
           });
           break;
         case 1:

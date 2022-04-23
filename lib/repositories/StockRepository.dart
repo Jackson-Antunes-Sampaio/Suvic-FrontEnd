@@ -102,8 +102,6 @@ class StockRepository {
         },
       );
 
-      print("Aqui...." + response.data.toString());
-
       response.data.forEach((vaccine) async {
         vacines.add(
           StockVacineModel(

@@ -34,16 +34,8 @@ class SlotTimesRepository {
           "date": date,
         },
       );
-
-      print(response.data);
       return response.data;
     } catch (e) {
-      Get.snackbar(
-        'Erro',
-        'Não possível obter as vaccinas em stock, $e',
-        backgroundColor: Colors.red,
-        snackPosition: SnackPosition.BOTTOM,
-      );
       return Future.error("error");
     }
   }
